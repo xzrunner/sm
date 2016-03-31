@@ -8,6 +8,7 @@ extern "C"
 
 #include "sm_quaternion.h"
 #include "sm_vector.h"
+#include "sm_const.h"
 
 union sm_mat3 {
 	float c[3][3];
@@ -108,14 +109,38 @@ sm_mat4_rotmat(union sm_mat4 *m, float x, float y, float z) {
 
 static inline union sm_mat4 *
 sm_mat4_rotxmat(union sm_mat4* mat, float degrees) {
-	float radians = degrees * 3.14159f / 180.0f;
-	float s = sin(radians);
-	float c = cos(radians);
+	float radians = degrees * SM_DEG_TO_RAD;
+	float s = sinf(radians);
+	float c = cosf(radians);
 	mat->c[0][0] = 1; mat->c[0][1] = 0; mat->c[0][2] = 0; mat->c[0][3] = 0;
 	mat->c[1][0] = 0; mat->c[1][1] = c; mat->c[1][2] = s; mat->c[1][3] = 0;
 	mat->c[2][0] = 0; mat->c[2][1] =-s; mat->c[2][2] = c; mat->c[2][3] = 0;
 	mat->c[3][0] = 0; mat->c[3][1] = 0; mat->c[3][2] = 0; mat->c[3][3] = 1;
     return mat;
+}
+
+static inline union sm_mat4 *
+sm_mat4_rotymat(union sm_mat4* mat, float degrees) {
+	float radians = degrees * SM_DEG_TO_RAD;
+	float s = sinf(radians);
+	float c = cosf(radians);
+	mat->c[0][0] = c; mat->c[0][1] = 0; mat->c[0][2] =-s; mat->c[0][3] = 0;
+	mat->c[1][0] = 0; mat->c[1][1] = 1; mat->c[1][2] = 0; mat->c[1][3] = 0;
+	mat->c[2][0] = s; mat->c[2][1] = 0; mat->c[2][2] = c; mat->c[2][3] = 0;
+	mat->c[3][0] = 0; mat->c[3][1] = 0; mat->c[3][2] = 0; mat->c[3][3] = 1;
+	return mat;
+}
+
+static inline union sm_mat4 *
+sm_mat4_rotzmat(union sm_mat4* mat, float degrees) {
+	float radians = degrees * SM_DEG_TO_RAD;
+	float s = sinf(radians);
+	float c = cosf(radians);
+	mat->c[0][0] = c; mat->c[0][1] = s; mat->c[0][2] = 0; mat->c[0][3] = 0;
+	mat->c[1][0] =-s; mat->c[1][1] = c; mat->c[1][2] = 0; mat->c[1][3] = 0;
+	mat->c[2][0] = 0; mat->c[2][1] = 0; mat->c[2][2] = 1; mat->c[2][3] = 0;
+	mat->c[3][0] = 0; mat->c[3][1] = 0; mat->c[3][2] = 0; mat->c[3][3] = 1;
+	return mat;
 }
 
 static inline union sm_mat4 *

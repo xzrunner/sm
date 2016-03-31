@@ -266,10 +266,11 @@ sm_vec3_mul(struct sm_vec3 *v, const union sm_mat4 *m) {
 	float x = v->x * C[0][0] + v->y * C[1][0] + v->z * C[2][0] + C[3][0];
 	float y = v->x * C[0][1] + v->y * C[1][1] + v->z * C[2][1] + C[3][1];
 	float z = v->x * C[0][2] + v->y * C[1][2] + v->z * C[2][2] + C[3][2];
+	float w = v->x * C[0][3] + v->y * C[1][3] + v->z * C[2][3] + C[3][3];
 
-	v->x = x;
-	v->y = y;
-	v->z = z;
+	v->x = x / w;
+	v->y = y / w;
+	v->z = z / w;
 
 	return v;
 }

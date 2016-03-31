@@ -115,6 +115,7 @@ sm_mat4_rotxmat(union sm_mat4* mat, float degrees) {
 	mat->c[1][0] = 0; mat->c[1][1] = c; mat->c[1][2] = s; mat->c[1][3] = 0;
 	mat->c[2][0] = 0; mat->c[2][1] =-s; mat->c[2][2] = c; mat->c[2][3] = 0;
 	mat->c[3][0] = 0; mat->c[3][1] = 0; mat->c[3][2] = 0; mat->c[3][3] = 1;
+    return mat;
 }
 
 static inline union sm_mat4 *

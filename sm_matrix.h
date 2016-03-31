@@ -9,6 +9,11 @@ extern "C"
 #include "sm_quaternion.h"
 #include "sm_vector.h"
 
+union sm_mat3 {
+	float c[3][3];
+	float x[9];
+};
+
 union sm_mat4 {
 	float c[4][4];
 	float x[16];
@@ -99,6 +104,17 @@ sm_mat4_rotmat(union sm_mat4 *m, float x, float y, float z) {
 	sm_quaternion_init(&q, x, y, z);
 
 	return sm_mat4_from_quaternion(m, &q);
+}
+
+static inline union sm_mat4 *
+sm_mat4_rotxmat(union sm_mat4* mat, float degrees) {
+	float radians = degrees * 3.14159f / 180.0f;
+	float s = sin(radians);
+	float c = cos(radians);
+	mat->c[0][0] = 1; mat->c[0][1] = 0; mat->c[0][2] = 0; mat->c[0][3] = 0;
+	mat->c[1][0] = 0; mat->c[1][1] = c; mat->c[1][2] = s; mat->c[1][3] = 0;
+	mat->c[2][0] = 0; mat->c[2][1] =-s; mat->c[2][2] = c; mat->c[2][3] = 0;
+	mat->c[3][0] = 0; mat->c[3][1] = 0; mat->c[3][2] = 0; mat->c[3][3] = 1;
 }
 
 static inline union sm_mat4 *
@@ -375,13 +391,12 @@ sm_mat4_decompose(const union sm_mat4 *m, struct sm_vec3 *trans, struct sm_vec3 
 	}
 }
 
-static inline float *
-sm_mat4_to33(const union sm_mat4 *m, float m33[9]) {
-	m33[0] = C[0][0]; m33[1] = C[0][1]; m33[2] = C[0][2];
-	m33[3] = C[1][0]; m33[4] = C[1][1]; m33[5] = C[1][2];
-	m33[6] = C[2][0]; m33[7] = C[2][1]; m33[8] = C[2][2];
-
-	return m33;
+static union sm_mat3*
+sm_mat4_to_mat3(union sm_mat3* m3, const union sm_mat4 *m) {
+	m3->x[0] = C[0][0]; m3->x[1] = C[0][1]; m3->x[2] = C[0][2];
+	m3->x[3] = C[1][0]; m3->x[4] = C[1][1]; m3->x[5] = C[1][2];
+	m3->x[6] = C[2][0]; m3->x[7] = C[2][1]; m3->x[8] = C[2][2];
+	return m3;
 }
 
 #undef C

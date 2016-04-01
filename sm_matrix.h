@@ -261,6 +261,17 @@ sm_mat4_rot(union sm_mat4 *m, float x, float y, float z) {
 
 // vector * matrix
 
+static inline struct sm_vec2*
+sm_vec2_mul(struct sm_vec2* v, const union sm_mat4* m) {
+	float x = v->x * C[0][0] + v->y * C[1][0] + C[3][0];
+	float y = v->x * C[0][1] + v->y * C[1][1] + C[3][1];
+
+	v->x = x;
+	v->y = y;
+
+	return v;
+}
+
 static inline struct sm_vec3 *
 sm_vec3_mul(struct sm_vec3 *v, const union sm_mat4 *m) {
 	float x = v->x * C[0][0] + v->y * C[1][0] + v->z * C[2][0] + C[3][0];

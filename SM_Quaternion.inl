@@ -1,3 +1,5 @@
+#include "sm_const.h"
+
 namespace sm
 {
 
@@ -76,7 +78,13 @@ void QuaternionT<T>::Normalize()
 }
 
 template <typename T>
-void QuaternionT<T>::Slerp(const QuaternionT<T>& a, const QuaternionT<T>& b, float t)
+T QuaternionT<T>::Dot(const QuaternionT<T>& q) const
+{
+	return x * q.x + y * q.y + z * q.z + w * q.w;
+}
+
+template <typename T>
+void QuaternionT<T>::Slerp(const QuaternionT<T>& a, const QuaternionT<T>& b, T t)
 {
 	T cos_theta = a.x * b.x + a.y * b.y + a.z * b.z + a.w * b.w;
 	if (cos_theta < 0) {
@@ -103,7 +111,7 @@ void QuaternionT<T>::Slerp(const QuaternionT<T>& a, const QuaternionT<T>& b, flo
 }
 
 template <typename T>
-void QuaternionT<T>::NSlerp(const QuaternionT<T>& a, const QuaternionT<T>& b, float t)
+void QuaternionT<T>::NSlerp(const QuaternionT<T>& a, const QuaternionT<T>& b, T t)
 {
 	// Normalized linear sm_quaternion interpolation
 	// Note: NLERP is faster than SLERP and commutative but does not yield constant velocity
@@ -132,10 +140,10 @@ void QuaternionT<T>::NSlerp(const QuaternionT<T>& a, const QuaternionT<T>& b, fl
 template <typename T>
 void QuaternionT<T>::Inverted()
 {
-	float len = x * x + y * y + z * z + w * w;
+	T len = x * x + y * y + z * z + w * w;
 	if( len > 0 ) 
 	{
-		float invLen = - 1.0f / len;
+		T invLen = - 1.0f / len;
 		x *= invLen;
 		y *= invLen;
 		z *= invLen;
@@ -163,5 +171,82 @@ void QuaternionT<T>::Scale(T scale)
 {
 
 }
+
+template <typename T>
+inline QuaternionT<T> QuaternionT<T>::Rotated(const QuaternionT<T>& b) const
+{
+	QuaternionT<T> q;
+	q.w = w * b.w - x * b.x - y * b.y - z * b.z;
+	q.x = w * b.x + x * b.w + y * b.z - z * b.y;
+	q.y = w * b.y + y * b.w + z * b.x - x * b.z;
+	q.z = w * b.z + z * b.w + x * b.y - y * b.x;
+	q.Normalize();
+	return q;
+}
+
+template <typename T>
+inline QuaternionT<T> QuaternionT<T>::Scaled(T s) const
+{
+	return QuaternionT<T>(x * s, y * s, z * s, w * s);
+}
+
+//template <typename T>
+//Matrix3<T> QuaternionT<T>::ToMatrix() const
+//{
+//	const T s = 2;
+//	T xs, ys, zs;
+//	T wx, wy, wz;
+//	T xx, xy, xz;
+//	T yy, yz, zz;
+//	xs = x * s;  ys = y * s;  zs = z * s;
+//	wx = w * xs; wy = w * ys; wz = w * zs;
+//	xx = x * xs; xy = x * ys; xz = x * zs;
+//	yy = y * ys; yz = y * zs; zz = z * zs;
+//	Matrix3<T> m;
+//	m.c[0][0] = 1 - (yy + zz); m.c[1][0] = xy - wz;  m.c[2][0] = xz + wy;
+//	m.c[0][1] = xy + wz; m.c[1][1] = 1 - (xx + zz); m.c[2][1] = yz - wx;
+//	m.c[0][2] = xz - wy; m.c[1][2] = yz + wx;  m.c[2][2] = 1 - (xx + yy);
+//	return m;
+//}
+
+template <typename T>
+Vector4<T> QuaternionT<T>::ToVector() const
+{
+	return Vector4<T>(x, y, z, w);
+}
+
+// Compute the quaternion that rotates from a to b, avoiding numerical instability.
+// Taken from "The Shortest Arc Quaternion" by Stan Melax in "Game Programming Gems".
+template <typename T>
+QuaternionT<T> QuaternionT<T>::CreateFromVectors(const Vector3<T>& v0, const Vector3<T>& v1)
+{
+	if (v0 == -v1) {
+		return QuaternionT<T>::CreateFromAxisAngle(vec3(1, 0, 0), SM_PI);
+	}
+
+	Vector3<T> c = v0.Cross(v1);
+	T d = v0.Dot(v1);
+	T s = sqrt((1 + d) * 2);
+
+	QuaternionT<T> q;
+	q.x = c.x / s;
+	q.y = c.y / s;
+	q.z = c.z / s;
+	q.w = s / 2.0f;
+	return q;
+}
+
+template <typename T>
+QuaternionT<T>  QuaternionT<T>::CreateFromAxisAngle(const Vector3<T>& axis, T radians)
+{
+	QuaternionT<T> q;
+	q.w = cos(radians / 2);
+	q.x = q.y = q.z = sin(radians / 2);
+	q.x *= axis.x;
+	q.y *= axis.y;
+	q.z *= axis.z;
+	return q;
+}
+
 
 }

@@ -29,7 +29,7 @@ public:
 	Vector2(const Vector2& v);
 
 	Vector2& operator = (const Vector2& v);
-	void Assign(T x, T y);
+	void Set(T x, T y);
 
 	bool operator != (const Vector2& v) const;
 	bool operator == (const Vector2& v) const;
@@ -38,15 +38,16 @@ public:
 
 	void operator += (const Vector2& v);
 	void operator -= (const Vector2& v);
-	void operator *= (float f);
-	void operator /= (float f);
+	void operator *= (T f);
+	void operator /= (T f);
 
 	Vector2 operator + (const Vector2& v) const;
 	Vector2 operator - (const Vector2& v) const;
-	Vector2 operator * (float f) const;
-	Vector2 operator / (float f) const;
+	Vector2 operator * (T f) const;
+	Vector2 operator / (T f) const;
 
 	T Length() const;
+	T LengthSquared() const;
 	void Normalize();
 	Vector2 Normalized() const;
 
@@ -90,15 +91,16 @@ public:
 
 	void operator += (const Vector3& v);
 	void operator -= (const Vector3& v);
-	void operator *= (float f);
-	void operator /= (float f);
+	void operator *= (T f);
+	void operator /= (T f);
 
 	Vector3 operator + (const Vector3& v) const;
 	Vector3 operator - (const Vector3& v) const;
-	Vector3 operator * (float f) const;
-	Vector3 operator / (float f) const;
+	Vector3 operator * (T f) const;
+	Vector3 operator / (T f) const;
 
 	T Length() const;
+	T LengthSquared() const;
 	void Normalize();
 	Vector3 Normalized() const;
 

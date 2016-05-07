@@ -1,6 +1,9 @@
 #ifndef _SPATIAL_MATH_QUATERNION_H_
 #define _SPATIAL_MATH_QUATERNION_H_
 
+#include "SM_Vector.h"
+//#include "SM_Matrix.h"
+
 namespace sm
 {
 
@@ -22,14 +25,24 @@ public:
 	QuaternionT<T> operator * (const QuaternionT<T>& q) const;
 
 	void Normalize();
+	T Dot(const QuaternionT<T>& q) const;
 
-	void Slerp(const QuaternionT<T>& a, const QuaternionT<T>& b, float t);
-	void NSlerp(const QuaternionT<T>& a, const QuaternionT<T>& b, float t);
+	void Slerp(const QuaternionT<T>& a, const QuaternionT<T>& b, T t);
+	void NSlerp(const QuaternionT<T>& a, const QuaternionT<T>& b, T t);
 
 	void Inverted();
 
 	void Rotate(const QuaternionT<T>& q);
 	void Scale(T scale);
+
+	QuaternionT<T> Rotated(const QuaternionT<T>& b) const;
+	QuaternionT<T> Scaled(T scale) const;
+
+//	Matrix3<T> ToMatrix() const;
+	Vector4<T> ToVector() const;
+
+	static QuaternionT<T> CreateFromVectors(const Vector3<T>& v0, const Vector3<T>& v1);
+	static QuaternionT<T> CreateFromAxisAngle(const Vector3<T>& axis, T radians);
 
 private:
 	T x;

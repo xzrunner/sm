@@ -85,10 +85,10 @@ template <typename T>
 Matrix4<T>::Matrix4(const QuaternionT<T>& q)
 {
 	// Calculate coefficients
-	float x2 = q.x + q.x, y2 = q.y + q.y, z2 = q.z + q.z;
-	float xx = q.x * x2,  xy = q.x * y2,  xz = q.x * z2;
-	float yy = q.y * y2,  yz = q.y * z2,  zz = q.z * z2;
-	float wx = q.w * x2,  wy = q.w * y2,  wz = q.w * z2;
+	T x2 = q.x + q.x, y2 = q.y + q.y, z2 = q.z + q.z;
+	T xx = q.x * x2,  xy = q.x * y2,  xz = q.x * z2;
+	T yy = q.y * y2,  yz = q.y * z2,  zz = q.z * z2;
+	T wx = q.w * x2,  wy = q.w * y2,  wz = q.w * z2;
 
 	c[0][0] = 1 - (yy + zz);  c[1][0] = xy - wz;	
 	c[2][0] = xz + wy;        c[3][0] = 0;
@@ -141,20 +141,20 @@ Vector2<T> Matrix4<T>::operator * (const Vector2<T>& v) const
 template <typename T>
 Vector3<T> Matrix4<T>::operator * (const Vector3<T>& v) const
 {
-	float x = v.x * c[0][0] + v.y * c[1][0] + v.z * c[2][0] + c[3][0];
-	float y = v.x * c[0][1] + v.y * c[1][1] + v.z * c[2][1] + c[3][1];
-	float z = v.x * c[0][2] + v.y * c[1][2] + v.z * c[2][2] + c[3][2];
-	float w = v.x * c[0][3] + v.y * c[1][3] + v.z * c[2][3] + c[3][3];
+	T x = v.x * c[0][0] + v.y * c[1][0] + v.z * c[2][0] + c[3][0];
+	T y = v.x * c[0][1] + v.y * c[1][1] + v.z * c[2][1] + c[3][1];
+	T z = v.x * c[0][2] + v.y * c[1][2] + v.z * c[2][2] + c[3][2];
+	T w = v.x * c[0][3] + v.y * c[1][3] + v.z * c[2][3] + c[3][3];
 	return Vector3<T>(x / w, y / w, z / w);
 }
 
 template <typename T>
 Vector4<T> Matrix4<T>::operator * (const Vector4<T>& v) const
 {
-	float x = v.x * c[0][0] + v.y * c[1][0] + v.z * c[2][0] + v.w * c[3][0];
-	float y = v.x * c[0][1] + v.y * c[1][1] + v.z * c[2][1] + v.w * c[3][1];
-	float z = v.x * c[0][2] + v.y * c[1][2] + v.z * c[2][2] + v.w * c[3][2];
-	float w = v.x * c[0][3] + v.y * c[1][3] + v.z * c[2][3] + v.w * c[3][3];
+	T x = v.x * c[0][0] + v.y * c[1][0] + v.z * c[2][0] + v.w * c[3][0];
+	T y = v.x * c[0][1] + v.y * c[1][1] + v.z * c[2][1] + v.w * c[3][1];
+	T z = v.x * c[0][2] + v.y * c[1][2] + v.z * c[2][2] + v.w * c[3][2];
+	T w = v.x * c[0][3] + v.y * c[1][3] + v.z * c[2][3] + v.w * c[3][3];
 	return Vector4<T>(x, y, z, w);
 }
 
@@ -170,25 +170,45 @@ void Matrix4<T>::Identity()
 template <typename T>
 void Matrix4<T>::Translate(T x, T y, T z)
 {
-	c[3][0] += x;
-	c[3][1] += y;
-	c[3][2] += z;
+	this->operator *= (Translated(x, y, z));
 }
 
 template <typename T>
 void Matrix4<T>::Scale(T x, T y, T z)
 {
-	c[0][0] *= x;
-	c[0][1] *= y;
-	c[0][2] *= z;
+	this->operator *= (Scaled(x, y, z));
+}
 
-	c[1][0] *= x;
-	c[1][1] *= y;
-	c[1][2] *= z;
+template <typename T>
+void Matrix4<T>::Shear(T kx, T ky)
+{
+	this->operator *= (Sheared(kx, ky));
+}
 
-	c[2][0] *= x;
-	c[2][1] *= y;
-	c[2][2] *= z;
+template <typename T>
+void Matrix4<T>::RotateZ(T degrees)
+{
+	this->operator *= (RotatedZ(degrees));
+}
+
+template <typename T>
+void Matrix4<T>::SetTransformation(T x, T y, T angle, T sx, T sy, T ox, T oy, T kx, T ky)
+{
+	Identity();
+	T c = cos(angle), s = sin(angle);
+	// matrix multiplication carried out on paper:
+	// |1     x| |c -s    | |sx       | | 1 ky    | |1     -ox|
+	// |  1   y| |s  c    | |   sy    | |kx  1    | |  1   -oy|
+	// |    1  | |     1  | |      1  | |      1  | |    1    |
+	// |      1| |       1| |        1| |        1| |       1 |
+	//   move      rotate      scale       skew       origin
+	this->x[10] = this->x[15] = 1.0f;
+	this->x[0]  = c * sx - ky * s * sy; // = a
+	this->x[1]  = s * sx + ky * c * sy; // = b
+	this->x[4]  = kx * c * sx - s * sy; // = c
+	this->x[5]  = kx * s * sx + c * sy; // = d
+	this->x[12] = x - ox * this->x[0] - oy * this->x[4];
+	this->x[13] = y - ox * this->x[1] - oy * this->x[5];
 }
 
 template <typename T>
@@ -226,7 +246,7 @@ void Matrix4<T>::Transposed()
 {
 	for (int y = 0; y < 4; ++y ) {
 		for(int x = y + 1; x < 4; ++x ) {
-			float tmp = c[x][y];
+			T tmp = c[x][y];
 			c[x][y] = c[y][x];
 			c[y][x] = tmp;
 		}
@@ -234,7 +254,7 @@ void Matrix4<T>::Transposed()
 }
 
 template <typename T>
-float Matrix4<T>::Determinant() const
+T Matrix4<T>::Determinant() const
 {
 	return 
 		c[0][3]*c[1][2]*c[2][1]*c[3][0] - c[0][2]*c[1][3]*c[2][1]*c[3][0] - c[0][3]*c[1][1]*c[2][2]*c[3][0] + c[0][1]*c[1][3]*c[2][2]*c[3][0] +
@@ -250,7 +270,7 @@ Matrix4<T> Matrix4<T>::Inverted()
 {
 	Matrix4<T> dst;
 
-	float d = Determinant();
+	T d = Determinant();
 	if( d == 0 ) {
 		return dst;
 	}
@@ -319,7 +339,7 @@ void Matrix4<T>::Decompose(Vector3<T>& trans, Vector3<T>& rot, Vector3<T>& scale
 	rot->x = asinf(-c[2][1] / scale->z);
 
 	// Special case: Cos[x] == 0 (when Sin[x] is +/-1)
-	float f = fabsf(c[2][1] / scale->z);
+	T f = fabsf(c[2][1] / scale->z);
 
 	if(f > 0.999f && f < 1.001f) {
 		// Pin arbitrarily one of y or z to zero
@@ -417,6 +437,15 @@ Matrix4<T> Matrix4<T>::RotatedAxis(const Vector3<T>& axis, T angle)
 	T y = axis->y * t;
 	T z = axis->z * t;
 	return Matrix4(QuaternionT<T>(x, y, z, cos(angle * 0.5f)));
+}
+
+template <typename T>
+Matrix4<T> Matrix4<T>::Sheared(T kx, T ky)
+{
+	Matrix4 m;
+	m.x[1] = ky;
+	m.x[4] = kx;
+	return m;
 }
 
 template <typename T>

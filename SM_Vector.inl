@@ -34,7 +34,7 @@ Vector2<T>& Vector2<T>::operator = (const Vector2& v)
 }
 
 template <typename T>
-void Vector2<T>::Assign(T x, T y) 
+void Vector2<T>::Set(T x, T y) 
 {
 	this->x = x;
 	this->y = y;
@@ -71,13 +71,13 @@ void Vector2<T>::operator -= (const Vector2& v)
 }
 
 template <typename T>
-void Vector2<T>::operator *= (float f)
+void Vector2<T>::operator *= (T f)
 {
 	x *= f; y *= f;
 }
 
 template <typename T>
-void Vector2<T>::operator /= (float f)
+void Vector2<T>::operator /= (T f)
 {
 	x /= f; y /= f;
 }
@@ -95,13 +95,13 @@ Vector2<T> Vector2<T>::operator - (const Vector2& v) const
 }
 
 template <typename T>
-Vector2<T> Vector2<T>::operator * (float f) const
+Vector2<T> Vector2<T>::operator * (T f) const
 {
 	return Vector2(x * f, y * f);
 }
 
 template <typename T>
-Vector2<T> Vector2<T>::operator / (float f) const
+Vector2<T> Vector2<T>::operator / (T f) const
 {
 	return Vector2(x / f, y / f);
 }
@@ -109,13 +109,19 @@ Vector2<T> Vector2<T>::operator / (float f) const
 template <typename T>
 T Vector2<T>::Length() const
 {
-	return sqrt(x * x + y * y);
+	return sqrt(LengthSquared());
+}
+
+template <typename T>
+T Vector2<T>::LengthSquared() const
+{
+	return x * x + y * y;
 }
 
 template <typename T>
 void Vector2<T>::Normalize()
 {
-	float s = 1.0f / Length();
+	T s = 1.0f / Length();
 	x *= s;
 	y *= s;
 }
@@ -210,13 +216,13 @@ void Vector3<T>::operator -= (const Vector3& v)
 }
 
 template <typename T>
-void Vector3<T>::operator *= (float f)
+void Vector3<T>::operator *= (T f)
 {
 	x *= f; y *= f; z *= f;
 }
 
 template <typename T>
-void Vector3<T>::operator /= (float f)
+void Vector3<T>::operator /= (T f)
 {
 	x /= f; y /= f; z /= f;
 }
@@ -234,13 +240,13 @@ Vector3<T> Vector3<T>::operator - (const Vector3& v) const
 }
 
 template <typename T>
-Vector3<T> Vector3<T>::operator * (float f) const
+Vector3<T> Vector3<T>::operator * (T f) const
 {
 	return Vector3(x * f, y * f, z * f);
 }
 
 template <typename T>
-Vector3<T> Vector3<T>::operator / (float f) const
+Vector3<T> Vector3<T>::operator / (T f) const
 {
 	return Vector3(x / f, y / f, z / f);
 }
@@ -248,13 +254,19 @@ Vector3<T> Vector3<T>::operator / (float f) const
 template <typename T>
 T Vector3<T>::Length() const
 {
-	return sqrt(x * x + y * y + z * z);
+	return sqrt(LengthSquared());
+}
+
+template <typename T>
+T Vector3<T>::LengthSquared() const
+{
+	return x * x + y * y + z * z;
 }
 
 template <typename T>
 void Vector3<T>::Normalize()
 {
-	float s = 1.0f / Length();
+	T s = 1.0f / Length();
 	x *= s;
 	y *= s;
 	z *= s;

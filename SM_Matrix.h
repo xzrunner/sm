@@ -16,8 +16,8 @@ class Matrix2
 {
 public:
 	union {
-		float c[2][2];	// Column major order for OpenGL: c[column][row]
-		float x[4];
+		T c[2][2];	// Column major order for OpenGL: c[column][row]
+		T x[4];
 	};
 
 public:
@@ -38,8 +38,8 @@ class Matrix3
 {
 public:
 	union {
-		float c[3][3];	// Column major order for OpenGL: c[column][row]
-		float x[9];
+		T c[3][3];	// Column major order for OpenGL: c[column][row]
+		T x[9];
 	};
 
 public:
@@ -58,8 +58,8 @@ class Matrix4
 {
 public:
 	union {
-		float c[4][4];	// Column major order for OpenGL: c[column][row]
-		float x[16];
+		T c[4][4];	// Column major order for OpenGL: c[column][row]
+		T x[16];
 	};
 
 public:
@@ -79,11 +79,26 @@ public:
 
 	void Translate(T x, T y, T z);
 	void Scale(T x, T y, T z);
+	void Shear(T kx, T ky);
+	void RotateZ(T degrees);
+
+	/**
+	* @param x The translation along the x-axis.
+	* @param y The translation along the y-axis.
+	* @param angle The rotation (rad) around the center with offset (ox,oy).
+	* @param sx Scale along x-axis.
+	* @param sy Scale along y-axis.
+	* @param ox The offset for rotation along the x-axis.
+	* @param oy The offset for rotation along the y-axis.
+	* @param kx Shear along x-axis
+	* @param ky Shear along y-axis
+	**/
+	void SetTransformation(T x, T y, T angle, T sx, T sy, T ox, T oy, T kx, T ky);
 
 	Matrix4<T> FastMul43(const Matrix4<T>& b);
 
 	void Transposed();
-	float Determinant() const;
+	T Determinant() const;
 	Matrix4<T> Inverted();
 
 	Vector3<T> GetTranslate() const;
@@ -97,6 +112,7 @@ public:
 	static Matrix4<T> RotatedY(T degrees);
 	static Matrix4<T> RotatedZ(T degrees);
 	static Matrix4<T> RotatedAxis(const Vector3<T>& axis, T angle);
+	static Matrix4<T> Sheared(T kx, T ky);
 
 	static Matrix4<T> Perspective(T left, T right, T bottom, T top, T near, T far);
 	static Matrix4<T> Orthographic(T left, T right, T bottom, T top, T near, T far);

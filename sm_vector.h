@@ -1,111 +1,160 @@
-#ifdef __cplusplus
-extern "C"
+#ifndef _SPATIAL_MATH_VECTOR_H_
+#define _SPATIAL_MATH_VECTOR_H_
+
+namespace sm
 {
-#endif
 
-#ifndef spatial_math_vector_h
-#define spatial_math_vector_h
+/**
+ *  @brief
+ *    vector2
+ */
+template <typename T>
+class Vector2
+{
+public:
+	union
+	{
+		struct 
+		{
+			T x;
+			T y;
+		};
 
-#include <math.h>
+		T xy[2];
+	};
 
-struct sm_ivec2 {
-	int x, y;
-};
+public:
+	Vector2();
+	Vector2(T x, T y);
+	Vector2(const Vector2& v);
 
-struct sm_vec2 {
-	float x, y;
-};
+	Vector2& operator = (const Vector2& v);
+	void Assign(T x, T y);
 
-struct sm_vec3 {
-	float x, y, z;
-};
+	bool operator != (const Vector2& v) const;
+	bool operator == (const Vector2& v) const;
 
-struct sm_vec4 {
-	float x, y, z, w;
-};
+	Vector2<T> operator - () const;
 
+	void operator += (const Vector2& v);
+	void operator -= (const Vector2& v);
+	void operator *= (float f);
+	void operator /= (float f);
 
-static inline float *
-sm_vec3_array(struct sm_vec3 *v) {
-	return (float *)v;
+	Vector2 operator + (const Vector2& v) const;
+	Vector2 operator - (const Vector2& v) const;
+	Vector2 operator * (float f) const;
+	Vector2 operator / (float f) const;
+
+	T Length() const;
+	void Normalize();
+	Vector2 Normalized() const;
+
+	T Cross(const Vector2& v) const;
+	T Dot(const Vector2& v) const;
+
+}; // Vector2
+
+/**
+ *  @brief
+ *    vector3
+ */
+template <typename T>
+class Vector3
+{
+public:
+	union
+	{
+		struct 
+		{
+			T x;
+			T y;
+			T z;
+		};
+
+		T xyz[3];
+	};
+
+public:
+	Vector3();
+	Vector3(T x, T y, T z);
+	Vector3(const Vector3& v);
+
+	Vector3& operator = (const Vector3& v);
+	void Assign(T x, T y, T z);
+
+	bool operator != (const Vector3& v) const;
+	bool operator == (const Vector3& v) const;
+
+	Vector3 operator - () const;
+
+	void operator += (const Vector3& v);
+	void operator -= (const Vector3& v);
+	void operator *= (float f);
+	void operator /= (float f);
+
+	Vector3 operator + (const Vector3& v) const;
+	Vector3 operator - (const Vector3& v) const;
+	Vector3 operator * (float f) const;
+	Vector3 operator / (float f) const;
+
+	T Length() const;
+	void Normalize();
+	Vector3 Normalized() const;
+
+	Vector3 Cross(const Vector3& v) const;
+	T Dot(const Vector3& v) const;
+
+}; // Vector3
+
+/**
+ *  @brief
+ *    vector4
+ */
+template <typename T>
+class Vector4
+{
+public:
+	union
+	{
+		struct 
+		{
+			T x;
+			T y;
+			T z;
+			T w;
+		};
+
+		T xyzw[4];
+	};
+
+public:
+	Vector4();
+	Vector4(T x, T y, T z, T w);
+	Vector4(const Vector4& v);
+
+	Vector4& operator = (const Vector4& v);
+	void Assign(T x, T y, T z, T w);
+
+	bool operator != (const Vector4& v) const;
+	bool operator == (const Vector4& v) const;
+
+	T Dot(const Vector4& v) const;
+
+}; // Vector4
+
+typedef Vector2<bool> bvec2;
+
+typedef Vector2<int> ivec2;
+typedef Vector3<int> ivec3;
+typedef Vector4<int> ivec4;
+
+typedef Vector2<float> vec2;
+typedef Vector3<float> vec3;
+typedef Vector4<float> vec4;
+
 }
 
-static inline float *
-sm_vec4_array(struct sm_vec4 *v) {
-	return (float *)v;
-}
+#include "SM_Vector.inl"
 
-static inline float
-sm_vec3_dot(const struct sm_vec3 *a, const struct sm_vec3 *b) {
-	return a->x * b->x + a->y * b->y + a->z * b->z;
-}
-
-static inline struct sm_vec3 *
-sm_vec3_cross(struct sm_vec3 *v, const struct sm_vec3 *a, const struct sm_vec3 *b) {
-	float x = a->y * b->z - a->z * b->y;
-	float y = a->z * b->x - a->x * b->z;
-	float z = a->x * b->y - a->y * b->x;
-
-	v->x = x;
-	v->y = y;
-	v->z = z;
-
-	return v;
-}
-
-static inline struct sm_vec3 *
-sm_vec3_vector(struct sm_vec3 *v, const struct sm_vec3 *p1, const struct sm_vec3 *p2) {
-	v->x = p1->x - p2->x;
-	v->y = p1->y - p2->y;
-	v->z = p1->z - p2->z;
-
-	return v;
-}
-
-static inline float
-sm_vec3_length(const struct sm_vec3 *v) {
-	return sqrtf(v->x * v->x + v->y * v->y + v->z * v->z );
-}
-
-static inline struct sm_vec3 *
-sm_vec3_normalize(struct sm_vec3 *v) {
-	float invLen = 1.0f / sm_vec3_length(v);
-	v->x *= invLen;
-	v->y *= invLen;
-	v->z *= invLen;
-
-	return v;
-}
-
-static inline struct sm_vec3 *
-sm_vec3_to_rotation(struct sm_vec3 *v, const struct sm_vec3 *r) {
-	// Assumes that the unrotated view vector is (0, 0, -1)
-	v->x = v->y = v->z = 0;
-	if (r->y != 0) {
-		v->x = atan2f( r->y, sqrtf( r->x*r->x + r->z*r->z ) );
-	}
-	if (r->x != 0 || r->z != 0) {
-		v->y = atan2f( -r->x, -r->z );
-	}
-
-	return v;
-}
-
-static inline struct sm_vec3 *
-sm_vec3_lerp(struct sm_vec3 *v, const struct sm_vec3 *a, const struct sm_vec3 *b, float f) {
-	float x = a->x + (b->x - a->x) * f;
-	float y = a->y + (b->y - a->y) * f;
-	float z = a->z + (b->z - a->z) * f;
-
-	v->x = x;
-	v->y = y;
-	v->z = z;
-
-	return v;
-}
-
-#endif // spatial_math_vector_h
-
-#ifdef __cplusplus
-}
-#endif
+#endif // _SPATIAL_MATH_VECTOR_H_

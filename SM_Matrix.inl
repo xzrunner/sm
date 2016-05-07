@@ -2,6 +2,7 @@
 #define _SPATIAL_MATH_MATRIX_INL_
 
 #include "sm_const.h"
+#include "SM_Quaternion.h"
 
 namespace sm
 {
@@ -360,7 +361,7 @@ Matrix4<T> Matrix4<T>::Scaled(T x, T y, T z)
 template <typename T>
 Matrix4<T> Matrix4<T>::Rotated(T x, T y, T z)
 {
-	return Matrix4(QuaternionT(x, y ,z));
+	return Matrix4(QuaternionT<T>(x, y ,z));
 }
 
 template <typename T>
@@ -415,7 +416,7 @@ Matrix4<T> Matrix4<T>::RotatedAxis(const Vector3<T>& axis, T angle)
 	T x = axis->x * t;
 	T y = axis->y * t;
 	T z = axis->z * t;
-	return Matrix4(QuaternionT(x, y, z, cos(angle * 0.5f)));
+	return Matrix4(QuaternionT<T>(x, y, z, cos(angle * 0.5f)));
 }
 
 template <typename T>

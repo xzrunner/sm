@@ -17,7 +17,7 @@ QuaternionT<T>::QuaternionT(T x, T y, T z)
 		           pitch(0, sinf( y * 0.5f ), 0, cosf( y * 0.5f )),
 				   yaw(0, 0, sinf( z * 0.5f ), cosf( z * 0.5f ));
 	// Order: y * x * z
-	return pitch * roll * yaw;
+	*this = pitch * roll * yaw;
 }
 
 template <typename T>
@@ -84,7 +84,7 @@ void QuaternionT<T>::Slerp(const QuaternionT<T>& a, const QuaternionT<T>& b, flo
 		x = -b.x; y = -b.y;
 		z = -b.z; w = -b.w;
 	} else {
-		*q = *b;
+		*this = *b;
 	}
 	T scale0 = 1 - t, scale1 = t;
 	if( (1 - cos_theta) > 0.001f ) {
@@ -151,12 +151,11 @@ void QuaternionT<T>::Inverted()
 template <typename T>
 void QuaternionT<T>::Rotate(const QuaternionT<T>& q)
 {
-	q.w = w * b.w - x * b.x - y * b.y - z * b.z;
-	q.x = w * b.x + x * b.w + y * b.z - z * b.y;
-	q.y = w * b.y + y * b.w + z * b.x - x * b.z;
-	q.z = w * b.z + z * b.w + x * b.y - y * b.x;
-	q.Normalize();
-	return q;
+	w = w * q.w - x * q.x - y * q.y - z * q.z;
+	x = w * q.x + x * q.w + y * q.z - z * q.y;
+	y = w * q.y + y * q.w + z * q.x - x * q.z;
+	z = w * q.z + z * q.w + x * q.y - y * q.x;
+	Normalize();
 }
 
 template <typename T>

@@ -1,8 +1,8 @@
 #ifndef _SPATIAL_MATH_MATRIX_H_
 #define _SPATIAL_MATH_MATRIX_H_
 
-#include "SM_Quaternion.h"
 #include "SM_Vector.h"
+#include "SM_Quaternion.h"
 
 namespace sm
 {

@@ -56,6 +56,27 @@ public:
 
 }; // Vector2
 
+class Vector2Cmp
+{
+public:
+	template <typename T>
+	bool operator () (const Vector2<T> & p0, const Vector2<T> & p1) const;
+}; // Vector2Cmp
+
+class Vector2CmpX
+{
+public:
+	template <typename T>
+	bool operator () (const Vector2<T> & p0, const Vector2<T> & p1) const;
+}; // Vector2CmpX
+
+class Vector2CmpY
+{
+public:
+	template <typename T>
+	bool operator () (const Vector2<T> & p0, const Vector2<T> & p1) const;
+}; // Vector2CmpY
+
 /**
  *  @brief
  *    vector3

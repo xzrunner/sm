@@ -3,17 +3,45 @@
 
 #include "SM_Vector.h"
 
+#include <vector>
+
 namespace sm
 {
 
-bool intersection_ray_triangle(const vec3& ray_ori, const vec3& ray_dir,
+/**
+ *  @brief
+ *    point
+ */
+bool is_point_at_line_left(const sm::vec2& v, const sm::vec2& s, const sm::vec2& e);
+bool is_point_in_rect(const vec2& v, const rect& r);
+bool is_point_in_area(const vec2& v, const std::vector<vec2>& area);
+bool is_point_in_circle(const vec2& v, const vec2& center, float radius);
+bool is_point_in_convex(const sm::vec2& pos, const std::vector<sm::vec2>& convex);
+
+/**
+ *  @brief
+ *    rect
+ */
+bool is_rect_contain_point(const rect& r, const vec2& v);
+bool is_rect_contain_rect(const rect& r0, const rect& r1);
+bool is_rect_intersect_rect(const rect& r0, const rect& r1);
+bool is_rect_intersect_segment(const rect& r, const sm::vec2& s, const sm::vec2& e);
+
+/**
+ *  @brief
+ *    convex
+ */
+bool is_convex_intersect_convex(const std::vector<sm::vec2>& c0, const std::vector<sm::vec2>& c1);
+
+/**
+ *  @brief
+ *    ray
+ */
+bool is_ray_intersect_triangle(const vec3& ray_ori, const vec3& ray_dir,
 							   const vec3& tri0, const vec3& tri1, 
 							   const vec3& tri2, vec3& out);
-
-bool intersection_ray_aabb(const vec3& ray_ori, const vec3& ray_dir, 
+bool is_ray_intersect_aabb(const vec3& ray_ori, const vec3& ray_dir, 
 						   const vec3& aabb_min, const vec3& aabb_max);
-
-float distance_aabb(const vec3& pos, const vec3& aabb_min, const vec3& aabb_max);
 
 }
 

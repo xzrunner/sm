@@ -29,6 +29,7 @@ public:
 
 	void Translate(const Vector2<T>& offset);
 	void Scale(T sx, T sy);
+	void Shear(T kx, T ky);
 
 }; // Rect
 

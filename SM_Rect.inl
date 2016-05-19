@@ -95,6 +95,26 @@ void Rect<T>::Scale(T sx, T sy)
 	ymax *= sy;
 }
 
+template <typename T>
+void Rect<T>::Shear(T kx, T ky)
+{
+	MakeEmpty();
+	// x' = x + y*kx
+	// y' = x*ky + y
+	sm ::vec2 v[4];
+	v[0].x = xmin + ymin * kx;
+	v[0].y = xmin * ky + ymin;
+	v[1].x = xmax + ymin * kx;
+	v[1].y = xmax * ky + ymin;
+	v[2].x = xmax + ymax * kx;
+	v[2].y = xmax * ky + ymax;
+	v[3].x = xmin + ymax * kx;
+	v[3].y = xmin * ky + ymax;
+	for (int i = 0; i < 4; ++i) {
+		Combine(v[i]);
+	}
+}
+
 }
 
 #endif // _SPATIAL_MATH_RECT_INL_

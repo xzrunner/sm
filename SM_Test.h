@@ -12,11 +12,11 @@ namespace sm
  *  @brief
  *    point
  */
-bool is_point_at_line_left(const sm::vec2& v, const sm::vec2& s, const sm::vec2& e);
+bool is_point_at_line_left(const vec2& v, const vec2& s, const vec2& e);
 bool is_point_in_rect(const vec2& v, const rect& r);
 bool is_point_in_area(const vec2& v, const std::vector<vec2>& area);
 bool is_point_in_circle(const vec2& v, const vec2& center, float radius);
-bool is_point_in_convex(const sm::vec2& pos, const std::vector<sm::vec2>& convex);
+bool is_point_in_convex(const vec2& pos, const std::vector<vec2>& convex);
 
 /**
  *  @brief
@@ -25,13 +25,13 @@ bool is_point_in_convex(const sm::vec2& pos, const std::vector<sm::vec2>& convex
 bool is_rect_contain_point(const rect& r, const vec2& v);
 bool is_rect_contain_rect(const rect& r0, const rect& r1);
 bool is_rect_intersect_rect(const rect& r0, const rect& r1);
-bool is_rect_intersect_segment(const rect& r, const sm::vec2& s, const sm::vec2& e);
+bool is_rect_intersect_segment(const rect& r, const vec2& s, const vec2& e);
 
 /**
  *  @brief
  *    convex
  */
-bool is_convex_intersect_convex(const std::vector<sm::vec2>& c0, const std::vector<sm::vec2>& c1);
+bool is_convex_intersect_convex(const std::vector<vec2>& c0, const std::vector<vec2>& c1);
 
 /**
  *  @brief

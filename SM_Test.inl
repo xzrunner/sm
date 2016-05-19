@@ -12,7 +12,7 @@ namespace sm
 {
 
 inline
-bool is_point_at_line_left(const sm::vec2& v, const sm::vec2& s, const sm::vec2& e)
+bool is_point_at_line_left(const vec2& v, const vec2& s, const vec2& e)
 {
 	return (v.y - s.y) * (e.x - s.x) - (v.x - s.x) * (e.y - s.y) > FLT_EPSILON;
 }
@@ -48,7 +48,7 @@ bool is_point_in_circle(const vec2& v, const vec2& center, float radius)
 }
 
 inline
-bool is_point_in_convex(const sm::vec2& pos, const std::vector<sm::vec2>& convex) 
+bool is_point_in_convex(const vec2& pos, const std::vector<vec2>& convex) 
 {
 	if (convex.size() < 3) {
 		return false;
@@ -57,7 +57,7 @@ bool is_point_in_convex(const sm::vec2& pos, const std::vector<sm::vec2>& convex
 	size_t count = 0;
 	for (size_t i = 0, n = convex.size(); i < n; ++i)
 	{
-		sm::vec2 s = convex[i], 
+		vec2 s = convex[i], 
 			     e = i == convex.size() - 1 ? convex[0] : convex[i + 1];
 		if (is_point_at_line_left(pos, s, e)) {
 			++count;
@@ -87,7 +87,7 @@ bool is_rect_intersect_rect(const rect& r0, const rect& r1)
 }
 
 inline
-bool is_rect_intersect_segment(const rect& r, const sm::vec2& s, const sm::vec2& e)
+bool is_rect_intersect_segment(const rect& r, const vec2& s, const vec2& e)
 {
 	unsigned char type_s, type_e;
 	type_s = type_e = 0;
@@ -151,7 +151,7 @@ bool is_rect_intersect_segment(const rect& r, const sm::vec2& s, const sm::vec2&
 }
 
 static inline
-void project_convex(const std::vector<sm::vec2>& c, float angle, float* min, float* max)
+void project_convex(const std::vector<vec2>& c, float angle, float* min, float* max)
 {
 	*min = FLT_MAX;
 	*max = -FLT_MAX;
@@ -173,7 +173,7 @@ bool is_project_intersect(float min0, float max0, float min1, float max1)
 }
 
 static inline
-bool is_convex_intersect_convex(const std::vector<sm::vec2>& c0, const std::vector<sm::vec2>& c1, float angle)
+bool is_convex_intersect_convex(const std::vector<vec2>& c0, const std::vector<vec2>& c1, float angle)
 {
 	float min0, max0, min1, max1;
 	project_convex(c0, angle, &min0, &max0);
@@ -182,14 +182,14 @@ bool is_convex_intersect_convex(const std::vector<sm::vec2>& c0, const std::vect
 }
 
 static inline
-bool is_convex_intersect_convex(const std::vector<sm::vec2>& c0, const std::vector<sm::vec2>& c1, const sm::vec2& v0, const sm::vec2& v1)
+bool is_convex_intersect_convex(const std::vector<vec2>& c0, const std::vector<vec2>& c1, const vec2& v0, const vec2& v1)
 {
 	float angle = SM_PI * 0.5f - atan2(v1.y - v0.y, v1.x - v0.x);
 	return is_convex_intersect_convex(c0, c1, angle);
 }
 
 static inline
-bool is_convex_intersect_convex(const std::vector<sm::vec2>& c0, const std::vector<sm::vec2>& c1, const std::vector<sm::vec2>& proj)
+bool is_convex_intersect_convex(const std::vector<vec2>& c0, const std::vector<vec2>& c1, const std::vector<vec2>& proj)
 {
 	for (int i = 0, n = c0.size() - 1; i < n; ++i) {
 		if (!is_convex_intersect_convex(c0, c1, proj[i], proj[i+1])) {
@@ -203,7 +203,7 @@ bool is_convex_intersect_convex(const std::vector<sm::vec2>& c0, const std::vect
 }
 
 inline
-bool is_convex_intersect_convex(const std::vector<sm::vec2>& c0, const std::vector<sm::vec2>& c1)
+bool is_convex_intersect_convex(const std::vector<vec2>& c0, const std::vector<vec2>& c1)
 {
 	if (c0.size() < 3 || c1.size() < 3) {
 		return false;

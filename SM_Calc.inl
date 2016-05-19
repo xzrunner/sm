@@ -5,7 +5,7 @@ namespace sm
 {
 
 inline
-float find_x_on_seg(const sm::vec2& s, const sm::vec2& e, float y)
+float find_x_on_seg(const vec2& s, const vec2& e, float y)
 {
 	if (s.y == e.y)  {
 		return (std::min)(s.x, e.x);
@@ -15,7 +15,7 @@ float find_x_on_seg(const sm::vec2& s, const sm::vec2& e, float y)
 }
 
 inline
-float find_y_on_seg(const sm::vec2& s, const sm::vec2& e, float x)
+float find_y_on_seg(const vec2& s, const vec2& e, float x)
 {
 	if (s.x == e.x)  {
 		return (std::min)(s.y, e.y);
@@ -31,6 +31,14 @@ vec2 rotate_vector(const vec2& v, float rad)
 	ret.x = v.x * cos(rad) - v.y * sin(rad);
 	ret.y = v.x * sin(rad) + v.y * cos(rad);
 	return ret;
+}
+
+inline
+float mat_trans_len(float len, const mat4& mat)
+{
+	vec2 p0 = mat * vec2(0, 0),
+		 p1 = mat * vec2(len, 0);
+	return (p0 - p1).Length();
 }
 
 inline

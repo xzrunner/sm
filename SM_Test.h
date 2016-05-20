@@ -2,6 +2,7 @@
 #define _SPATIAL_MATH_TEST_H_
 
 #include "SM_Vector.h"
+#include "SM_Rect.h"
 
 #include <vector>
 

@@ -1,6 +1,8 @@
 #ifndef _SPATIAL_MATH_CALC_INL_
 #define _SPATIAL_MATH_CALC_INL_
 
+#include <float.h>
+
 namespace sm
 {
 
@@ -36,7 +38,7 @@ vec2 rotate_vector(const vec2& v, float rad)
 inline
 vec2 rotate_vector_right_angle(const vec2& v, bool turn_left)
 {
-	sm::vec2 ret = v;
+	vec2 ret = v;
 	if (turn_left)
 	{
 		ret.x = -v.y;
@@ -59,7 +61,7 @@ float mat_trans_len(float len, const mat4& mat)
 }
 
 inline
-bool is_acute_angle(const sm::vec2& a, const sm::vec2& center, const sm::vec2& b) 
+bool is_acute_angle(const vec2& a, const vec2& center, const vec2& b) 
 {
 	float lac = (a - center).LengthSquared(),
 		  lbc = (b - center).LengthSquared(),
@@ -68,13 +70,25 @@ bool is_acute_angle(const sm::vec2& a, const sm::vec2& center, const sm::vec2& b
 }
 
 inline
-float dis_pos_to_pos(const sm::vec2& v0, const sm::vec2& v1)
+bool is_turn_left(const vec2& a, const vec2& center, const vec2& b) 
+{
+	return (center.x - a.x) * (b.y - center.y) - (b.x - center.x) * (center.y - a.y) > 0;
+}
+
+inline
+bool is_turn_right(const vec2& a, const vec2& center, const vec2& b)
+{
+	return (center.x - a.x) * (b.y - center.y) - (b.x - center.x) * (center.y - a.y) < 0;
+}
+
+inline
+float dis_pos_to_pos(const vec2& v0, const vec2& v1)
 {
 	return (v0 - v1).Length();
 }
 
 inline
-float dis_pos_to_multi_pos(const sm::vec2& pos, const std::vector<sm::vec2>& multi_pos, int* nearest_idx)
+float dis_pos_to_multi_pos(const vec2& pos, const std::vector<vec2>& multi_pos, int* nearest_idx)
 {
 	float nearest = FLT_MAX;
 	int idx = -1;
@@ -94,7 +108,7 @@ float dis_pos_to_multi_pos(const sm::vec2& pos, const std::vector<sm::vec2>& mul
 }
 
 inline
-float dis_pos_to_seg(const sm::vec2& v, const vec2& s0, const vec2& s1)
+float dis_pos_to_seg(const vec2& v, const vec2& s0, const vec2& s1)
 {
 	if (s0 == s1) {
 		return dis_pos_to_pos(v, s0);

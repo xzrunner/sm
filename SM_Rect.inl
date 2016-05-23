@@ -2,6 +2,7 @@
 #define _SPATIAL_MATH_RECT_INL_
 
 #include <limits>
+#include <algorithm>
 
 namespace sm
 {

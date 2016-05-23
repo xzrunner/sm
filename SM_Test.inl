@@ -28,7 +28,7 @@ inline
 bool is_point_in_area(const vec2& v, const std::vector<vec2>& area)
 {
 	bool odd_nodes = false;
-	for (size_t i = 0, n = area.size(), j = n - 1; i < n; ++i)
+	for (int i = 0, n = area.size(), j = n - 1; i < n; ++i)
 	{
 		if ((area[i].y < v.y && area[j].y >= v.y ||
 			 area[j].y < v.y && area[i].y >= v.y) &&
@@ -54,8 +54,8 @@ bool is_point_in_convex(const vec2& pos, const std::vector<vec2>& convex)
 		return false;
 	}
 
-	size_t count = 0;
-	for (size_t i = 0, n = convex.size(); i < n; ++i)
+	int count = 0;
+	for (int i = 0, n = convex.size(); i < n; ++i)
 	{
 		vec2 s = convex[i], 
 			     e = i == convex.size() - 1 ? convex[0] : convex[i + 1];

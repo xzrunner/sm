@@ -3,6 +3,8 @@
 
 #include <algorithm>
 
+#include <stddef.h>
+
 namespace sm
 {
 
@@ -49,7 +51,7 @@ void convex_hull(const std::vector<vec2>& points,
 	for (int i = sorted.size() - 3; i >= 0; --i)
 	{
 		lower.push_back(sorted[i]);
-		size_t c = lower.size() - 1;
+		int c = lower.size() - 1;
 		while (lower.size() >= 3 && !is_turn_right(lower[c- 2], lower[c - 1], lower[c]))
 		{
 			lower.erase(----lower.end());

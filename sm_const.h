@@ -14,7 +14,7 @@ static const float SM_PI = 3.1415926f;
 static const float SM_TWO_PI = 2 * SM_PI;
 
 static const float SM_DEG_TO_RAD = SM_PI / 180.0f;
-static const float SM_RAD_TO_DEG = SM_PI * 180.0f;
+static const float SM_RAD_TO_DEG = 180.0f / SM_PI;
 
 static const float SM_LARGE_EPSILON = 0.001f;
 

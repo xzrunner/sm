@@ -31,6 +31,9 @@ public:
 	Vector2& operator = (const Vector2& v);
 	void Set(T x, T y);
 
+	void MakeInvalid();
+	bool IsValid() const;
+
 	bool operator != (const Vector2& v) const;
 	bool operator == (const Vector2& v) const;
 

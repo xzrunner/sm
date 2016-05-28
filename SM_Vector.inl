@@ -41,6 +41,19 @@ void Vector2<T>::Set(T x, T y)
 }
 
 template <typename T>
+void Vector2<T>::MakeInvalid()
+{
+	x = y = std::numeric_limits<T>::max();
+}
+
+template <typename T>
+bool Vector2<T>::IsValid() const
+{
+	return x != std::numeric_limits<T>::max() 
+		|| y != std::numeric_limits<T>::max();
+}
+
+template <typename T>
 bool Vector2<T>::operator != (const Vector2& v) const
 {
 	return x != v.x || y != v.y;

@@ -1,6 +1,8 @@
 #ifndef _SPATIAL_MATH_VECTOR_INL_
 #define _SPATIAL_MATH_VECTOR_INL_
 
+#include <limits>
+
 #include <math.h>
 
 namespace sm

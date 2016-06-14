@@ -7,6 +7,7 @@ include $(CLEAR_VARS)
 LOCAL_MODULE := sm
 
 LOCAL_SRC_FILES := \
+	$(subst $(LOCAL_PATH)/,,$(shell find $(LOCAL_PATH) -name "*.cpp" -print)) \
 	$(subst $(LOCAL_PATH)/,,$(shell find $(LOCAL_PATH) -name "*.c" -print)) \
 
 include $(BUILD_STATIC_LIBRARY)	

@@ -18,6 +18,8 @@ public:
 	Rect(const Vector2<T>& center, T width, T height);
 	Rect(const Vector2<T>& v0, const Vector2<T>& v1);
 
+	bool operator == (const Rect& r) const;
+
 	void MakeEmpty();
 	bool IsValid() const;
 

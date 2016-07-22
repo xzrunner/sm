@@ -19,6 +19,8 @@ vec2 rotate_vector_right_angle(const vec2& v, bool turn_left);
 
 float mat_trans_len(float len, const mat4& mat);
 
+float get_line_angle(const vec2& s, const vec2& e);
+
 /**
  *  @brief
  *    To check if angle a-center-b is acute.
@@ -41,6 +43,12 @@ float dis_pos_to_multi_pos(const vec2& pos, const std::vector<vec2>& multi_pos, 
 float dis_pos_to_seg(const vec2& v, const vec2& s0, const vec2& s1);
 
 float distance_aabb(const vec3& pos, const vec3& aabb_min, const vec3& aabb_max);
+
+/**
+ *  @brief
+ *    Intersect
+ */
+bool intersect_line_line(const vec2& s0, const vec2& e0, const vec2& s1, const vec2& e1, vec2* cross);
 
 }
 

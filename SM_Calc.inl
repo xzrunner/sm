@@ -61,6 +61,12 @@ float mat_trans_len(float len, const mat4& mat)
 }
 
 inline
+float get_line_angle(const vec2& s, const vec2& e)
+{
+	return atan2(e.y - s.y, e.x - s.x);
+}
+
+inline
 bool is_acute_angle(const vec2& a, const vec2& center, const vec2& b) 
 {
 	float lac = (a - center).LengthSquared(),
@@ -140,6 +146,23 @@ float distance_aabb(const vec3& pos, const vec3& aabb_min, const vec3& aabb_max)
 	nearest_vec.z = std::max(0.0f, fabsf(pos.z - center.z) - extent.z);
 
 	return nearest_vec.Length();
+}
+
+inline
+bool intersect_line_line(const vec2& s0, const vec2& e0, const vec2& s1, const vec2& e1, vec2* cross) 
+{
+	// If they are parallel ?
+	float denominator_x = (e1.y - s1.y) * (e0.x - s0.x) - (e0.y - s0.y) * (e1.x - s1.x),
+		  denominator_y = (e1.x - s1.x) * (e0.y - s0.y) - (e0.x - s0.x) * (e1.y - s1.y);
+	if (fabs(denominator_x) < FLT_EPSILON || fabs(denominator_y) < FLT_EPSILON)
+	{
+		cross->x = cross->y = FLT_MAX;
+		return false;
+	} else {
+		cross->x = ( (e0.x * s0.y - s0.x * e0.y) * (e1.x - s1.x) - (e1.x * s1.y - s1.x * e1.y) * (e0.x - s0.x) ) / denominator_x;
+		cross->y = ( (e0.y * s0.x - s0.y * e0.x) * (e1.y - s1.y) - (e1.y * s1.x - s1.y * e1.x) * (e0.y - s0.y) ) / denominator_y;
+		return true;
+	}
 }
 
 }

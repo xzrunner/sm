@@ -22,6 +22,10 @@ struct sm_vec4 {
 	float x, y, z, w;
 };
 
+struct sm_vec2* sm_vec2_vector(struct sm_vec2* v, const struct sm_vec2* p1, const struct sm_vec2* p2);
+struct sm_vec2* sm_vec2_add(struct sm_vec2* v, const struct sm_vec2* p1, const struct sm_vec2* p2);
+struct sm_vec2* sm_vec2_normalize(struct sm_vec2* v);
+
 struct sm_vec3* sm_vec3_vector(struct sm_vec3* v, const struct sm_vec3* p1, const struct sm_vec3* p2);
 struct sm_vec3* sm_vec3_cross(struct sm_vec3* v, const struct sm_vec3* a, const struct sm_vec3* b);
 struct sm_vec3* sm_vec3_normalize(struct sm_vec3* v);

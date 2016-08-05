@@ -154,7 +154,7 @@ bool intersect_line_line(const vec2& s0, const vec2& e0, const vec2& s1, const v
 	// If they are parallel ?
 	float denominator_x = (e1.y - s1.y) * (e0.x - s0.x) - (e0.y - s0.y) * (e1.x - s1.x),
 		  denominator_y = (e1.x - s1.x) * (e0.y - s0.y) - (e0.x - s0.x) * (e1.y - s1.y);
-	if (fabs(denominator_x) < FLT_EPSILON || fabs(denominator_y) < FLT_EPSILON)
+	if (fabs(denominator_x) < SM_LARGE_EPSILON || fabs(denominator_y) < SM_LARGE_EPSILON)
 	{
 		cross->x = cross->y = FLT_MAX;
 		return false;

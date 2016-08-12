@@ -14,14 +14,16 @@ Rect<T>::Rect()
 }
 
 template <typename T>
+Rect<T>::Rect(T width, T height)
+{
+	Build(width, height);
+}
+
+template <typename T>
 Rect<T>::Rect(const Vector2<T>& center, T width, T height)
 {
-	T hw = width * 0.5f,
-	  hh = height * 0.5f;
-	xmin = center.x - hw;
-	xmax = center.x + hw;
-	ymin = center.y - hh;
-	ymax = center.y + hh;
+	Build(width, height);
+	Translate(center);
 }
 
 template <typename T>
@@ -40,6 +42,17 @@ bool Rect<T>::operator == (const Rect<T>& r) const
 		&& xmax == r.xmax
 		&& ymin == r.ymin
 		&& ymax == r.ymax;
+}
+
+template <typename T>
+void Rect<T>::Build(T width, T height)
+{
+	T hw = width * 0.5f,
+	  hh = height * 0.5f;
+	xmin = -hw;
+	xmax =  hw;
+	ymin = -hh;
+	ymax =  hh;	
 }
 
 template <typename T>

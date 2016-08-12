@@ -15,10 +15,14 @@ public:
 
 public:
 	Rect();
+	Rect(T width, T height);
 	Rect(const Vector2<T>& center, T width, T height);
 	Rect(const Vector2<T>& v0, const Vector2<T>& v1);
 
 	bool operator == (const Rect& r) const;
+
+	void Build(T width, T height);
+	void Build(const Vector2<T>& center, T width, T height);
 
 	void MakeEmpty();
 	bool IsValid() const;

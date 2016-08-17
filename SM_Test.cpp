@@ -94,7 +94,7 @@ bool is_convex_intersect_convex(const std::vector<vec2>& c0, const std::vector<v
 {
 	float min0, max0, min1, max1;
 	project_convex(c0, angle, &min0, &max0);
-	project_convex(c0, angle, &min1, &max1);
+	project_convex(c1, angle, &min1, &max1);
 	return is_project_intersect(min0, max0, min1, max1);
 }
 

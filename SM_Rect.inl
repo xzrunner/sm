@@ -121,7 +121,6 @@ void Rect<T>::Scale(T sx, T sy)
 template <typename T>
 void Rect<T>::Shear(T kx, T ky)
 {
-	MakeEmpty();
 	// x' = x + y*kx
 	// y' = x*ky + y
 	sm ::vec2 v[4];
@@ -133,6 +132,8 @@ void Rect<T>::Shear(T kx, T ky)
 	v[2].y = xmax * ky + ymax;
 	v[3].x = xmin + ymax * kx;
 	v[3].y = xmin * ky + ymax;
+
+	MakeEmpty();
 	for (int i = 0; i < 4; ++i) {
 		Combine(v[i]);
 	}

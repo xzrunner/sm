@@ -13,6 +13,12 @@ namespace sm
  *  @brief
  *    point
  */
+
+/**
+ *  @note
+ *    It can't handle the point on segment.
+ *	  Before use it must make sure the point is not on the segment.
+ */
 bool is_point_at_line_left(const vec2& v, const vec2& s, const vec2& e);
 bool is_point_in_rect(const vec2& v, const rect& r);
 bool is_point_in_area(const vec2& v, const std::vector<vec2>& area);

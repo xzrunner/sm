@@ -39,6 +39,7 @@ bool is_turn_right(const vec2& a, const vec2& center, const vec2& b);
  *    distance position to ...
  */
 float dis_pos_to_pos(const vec2& v0, const vec2& v1);
+float dis_square_pos_to_pos(const vec2& v0, const vec2& v1);
 float dis_pos_to_multi_pos(const vec2& pos, const std::vector<vec2>& multi_pos, int* nearest_idx = NULL);
 float dis_pos_to_seg(const vec2& v, const vec2& s0, const vec2& s1);
 
@@ -46,7 +47,8 @@ float distance_aabb(const vec3& pos, const vec3& aabb_min, const vec3& aabb_max)
 
 /**
  *  @brief
- *    Intersect
+ *    Get the cross point of two segment.
+ *    If they are not crossed, direct return false withnot compute the cross point.
  */
 bool intersect_line_line(const vec2& s0, const vec2& e0, const vec2& s1, const vec2& e1, vec2* cross);
 

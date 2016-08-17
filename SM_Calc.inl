@@ -94,6 +94,12 @@ float dis_pos_to_pos(const vec2& v0, const vec2& v1)
 }
 
 inline
+float dis_square_pos_to_pos(const vec2& v0, const vec2& v1)
+{
+	return (v0 - v1).LengthSquared();	
+}
+
+inline
 float dis_pos_to_multi_pos(const vec2& pos, const std::vector<vec2>& multi_pos, int* nearest_idx)
 {
 	float nearest = FLT_MAX;

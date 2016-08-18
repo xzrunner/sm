@@ -116,6 +116,12 @@ void Rect<T>::Scale(T sx, T sy)
 	xmax *= sx;
 	ymin *= sy;
 	ymax *= sy;
+	if (xmin > xmax) {
+		std::swap(xmin, xmax);
+	}
+	if (ymin > ymax) {
+		std::swap(ymin, ymax);
+	}
 }
 
 template <typename T>

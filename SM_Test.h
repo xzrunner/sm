@@ -11,6 +11,17 @@ namespace sm
 
 /**
  *  @brief
+ *    float
+ */
+
+/**
+ *  @brief
+ *    To check if test at middle of bound0 and bound1
+ */
+bool is_between(float bound0, float bound1, float test);
+
+/**
+ *  @brief
  *    point
  */
 

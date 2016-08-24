@@ -1,6 +1,8 @@
 #ifndef _SPATIAL_MATH_CALC_INL_
 #define _SPATIAL_MATH_CALC_INL_
 
+#include "SM_Test.h"
+
 #include <float.h>
 
 namespace sm
@@ -169,6 +171,56 @@ bool intersect_line_line(const vec2& s0, const vec2& e0, const vec2& s1, const v
 		cross->y = ( (e0.y * s0.x - s0.y * e0.x) * (e1.y - s1.y) - (e1.y * s1.x - s1.y * e1.x) * (e0.y - s0.y) ) / denominator_y;
 		return true;
 	}
+}
+
+inline
+int get_foot_of_perpendicular(const sm::vec2& s, const sm::vec2& e, const sm::vec2& out, sm::vec2* foot) 
+{
+	const float dx = e.x - s.x, dy = e.y - s.y;
+	const float dx_square = dx * dx, dy_square = dy * dy;
+
+	if (dx_square + dy_square < FLT_EPSILON)
+	{
+		*foot = s;
+		return -1;
+	}
+
+	if (fabs(s.x - e.x) > fabs(s.y - e.y))
+	{
+		foot->x = (dx_square * out.x + dy_square * s.x + dx * dy * (out.y - s.y)) / (dx_square + dy_square);
+		if (s.x == e.x)
+		{
+			foot->y = out.y;
+		}
+		else
+		{
+			foot->y = sm::find_y_on_seg(s, e, foot->x);
+		}
+	}
+	else
+	{
+		foot->y = (dy_square * out.y + dx_square * s.y + dx * dy * (out.x - s.x)) / (dx_square + dy_square);
+		if (s.y == e.y)
+		{
+			foot->x = out.x;
+		}
+		else
+		{
+			foot->x = sm::find_x_on_seg(s, e, foot->y);
+		}
+	}
+
+	if (is_between(s.x, e.x, foot->x) && is_between(s.y, e.y, foot->y)) {
+		return 0;
+	} else {
+		return -1;
+	}
+}
+
+inline
+vec2 get_tri_gravity_center(const vec2& p0, const vec2& p1, const vec2& p2)
+{
+	return vec2((p0.x + p1.x + p2.x) / 3, (p0.y + p1.y + p2.y) / 3);
 }
 
 }

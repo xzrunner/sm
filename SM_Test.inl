@@ -12,6 +12,16 @@ namespace sm
 {
 
 inline
+bool is_between(float bound0, float bound1, float test)
+{
+	if (bound0 < bound1) {
+		return test < bound1 + FLT_EPSILON && test > bound0 - FLT_EPSILON;
+	} else {
+		return test < bound0 + FLT_EPSILON && test > bound1 - FLT_EPSILON;
+	}
+}
+
+inline
 bool is_point_at_line_left(const vec2& v, const vec2& s, const vec2& e)
 {
 	return (v.y - s.y) * (e.x - s.x) - (v.x - s.x) * (e.y - s.y) > FLT_EPSILON;

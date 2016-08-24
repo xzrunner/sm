@@ -52,6 +52,19 @@ float distance_aabb(const vec3& pos, const vec3& aabb_min, const vec3& aabb_max)
  */
 bool intersect_line_line(const vec2& s0, const vec2& e0, const vec2& s1, const vec2& e1, vec2* cross);
 
+/**
+ *  @brief
+ *    Get the foot of out at line(s, e).
+ *    Is return -1 the foot is outside the line(s, e), return 0 the foot on the line(s, e).
+ */
+int get_foot_of_perpendicular(const sm::vec2& s, const sm::vec2& e, const sm::vec2& out, sm::vec2* foot);
+
+/**
+ *  @brief
+ *    triangle
+ */
+vec2 get_tri_gravity_center(const vec2& p0, const vec2& p1, const vec2& p2);
+
 }
 
 #include "SM_Calc.inl"

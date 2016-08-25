@@ -168,9 +168,9 @@ void triangulate_normal(const std::vector<vec2>& bound,
 	finish(in, out, bound_fixed, result);
 }
 
-void triangulate_holes(const std::vector<sm::vec2>& bound, 
-					   const std::vector<std::vector<sm::vec2> >& holes,
-					   std::vector<sm::vec2>& result, 
+void triangulate_holes(const std::vector<vec2>& bound, 
+					   const std::vector<std::vector<vec2> >& holes,
+					   std::vector<vec2>& result, 
 					   TriangulateConstrained tc)
 {
 	if (!holes.empty()) {
@@ -180,7 +180,7 @@ void triangulate_holes(const std::vector<sm::vec2>& bound,
 	struct triangulateio in, out;
 	init(in, out);
 
-	std::vector<sm::vec2> bound_fixed;
+	std::vector<vec2> bound_fixed;
 	verify_bound(bound, bound_fixed);
 
 	in.numberofpoints = bound_fixed.size();
@@ -214,7 +214,7 @@ void triangulate_holes(const std::vector<sm::vec2>& bound,
 	in.holelist[0] = 0;
 	in.holelist[1] = 0;
 
-	// 	std::vector<sm::vec2> hole_fixed;
+	// 	std::vector<vec2> hole_fixed;
 	// 	verify_bound(holes[0], hole_fixed);
 	// 	in.numberofholes = hole_fixed.size();
 	// 	in.holelist = (REAL*)malloc(in.numberofholes * 2 * sizeof(REAL));
@@ -231,15 +231,15 @@ void triangulate_holes(const std::vector<sm::vec2>& bound,
 	finish(in, out, bound_fixed, result);
 }
 
-void triangulate_holes_new(const std::vector<sm::vec2>& bound, 
-						   const std::vector<sm::vec2>& hole,
-						   std::vector<sm::vec2>& result, 
+void triangulate_holes_new(const std::vector<vec2>& bound, 
+						   const std::vector<vec2>& hole,
+						   std::vector<vec2>& result, 
 						   TriangulateConstrained tc)
 {
 	struct triangulateio in, out;
 	init(in, out);
 
-	std::vector<sm::vec2> bound_fixed, hole_fixed;
+	std::vector<vec2> bound_fixed, hole_fixed;
 	verify_bound(bound, bound_fixed);
 	verify_bound(hole, hole_fixed);
 
@@ -253,7 +253,7 @@ void triangulate_holes_new(const std::vector<sm::vec2>& bound,
 		in.pointlist[index++] = bound_fixed[i].x;
 		in.pointlist[index++] = bound_fixed[i].y;
 	}
-	sm::vec2 hold_center;
+	vec2 hold_center;
 	for (int i = 0, n = hole_fixed.size(); i < n; ++i)
 	{
 		in.pointlist[index++] = hole_fixed[i].x;
@@ -292,7 +292,7 @@ void triangulate_holes_new(const std::vector<sm::vec2>& bound,
 	in.holelist[0] = hold_center.x;
 	in.holelist[1] = hold_center.y;
 
-	// 	std::vector<sm::vec2> hole_fixed;
+	// 	std::vector<vec2> hole_fixed;
 	// 	verify_bound(holes[0], hole_fixed);
 	// 	in.numberofholes = hole_fixed.size();
 	// 	in.holelist = (REAL*)malloc(in.numberofholes * 2 * sizeof(REAL));
@@ -357,15 +357,15 @@ void triangulate_points(const std::vector<vec2>& bound,
 	finish(in, out, bound_fixed, result);
 }
 
-void triangulate_lines(const std::vector<sm::vec2>& bound, 
-					   const std::vector<sm::vec2>& lines,
-					   std::vector<sm::vec2>& result, 
+void triangulate_lines(const std::vector<vec2>& bound, 
+					   const std::vector<vec2>& lines,
+					   std::vector<vec2>& result, 
 					   TriangulateConstrained tc)
 {
 	struct triangulateio in, out;
 	init(in, out);
 
-	std::vector<sm::vec2> bound_fixed;
+	std::vector<vec2> bound_fixed;
 	verify_bound(bound, bound_fixed);
 
 	in.numberofpoints = bound_fixed.size() + lines.size();
@@ -412,16 +412,16 @@ void triangulate_lines(const std::vector<sm::vec2>& bound,
 	finish(in, out, bound_fixed, result);
 }
 
-void triangulate_points_and_lines(const std::vector<sm::vec2>& bound, 
-								  const std::vector<sm::vec2>& points,
-								  const std::vector<sm::vec2>& lines, 
-								  std::vector<sm::vec2>& result, 
+void triangulate_points_and_lines(const std::vector<vec2>& bound, 
+								  const std::vector<vec2>& points,
+								  const std::vector<vec2>& lines, 
+								  std::vector<vec2>& result, 
 								  TriangulateConstrained tc)
 {
 	struct triangulateio in, out;
 	init(in, out);
 
-	std::vector<sm::vec2> bound_fixed;
+	std::vector<vec2> bound_fixed;
 	verify_bound(bound, bound_fixed);
 
 	in.numberofpoints = bound_fixed.size() + lines.size() + points.size();
@@ -473,10 +473,10 @@ void triangulate_points_and_lines(const std::vector<sm::vec2>& bound,
 	finish(in, out, bound_fixed, result);
 }
 
-void triangulate_lines_and_loops(const std::vector<sm::vec2>& bound, 
-								 const std::vector<sm::vec2>& lines,
-								 const std::vector<std::vector<sm::vec2> >& loops, 
-								 std::vector<sm::vec2>& result, 
+void triangulate_lines_and_loops(const std::vector<vec2>& bound, 
+								 const std::vector<vec2>& lines,
+								 const std::vector<std::vector<vec2> >& loops, 
+								 std::vector<vec2>& result, 
 								 TriangulateConstrained tc)
 {
 	struct triangulateio in, out;
@@ -486,7 +486,7 @@ void triangulate_lines_and_loops(const std::vector<sm::vec2>& bound,
 	for (int i = 0, n = loops.size(); i < n; ++i)
 		loopSize += loops[i].size();
 
-	std::vector<sm::vec2> bound_fixed;
+	std::vector<vec2> bound_fixed;
 	verify_bound(bound, bound_fixed);
 
 	in.numberofpoints = bound_fixed.size() + lines.size() + loopSize;

@@ -69,6 +69,31 @@ float get_line_angle(const vec2& s, const vec2& e)
 }
 
 inline
+float get_angle(const vec2& center, const vec2& pa, const vec2& pb)
+{
+	const float a = dis_pos_to_pos(center, pa),
+		        b = dis_pos_to_pos(center, pb),
+		        c = dis_pos_to_pos(pa, pb);
+
+	float cos_val = (a * a + b * b - c * c) / (2 * a * b);
+	cos_val = std::max(std::min(cos_val, 1.0f), -1.0f);
+
+	return acos(cos_val);
+
+	// 	float angle = acos(cosVal);
+	// 	return is_turn_right(pa, center, pb) ? angle : -angle;
+}
+
+inline
+float get_angle_in_direction(const vec2& center, const vec2& start, const vec2& end)
+{
+	float angle = get_angle(center, start, end);
+	const float cross = (start - center).Cross(end - start);
+	if (cross < 0) angle = -angle;
+	return angle;
+}
+
+inline
 bool is_acute_angle(const vec2& a, const vec2& center, const vec2& b) 
 {
 	float lac = (a - center).LengthSquared(),
@@ -174,7 +199,18 @@ bool intersect_line_line(const vec2& s0, const vec2& e0, const vec2& s1, const v
 }
 
 inline
-int get_foot_of_perpendicular(const sm::vec2& s, const sm::vec2& e, const sm::vec2& out, sm::vec2* foot) 
+bool intersect_segment_segment(const vec2& s0, const vec2& e0, const vec2& s1, const vec2& e1, vec2* cross)
+{
+	bool line_intersect = intersect_line_line(s0, e0, s1, e1, cross);
+	if (line_intersect) {
+		return is_segment_intersect_segment(s0, e0, s1, e1);
+	} else {
+		return false;
+	}
+}
+
+inline
+int get_foot_of_perpendicular(const vec2& s, const vec2& e, const vec2& out, vec2* foot) 
 {
 	const float dx = e.x - s.x, dy = e.y - s.y;
 	const float dx_square = dx * dx, dy_square = dy * dy;
@@ -194,7 +230,7 @@ int get_foot_of_perpendicular(const sm::vec2& s, const sm::vec2& e, const sm::ve
 		}
 		else
 		{
-			foot->y = sm::find_y_on_seg(s, e, foot->x);
+			foot->y = find_y_on_seg(s, e, foot->x);
 		}
 	}
 	else
@@ -206,7 +242,7 @@ int get_foot_of_perpendicular(const sm::vec2& s, const sm::vec2& e, const sm::ve
 		}
 		else
 		{
-			foot->x = sm::find_x_on_seg(s, e, foot->y);
+			foot->x = find_x_on_seg(s, e, foot->y);
 		}
 	}
 

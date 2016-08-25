@@ -77,6 +77,20 @@ bool is_point_in_convex(const vec2& pos, const std::vector<vec2>& convex)
 }
 
 inline
+bool is_point_intersect_polyline(const vec2& point, const std::vector<vec2>& polyline)
+{
+	rect r(point, SM_LARGE_EPSILON, SM_LARGE_EPSILON);
+	return is_rect_intersect_polyline(r, polyline, true);
+}
+
+inline
+bool is_segment_intersect_segment(const vec2& s0, const vec2& e0, const vec2& s1, const vec2& e1)
+{
+	return is_point_at_line_left(s0, s1, e1) != is_point_at_line_left(e0, s1, e1)
+		&& is_point_at_line_left(s1, s0, e0) != is_point_at_line_left(e1, s0, e0);	
+}
+
+inline
 bool is_rect_contain_point(const rect& r, const vec2& v)
 {
 	return v.x >= r.xmin && v.x <= r.xmax
@@ -94,6 +108,43 @@ inline
 bool is_rect_intersect_rect(const rect& r0, const rect& r1)
 {
 	return !(r0.xmin >= r1.xmax || r0.xmax <= r1.xmin || r0.ymin >= r1.ymax || r0.ymax <= r1.ymin);
+}
+
+inline
+bool is_rect_intersect_polyline(const rect& r, const std::vector<vec2>& poly, bool loop)
+{
+	if (poly.size() < 2) return false;
+
+	for (size_t i = 0, n = poly.size() - 1; i < n; ++i)
+	{
+		if (is_rect_intersect_segment(r, poly[i], poly[i+1]))
+			return true;
+	}
+
+	if (loop && is_rect_intersect_segment(r, poly[poly.size() - 1], poly[0]))
+		return true;
+
+	return false;
+}
+
+inline
+bool is_rect_intersect_polygon(const rect& rect, const std::vector<vec2>& poly)
+{
+	if (poly.size() < 3) {
+		return false;
+	}
+
+	if (is_point_in_area(rect.Center(), poly) || is_point_in_rect(poly[0], rect)) {
+		return true;
+	}
+
+	std::vector<vec2> poly2;
+	poly2.push_back(vec2(rect.xmin, rect.ymin));
+	poly2.push_back(vec2(rect.xmax, rect.ymin));
+	poly2.push_back(vec2(rect.xmax, rect.ymax));
+	poly2.push_back(vec2(rect.xmin, rect.ymax));
+
+	return is_polygon_intersect_polygon(poly, poly2);
 }
 
 inline

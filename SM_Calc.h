@@ -20,6 +20,8 @@ vec2 rotate_vector_right_angle(const vec2& v, bool turn_left);
 float mat_trans_len(float len, const mat4& mat);
 
 float get_line_angle(const vec2& s, const vec2& e);
+float get_angle(const vec2& center, const vec2& pa, const vec2& pb);
+float get_angle_in_direction(const vec2& center, const vec2& start, const vec2& end);
 
 /**
  *  @brief
@@ -51,13 +53,14 @@ float distance_aabb(const vec3& pos, const vec3& aabb_min, const vec3& aabb_max)
  *    If they are not crossed, direct return false withnot compute the cross point.
  */
 bool intersect_line_line(const vec2& s0, const vec2& e0, const vec2& s1, const vec2& e1, vec2* cross);
+bool intersect_segment_segment(const vec2& s0, const vec2& e0, const vec2& s1, const vec2& e1, vec2* cross);
 
 /**
  *  @brief
  *    Get the foot of out at line(s, e).
  *    Is return -1 the foot is outside the line(s, e), return 0 the foot on the line(s, e).
  */
-int get_foot_of_perpendicular(const sm::vec2& s, const sm::vec2& e, const sm::vec2& out, sm::vec2* foot);
+int get_foot_of_perpendicular(const vec2& s, const vec2& e, const vec2& out, vec2* foot);
 
 /**
  *  @brief

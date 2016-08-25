@@ -21,13 +21,13 @@ void triangulate_normal(const std::vector<vec2>& bound,
 						std::vector<vec2>& result, 
 						TriangulateConstrained tc = TC_CONSTRAINED);
 
-void triangulate_holes(const std::vector<sm::vec2>& bound, 
-					   const std::vector<std::vector<sm::vec2> >& holes,
-					   std::vector<sm::vec2>& result, 
+void triangulate_holes(const std::vector<vec2>& bound, 
+					   const std::vector<std::vector<vec2> >& holes,
+					   std::vector<vec2>& result, 
 					   TriangulateConstrained tc = TC_CONSTRAINED);
-void triangulate_holes_new(const std::vector<sm::vec2>& bound, 
-						   const std::vector<sm::vec2>& hole,
-						   std::vector<sm::vec2>& result, 
+void triangulate_holes_new(const std::vector<vec2>& bound, 
+						   const std::vector<vec2>& hole,
+						   std::vector<vec2>& result, 
 						   TriangulateConstrained tc = TC_CONSTRAINED);
 
 void triangulate_points(const std::vector<vec2>& bound, 
@@ -35,21 +35,21 @@ void triangulate_points(const std::vector<vec2>& bound,
 						std::vector<vec2>& result, 
 						TriangulateConstrained tc = TC_CONSTRAINED);
 
-void triangulate_lines(const std::vector<sm::vec2>& bound, 
-					   const std::vector<sm::vec2>& lines, 
-					   std::vector<sm::vec2>& result, 
+void triangulate_lines(const std::vector<vec2>& bound, 
+					   const std::vector<vec2>& lines, 
+					   std::vector<vec2>& result, 
 					   TriangulateConstrained tc = TC_CONSTRAINED);
 
-void triangulate_points_and_lines(const std::vector<sm::vec2>& bound, 
-								  const std::vector<sm::vec2>& points,
-								  const std::vector<sm::vec2>& lines, 
-								  std::vector<sm::vec2>& result, 
+void triangulate_points_and_lines(const std::vector<vec2>& bound, 
+								  const std::vector<vec2>& points,
+								  const std::vector<vec2>& lines, 
+								  std::vector<vec2>& result, 
 								  TriangulateConstrained tc = TC_CONSTRAINED);
 
-void triangulate_lines_and_loops(const std::vector<sm::vec2>& bound, 
-								 const std::vector<sm::vec2>& lines,
-								 const std::vector<std::vector<sm::vec2> >& loops, 
-								 std::vector<sm::vec2>& result, 
+void triangulate_lines_and_loops(const std::vector<vec2>& bound, 
+								 const std::vector<vec2>& lines,
+								 const std::vector<std::vector<vec2> >& loops, 
+								 std::vector<vec2>& result, 
 								 TriangulateConstrained tc = TC_CONSTRAINED);
 
 }

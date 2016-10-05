@@ -33,9 +33,9 @@ public:
 	Vector2<T> Size() const;
 	Vector2<T> Center() const;
 
-	void Translate(const Vector2<T>& offset);
-	void Scale(T sx, T sy);
-	void Shear(T kx, T ky);
+	void Translate(const Vector2<T>& trans);
+	void Scale(const Vector2<T>& scale);
+	void Shear(const Vector2<T>& shear);
 
 }; // Rect
 

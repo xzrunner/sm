@@ -86,6 +86,27 @@ void Vector2<T>::operator -= (const Vector2& v)
 }
 
 template <typename T>
+void Vector2<T>::operator *= (const Vector2& v)
+{
+	x *= v.x; y *= v.y;
+}
+
+template <typename T>
+void Vector2<T>::operator /= (const Vector2& v)
+{
+	if (v.x == 0) {
+		x = FLT_MAX;
+	} else {
+		x /= v.x;
+	}
+	if (v.y == 0) {
+		y = FLT_MAX;
+	} else {
+		y /= v.y;
+	}
+}
+
+template <typename T>
 void Vector2<T>::operator *= (T f)
 {
 	x *= f; y *= f;
@@ -100,13 +121,33 @@ void Vector2<T>::operator /= (T f)
 template <typename T>
 Vector2<T> Vector2<T>::operator + (const Vector2& v) const
 {
-	return Vector2(x + v.x, y + v.y);
+	Vector2 ret(*this);
+	ret += v;
+	return ret;
 }
 
 template <typename T>
 Vector2<T> Vector2<T>::operator - (const Vector2& v) const
 {
-	return Vector2(x - v.x, y - v.y);
+	Vector2 ret(*this);
+	ret -= v;
+	return ret;
+}
+
+template <typename T>
+Vector2<T> Vector2<T>::operator * (const Vector2& v) const
+{
+	Vector2 ret(*this);
+	ret *= v;
+	return ret;
+}
+
+template <typename T>
+Vector2<T> Vector2<T>::operator / (const Vector2& v) const
+{
+	Vector2 ret(*this);
+	ret /= v;
+	return ret;
 }
 
 template <typename T>

@@ -101,21 +101,21 @@ Vector2<T> Rect<T>::Center() const
 }
 
 template <typename T>
-void Rect<T>::Translate(const Vector2<T>& offset)
+void Rect<T>::Translate(const Vector2<T>& trans)
 {
-	xmin += offset.x;
-	xmax += offset.x;
-	ymin += offset.y;
-	ymax += offset.y;
+	xmin += trans.x;
+	xmax += trans.x;
+	ymin += trans.y;
+	ymax += trans.y;
 }
 
 template <typename T>
-void Rect<T>::Scale(T sx, T sy)
+void Rect<T>::Scale(const Vector2<T>& scale)
 {
-	xmin *= sx;
-	xmax *= sx;
-	ymin *= sy;
-	ymax *= sy;
+	xmin *= scale.x;
+	xmax *= scale.x;
+	ymin *= scale.y;
+	ymax *= scale.y;
 	if (xmin > xmax) {
 		std::swap(xmin, xmax);
 	}
@@ -125,19 +125,19 @@ void Rect<T>::Scale(T sx, T sy)
 }
 
 template <typename T>
-void Rect<T>::Shear(T kx, T ky)
+void Rect<T>::Shear(const Vector2<T>& shear)
 {
-	// x' = x + y*kx
-	// y' = x*ky + y
+	// x' = x + y*shear.x
+	// y' = x*shear.y + y
 	sm ::vec2 v[4];
-	v[0].x = xmin + ymin * kx;
-	v[0].y = xmin * ky + ymin;
-	v[1].x = xmax + ymin * kx;
-	v[1].y = xmax * ky + ymin;
-	v[2].x = xmax + ymax * kx;
-	v[2].y = xmax * ky + ymax;
-	v[3].x = xmin + ymax * kx;
-	v[3].y = xmin * ky + ymax;
+	v[0].x = xmin + ymin * shear.x;
+	v[0].y = xmin * shear.y + ymin;
+	v[1].x = xmax + ymin * shear.x;
+	v[1].y = xmax * shear.y + ymin;
+	v[2].x = xmax + ymax * shear.x;
+	v[2].y = xmax * shear.y + ymax;
+	v[3].x = xmin + ymax * shear.x;
+	v[3].y = xmin * shear.y + ymax;
 
 	MakeEmpty();
 	for (int i = 0; i < 4; ++i) {

@@ -41,11 +41,15 @@ public:
 
 	void operator += (const Vector2& v);
 	void operator -= (const Vector2& v);
+	void operator *= (const Vector2& v);
+	void operator /= (const Vector2& v);
 	void operator *= (T f);
 	void operator /= (T f);
 
 	Vector2 operator + (const Vector2& v) const;
 	Vector2 operator - (const Vector2& v) const;
+	Vector2 operator * (const Vector2& v) const;
+	Vector2 operator / (const Vector2& v) const;
 	Vector2 operator * (T f) const;
 	Vector2 operator / (T f) const;
 

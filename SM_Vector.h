@@ -1,6 +1,8 @@
 #ifndef _SPATIAL_MATH_VECTOR_H_
 #define _SPATIAL_MATH_VECTOR_H_
 
+#include <float.h>
+
 namespace sm
 {
 

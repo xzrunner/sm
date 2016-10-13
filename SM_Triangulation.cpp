@@ -127,6 +127,25 @@ static void verify_bound(const std::vector<vec2>& src, std::vector<vec2>& dst)
    }
 }
 
+static void verify_inner(const std::vector<vec2>& outer, std::vector<vec2>& inner)
+{
+	std::vector<vec2>::iterator itr = inner.begin();
+	for ( ; itr != inner.end(); ) 
+	{
+		bool find = false;
+		for (int i = 0, n = outer.size(); i < n; ++i) {
+			if (*itr == outer[i]) {
+				find = true;
+				itr = inner.erase(itr);
+				break;
+			}
+		}
+		if (!find) {
+			++itr;
+		}
+	}
+}
+
 void triangulate_normal(const std::vector<vec2>& bound, 
 						std::vector<vec2>& result, 
 						TriangulateConstrained tc)
@@ -320,7 +339,10 @@ void triangulate_points(const std::vector<vec2>& bound,
 	std::vector<vec2> bound_fixed;
 	verify_bound(bound, bound_fixed);
 
-	in.numberofpoints = bound_fixed.size() + points.size();
+	std::vector<vec2> points_fixed(points);
+	verify_inner(bound_fixed, points_fixed);
+
+	in.numberofpoints = bound_fixed.size() + points_fixed.size();
 	in.numberofpointattributes = 0;
 	in.pointlist = (REAL *) malloc(in.numberofpoints * 2 * sizeof(REAL));
 	in.pointmarkerlist = (int *) NULL;
@@ -330,10 +352,10 @@ void triangulate_points(const std::vector<vec2>& bound,
 		in.pointlist[index++] = bound_fixed[i].x;
 		in.pointlist[index++] = bound_fixed[i].y;
 	}
-	for (int i = 0, n = points.size(); i < n; ++i)
+	for (int i = 0, n = points_fixed.size(); i < n; ++i)
 	{
-		in.pointlist[index++] = points[i].x;
-		in.pointlist[index++] = points[i].y;
+		in.pointlist[index++] = points_fixed[i].x;
+		in.pointlist[index++] = points_fixed[i].y;
 	}
 
 	in.numberofsegments = bound_fixed.size();
@@ -424,7 +446,10 @@ void triangulate_points_and_lines(const std::vector<vec2>& bound,
 	std::vector<vec2> bound_fixed;
 	verify_bound(bound, bound_fixed);
 
-	in.numberofpoints = bound_fixed.size() + lines.size() + points.size();
+	std::vector<vec2> points_fixed(points);
+	verify_inner(bound_fixed, points_fixed);
+
+	in.numberofpoints = bound_fixed.size() + lines.size() + points_fixed.size();
 	in.numberofpointattributes = 0;
 	in.pointlist = (REAL *) malloc(in.numberofpoints * 2 * sizeof(REAL));
 	in.pointmarkerlist = (int *) NULL;
@@ -439,10 +464,10 @@ void triangulate_points_and_lines(const std::vector<vec2>& bound,
 		in.pointlist[index++] = lines[i].x;
 		in.pointlist[index++] = lines[i].y;
 	}
-	for (int i = 0, n = points.size(); i < n; ++i)
+	for (int i = 0, n = points_fixed.size(); i < n; ++i)
 	{
-		in.pointlist[index++] = points[i].x;
-		in.pointlist[index++] = points[i].y;
+		in.pointlist[index++] = points_fixed[i].x;
+		in.pointlist[index++] = points_fixed[i].y;
 	}
 
 	in.numberofsegments = bound_fixed.size() + lines.size() / 2;

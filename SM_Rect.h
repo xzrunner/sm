@@ -41,7 +41,7 @@ public:
 
 }; // Rect
 
-typedef Rect<uint16_t> ui16_rect;
+typedef Rect<int16_t> i16_rect;
 
 typedef Rect<float> rect;
 

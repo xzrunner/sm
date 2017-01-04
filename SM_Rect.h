@@ -3,6 +3,8 @@
 
 #include "SM_Vector.h"
 
+#include <stdint.h>
+
 namespace sm
 {
 
@@ -38,6 +40,8 @@ public:
 	void Shear(const Vector2<T>& shear);
 
 }; // Rect
+
+typedef Rect<uint16_t> ui16_rect;
 
 typedef Rect<float> rect;
 

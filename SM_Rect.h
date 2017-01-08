@@ -20,6 +20,7 @@ public:
 	Rect(T width, T height);
 	Rect(const Vector2<T>& center, T width, T height);
 	Rect(const Vector2<T>& v0, const Vector2<T>& v1);
+	Rect(T xmin, T ymin, T xmax, T ymax);
 
 	bool operator == (const Rect& r) const;
 

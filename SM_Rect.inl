@@ -36,6 +36,15 @@ Rect<T>::Rect(const Vector2<T>& v0, const Vector2<T>& v1)
 }
 
 template <typename T>
+Rect<T>::Rect(T xmin, T ymin, T xmax, T ymax)
+	: xmin(xmin)
+	, ymin(ymin)
+	, xmax(xmax)
+	, ymax(ymax)
+{
+}
+
+template <typename T>
 bool Rect<T>::operator == (const Rect<T>& r) const
 {
 	return xmin == r.xmin

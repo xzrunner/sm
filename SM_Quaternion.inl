@@ -190,25 +190,6 @@ inline QuaternionT<T> QuaternionT<T>::Scaled(T s) const
 	return QuaternionT<T>(x * s, y * s, z * s, w * s);
 }
 
-//template <typename T>
-//Matrix3<T> QuaternionT<T>::ToMatrix() const
-//{
-//	const T s = 2;
-//	T xs, ys, zs;
-//	T wx, wy, wz;
-//	T xx, xy, xz;
-//	T yy, yz, zz;
-//	xs = x * s;  ys = y * s;  zs = z * s;
-//	wx = w * xs; wy = w * ys; wz = w * zs;
-//	xx = x * xs; xy = x * ys; xz = x * zs;
-//	yy = y * ys; yz = y * zs; zz = z * zs;
-//	Matrix3<T> m;
-//	m.c[0][0] = 1 - (yy + zz); m.c[1][0] = xy - wz;  m.c[2][0] = xz + wy;
-//	m.c[0][1] = xy + wz; m.c[1][1] = 1 - (xx + zz); m.c[2][1] = yz - wx;
-//	m.c[0][2] = xz - wy; m.c[1][2] = yz + wx;  m.c[2][2] = 1 - (xx + yy);
-//	return m;
-//}
-
 template <typename T>
 Vector4<T> QuaternionT<T>::ToVector() const
 {

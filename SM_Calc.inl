@@ -2,6 +2,7 @@
 #define _SPATIAL_MATH_CALC_INL_
 
 #include "SM_Test.h"
+#include "SM_MatrixFix.h"
 
 #include <float.h>
 
@@ -56,6 +57,14 @@ vec2 rotate_vector_right_angle(const vec2& v, bool turn_left)
 
 inline
 float mat_trans_len(float len, const mat4& mat)
+{
+	vec2 p0 = mat * vec2(0, 0),
+		 p1 = mat * vec2(len, 0);
+	return (p0 - p1).Length();
+}
+
+inline
+float mat_trans_len(float len, const MatrixFix& mat)
 {
 	vec2 p0 = mat * vec2(0, 0),
 		 p1 = mat * vec2(len, 0);

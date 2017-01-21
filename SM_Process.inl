@@ -39,6 +39,16 @@ void trans_vertices(const mat4& mt, const std::vector<vec2>& src, std::vector<ve
 	}
 }
 
+inline
+void trans_vertices(const MatrixFix& mt, const std::vector<vec2>& src, std::vector<vec2>& dst)
+{
+	dst.clear();
+	dst.reserve(src.size());
+	for (int i = 0, n = src.size(); i < n; ++i) {
+		dst.push_back(mt * src[i]);
+	}
+}
+
 }
 
 #endif // _SPATIAL_MATH_PROCESS_INL_

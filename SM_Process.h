@@ -9,9 +9,12 @@
 namespace sm
 {
 
+class MatrixFix;
+
 void rm_duplicate_nodes(const std::vector<vec2>& src, std::vector<vec2>& dst);
 
 void trans_vertices(const mat4& mt, const std::vector<vec2>& src, std::vector<vec2>& dst);
+void trans_vertices(const MatrixFix& mt, const std::vector<vec2>& src, std::vector<vec2>& dst);
 
 }
 

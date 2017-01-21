@@ -3,6 +3,7 @@
 
 #include "SM_Test.h"
 #include "SM_MatrixFix.h"
+#include "sm_math.h"
 
 #include <float.h>
 
@@ -33,8 +34,8 @@ inline
 vec2 rotate_vector(const vec2& v, float rad)
 {
 	vec2 ret;
-	ret.x = v.x * cos(rad) - v.y * sin(rad);
-	ret.y = v.x * sin(rad) + v.y * cos(rad);
+	ret.x = v.x * sm_cos(rad) - v.y * sm_sin(rad);
+	ret.y = v.x * sm_sin(rad) + v.y * sm_cos(rad);
 	return ret;
 }
 

@@ -1,5 +1,6 @@
 #include "SM_CosineSmooth.h"
 #include "sm_const.h"
+#include "sm_math.h"
 
 #include <cmath>
 
@@ -17,7 +18,7 @@ void cosine_smooth(const std::vector<vec2>& src,
 	for (int i = 0, n = src.size() - 1; i < n; ++i)
 	{
 		const vec2& p0 = src[i],
-			            p1 = src[i+1];
+			        p1 = src[i+1];
 		const int sampling_count = static_cast<int>(std::floor(std::abs(p1.x - p0.x) / sampling_width));
 		const float dx = (p1.x - p0.x) / sampling_count;
 		const float da = SM_PI / sampling_count;
@@ -28,7 +29,7 @@ void cosine_smooth(const std::vector<vec2>& src,
 		{
 			vec2 pt;
 			pt.x = p0.x + j * dx;
-			pt.y = ymid + ampl * cos(da * j);
+			pt.y = ymid + ampl * sm_cos(da * j);
 			dst.push_back(pt);
 		}
 	}

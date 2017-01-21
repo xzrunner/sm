@@ -3,6 +3,7 @@
 
 #include "sm_const.h"
 #include "SM_Quaternion.h"
+#include "sm_math.h"
 
 namespace sm
 {
@@ -195,7 +196,7 @@ template <typename T>
 void Matrix4<T>::SetTransformation(T x, T y, T angle, T sx, T sy, T ox, T oy, T kx, T ky)
 {
 	Identity();
-	T c = cos(angle), s = sin(angle);
+	T c = sm_cos(angle), s = sm_sin(angle);
 	// matrix multiplication carried out on paper:
 	// |1     x| |c -s    | |sx       | | 1 ky    | |1     -ox|
 	// |  1   y| |s  c    | |   sy    | |kx  1    | |  1   -oy|
@@ -388,8 +389,8 @@ template <typename T>
 Matrix4<T> Matrix4<T>::RotatedX(T degrees)
 {
 	T radians = degrees * SM_DEG_TO_RAD;
-	T s = sin(radians);
-	T c = cos(radians);
+	T s = sm_sin(radians);
+	T c = sm_cos(radians);
 
 	Matrix4 m;
 	m.c[0][0] = 1; m.c[0][1] = 0; m.c[0][2] = 0; m.c[0][3] = 0;
@@ -403,8 +404,8 @@ template <typename T>
 Matrix4<T> Matrix4<T>::RotatedY(T degrees)
 {
 	T radians = degrees * SM_DEG_TO_RAD;
-	T s = sin(radians);
-	T c = cos(radians);
+	T s = sm_sin(radians);
+	T c = sm_cos(radians);
 
 	Matrix4 m;
 	m.c[0][0] = c; m.c[0][1] = 0; m.c[0][2] =-s; m.c[0][3] = 0;
@@ -418,8 +419,8 @@ template <typename T>
 Matrix4<T> Matrix4<T>::RotatedZ(T degrees)
 {
 	T radians = degrees * SM_DEG_TO_RAD;
-	T s = sin(radians);
-	T c = cos(radians);
+	T s = sm_sin(radians);
+	T c = sm_cos(radians);
 
 	Matrix4 m;
 	m.c[0][0] = c; m.c[0][1] = s; m.c[0][2] = 0; m.c[0][3] = 0;
@@ -432,11 +433,11 @@ Matrix4<T> Matrix4<T>::RotatedZ(T degrees)
 template <typename T>
 Matrix4<T> Matrix4<T>::RotatedAxis(const Vector3<T>& axis, T angle)
 {
-	T t = sin(angle * 0.5f);
+	T t = sm_sin(angle * 0.5f);
 	T x = axis->x * t;
 	T y = axis->y * t;
 	T z = axis->z * t;
-	return Matrix4(QuaternionT<T>(x, y, z, cos(angle * 0.5f)));
+	return Matrix4(QuaternionT<T>(x, y, z, sm_cos(angle * 0.5f)));
 }
 
 template <typename T>

@@ -33,9 +33,15 @@ float find_y_on_seg(const vec2& s, const vec2& e, float x)
 inline
 vec2 rotate_vector(const vec2& v, float rad)
 {
+	if (rad == 0) {
+		return v;
+	}
+
 	vec2 ret;
-	ret.x = v.x * sm_cos(rad) - v.y * sm_sin(rad);
-	ret.y = v.x * sm_sin(rad) + v.y * sm_cos(rad);
+	float s = sm_sin(rad),
+		  c = sm_cos(rad);
+	ret.x = v.x * c - v.y * s;
+	ret.y = v.x * s + v.y * c;
 	return ret;
 }
 

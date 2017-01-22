@@ -20,22 +20,26 @@ float sm_sin(float x)
 	}
 
 	//compute sine
+	double sin;
 	if (x < 0)
-		return 1.27323954 * x + .405284735 * x * x;
+		sin = 1.27323954 * x + .405284735 * x * x;
 	else
-		return 1.27323954 * x - 0.405284735 * x * x;
+		sin = 1.27323954 * x - 0.405284735 * x * x;
+	return static_cast<float>(sin);
 }
 
 inline
-float sm_cos(float x)
+float sm_cos(float _x)
 {
 	//compute cosine: sin(x + PI/2) = cos(x)
-	x += 1.57079632;
+	double x = _x + 1.57079632;
 
+	double cos;
 	if (x < 0)
-		return 1.27323954 * x + 0.405284735 * x * x;
+		cos = 1.27323954 * x + 0.405284735 * x * x;
 	else
-		return 1.27323954 * x - 0.405284735 * x * x;
+		cos = 1.27323954 * x - 0.405284735 * x * x;
+	return static_cast<float>(cos);
 }
 
 #endif // spatial_math_math_h

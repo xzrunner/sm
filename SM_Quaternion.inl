@@ -1,4 +1,5 @@
 #include "sm_const.h"
+#include "sm_math.h"
 
 namespace sm
 {

@@ -1,6 +1,8 @@
 #include "SM_MatrixFix.h"
 #include "sm_const.h"
 
+#include <string.h>
+
 namespace sm
 {
 

@@ -31,6 +31,14 @@ float sm_sin(float x)
 inline
 float sm_cos(float _x)
 {
+	//always wrap input angle to -PI..PI
+	while (_x < -SM_PI) {
+		_x += SM_TWO_PI;
+	}
+	while (_x > SM_PI) {
+		_x -= SM_TWO_PI;
+	}
+
 	//compute cosine: sin(x + PI/2) = cos(x)
 	double x = _x + 1.57079632;
 

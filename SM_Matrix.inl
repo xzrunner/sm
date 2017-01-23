@@ -102,6 +102,12 @@ Matrix4<T>::Matrix4(const QuaternionT<T>& q)
 }
 
 template <typename T>
+bool Matrix4<T>::operator != (const Matrix4<T>& b) const
+{
+	return memcmp(x, b.x, sizeof(x)) != 0;
+}
+
+template <typename T>
 Matrix4<T> Matrix4<T>::operator * (const Matrix4<T>& b) const
 {
 	Matrix4 m;
@@ -267,7 +273,7 @@ T Matrix4<T>::Determinant() const
 }
 
 template <typename T>
-Matrix4<T> Matrix4<T>::Inverted()
+Matrix4<T> Matrix4<T>::Inverted() const
 {
 	Matrix4<T> dst;
 

@@ -68,6 +68,8 @@ public:
 	Matrix4(const Matrix3<T>& m);
 	Matrix4(const QuaternionT<T>& q);
 
+	bool operator != (const Matrix4<T>& b) const;
+
 	Matrix4<T> operator * (const Matrix4<T>& b) const;
 	Matrix4<T>& operator *= (const Matrix4<T>& b);
 
@@ -99,7 +101,7 @@ public:
 
 	void Transposed();
 	T Determinant() const;
-	Matrix4<T> Inverted();
+	Matrix4<T> Inverted() const;
 
 	Vector3<T> GetTranslate() const;
 	Vector3<T> GetScale() const;

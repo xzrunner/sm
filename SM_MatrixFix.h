@@ -29,6 +29,8 @@ public:
 
 	void Identity();
 
+	MatrixFix Inverted() const;
+
 	void Translate(float x, float y);
 	void Scale(float sx, float sy);
 	void Rotate(float angle);

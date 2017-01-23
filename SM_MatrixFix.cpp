@@ -1,7 +1,10 @@
+// code from https://github.com/ejoy/ejoy2d/blob/master/lib/matrix.c
+
 #include "SM_MatrixFix.h"
 #include "sm_const.h"
 
 #include <string.h>
+#include <stdint.h>
 
 namespace sm
 {
@@ -23,6 +26,70 @@ MatrixFix& MatrixFix::operator = (const MatrixFix& mt)
 {
 	memcpy(x, mt.x, sizeof(x));
 	return *this;
+}
+
+static inline MatrixFix
+inverse_scale(const MatrixFix& m) 
+{
+	MatrixFix ret;
+	if (m.x[0] == 0 || m.x[3] == 0) {
+		return ret;
+	}
+
+	const int S = MatrixFix::SCALE;
+	ret.x[0] = (S * S) / m.x[0];
+	ret.x[1] = 0;
+	ret.x[2] = 0;
+	ret.x[3] = (S * S) / m.x[3];
+	ret.x[4] = - (m.x[4] * ret.x[0]) / S;
+	ret.x[5] = - (m.x[5] * ret.x[3]) / S;
+
+	return ret;
+}
+
+static inline MatrixFix
+inverse_rot(const MatrixFix& m) 
+{
+	MatrixFix ret;
+	if (m.x[1] == 0 || m.x[2] == 0) {
+		return ret;
+	}
+
+	const int S = MatrixFix::SCALE;
+	ret.x[0] = 0;
+	ret.x[1] = (S * S) / m.x[2];
+	ret.x[2] = (S * S) / m.x[1];
+	ret.x[3] = 0;
+	ret.x[4] = - (m.x[5] * ret.x[2]) / S;
+	ret.x[5] = - (m.x[4] * ret.x[1]) / S;
+
+	return ret;
+}
+
+MatrixFix MatrixFix::Inverted() const
+{
+	if (x[1] == 0 && x[2] == 0) {
+		return inverse_scale(*this);
+	}
+	if (x[0] == 0 && x[3] == 0) {
+		return inverse_rot(*this);
+	}
+
+	MatrixFix ret;
+	int t = x[0] * x[3] - x[1] * x[2] ;
+	if (t == 0) {
+		return ret;
+	}
+
+	const int S = MatrixFix::SCALE;
+	ret.x[0] = (int32_t)((int64_t)x[3] * (S * S) / t);
+	ret.x[1] = (int32_t)(- (int64_t)x[1] * (S * S) / t);
+	ret.x[2] = (int32_t)(- (int64_t)x[2] * (S * S) / t);
+	ret.x[3] = (int32_t)((int64_t)x[0] * (S * S) / t);
+	ret.x[4] = - (x[4] * ret.x[0] + x[5] * ret.x[2]) / S;
+	ret.x[5] = - (x[4] * ret.x[1] + x[5] * ret.x[3]) / S;
+
+	return ret;
 }
 
 void MatrixFix::Translate(float _x, float _y)

@@ -1,13 +1,15 @@
-#ifndef spatial_math_math_inl
-#define spatial_math_math_inl
+// http://lab.polygonal.de/2007/07/18/fast-and-accurate-sinecosine-approximation/
+
+#ifndef _SPATIAL_MATH_MATH_INL_
+#define _SPATIAL_MATH_MATH_INL_
 
 #include "sm_const.h"
 
-// http://lab.polygonal.de/2007/07/18/fast-and-accurate-sinecosine-approximation/
-
-static inline
-float sin_low_precision(float x)
+namespace sm
 {
+
+static inline 
+float prepare_angle(float x) {
 	//always wrap input angle to -PI..PI
 	while (x < -SM_PI) {
 		x += SM_TWO_PI;
@@ -15,100 +17,111 @@ float sin_low_precision(float x)
 	while (x > SM_PI) {
 		x -= SM_TWO_PI;
 	}
+	return x;
+}
 
-	//compute sine
-	if (x < 0)
-		return 1.27323954 * x + .405284735 * x * x;
-	else
-		return 1.27323954 * x - 0.405284735 * x * x;
+static inline
+float sin_low_precision(float x)
+{
+	x = prepare_angle(x);
+
+	double sin;
+	if (x < 0) {
+		sin = 1.27323954 * x + .405284735 * x * x;
+	} else {
+		sin = 1.27323954 * x - 0.405284735 * x * x;
+	}
+	return static_cast<float>(sin);
 }
 
 static inline
 float cos_low_precision(float x)
 {
 	//compute cosine: sin(x + PI/2) = cos(x)
-	x += 1.57079632;
+	x += 1.57079632f;
 
-	if (x < 0)
-		return 1.27323954 * x + 0.405284735 * x * x;
-	else
-		return 1.27323954 * x - 0.405284735 * x * x;
+	x = prepare_angle(x);
+
+	double cos;
+	if (x < 0) {
+		cos = 1.27323954 * x + 0.405284735 * x * x;
+	} else {
+		cos = 1.27323954 * x - 0.405284735 * x * x;
+	}
+	return static_cast<float>(cos);
 }
 
 static inline
 float sin_high_precision(float x)
 {
-	//always wrap input angle to -PI..PI
-	while (x < -SM_PI) {
-		x += SM_TWO_PI;
-	}
-	while (x > SM_PI) {
-		x -= SM_TWO_PI;
-	}
+	x = prepare_angle(x);
 
-	//compute sine
-	float sin;
+	double sin;
 	if (x < 0)
 	{
 		sin = 1.27323954 * x + .405284735 * x * x;
-
-		if (sin < 0)
+		if (sin < 0) {
 			sin = .225 * (sin *-sin - sin) + sin;
-		else
+		} else {
 			sin = .225 * (sin * sin - sin) + sin;
+		}
 	}
 	else
 	{
 		sin = 1.27323954 * x - 0.405284735 * x * x;
-
-		if (sin < 0)
+		if (sin < 0) {
 			sin = .225 * (sin *-sin - sin) + sin;
-		else
+		} else {
 			sin = .225 * (sin * sin - sin) + sin;
+		}
 	}
-	return sin;
+	return static_cast<float>(sin);
 }
 
 static inline
 float cos_high_precision(float x)
 {
 	//compute cosine: sin(x + PI/2) = cos(x)
-	x += 1.57079632;
+	x += 1.57079632f;
 
-	float cos;
+	x = prepare_angle(x);
+
+	double cos;
 	if (x < 0)
 	{
 		cos = 1.27323954 * x + 0.405284735 * x * x;
-
-		if (cos < 0)
+		if (cos < 0) {
 			cos = .225 * (cos *-cos - cos) + cos;
-		else
+		} else {
 			cos = .225 * (cos * cos - cos) + cos;
+		}
 	}
 	else
 	{
 		cos = 1.27323954 * x - 0.405284735 * x * x;
-
-		if (cos < 0)
+		if (cos < 0) {
 			cos = .225 * (cos *-cos - cos) + cos;
-		else
+		} else {
 			cos = .225 * (cos * cos - cos) + cos;
+		}
 	}
-	return cos;
+	return static_cast<float>(cos);
 }
 
-//inline
-//float sm_sin(float x)
-//{
-//	return sin_low_precision(x);
-////	return sin_high_precision(x);
-//}
-//
-//inline
-//float sm_cos(float x)
-//{
-//	return cos_low_precision(x);
-////	return cos_high_precision(x);
-//}
+inline
+float sin(float x)
+{
+	return sin_low_precision(x);
+//	return sin_high_precision(x);
+}
 
-#endif // spatial_math_math_inl
+inline
+float cos(float x)
+{
+	return cos_low_precision(x);
+//	return cos_high_precision(x);
+}
+
+}
+
+#endif // _SPATIAL_MATH_MATH_INL_

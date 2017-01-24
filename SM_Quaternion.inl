@@ -1,5 +1,5 @@
 #include "sm_const.h"
-#include "sm_math.h"
+#include "SM_Math.h"
 
 namespace sm
 {
@@ -222,8 +222,8 @@ template <typename T>
 QuaternionT<T>  QuaternionT<T>::CreateFromAxisAngle(const Vector3<T>& axis, T radians)
 {
 	QuaternionT<T> q;
-	q.w = sm_cos(radians / 2);
-	q.x = q.y = q.z = sm_sin(radians / 2);
+	q.w = sm::cos(radians / 2);
+	q.x = q.y = q.z = sm::sin(radians / 2);
 	q.x *= axis.x;
 	q.y *= axis.y;
 	q.z *= axis.z;

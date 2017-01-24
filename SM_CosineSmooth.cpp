@@ -1,6 +1,6 @@
 #include "SM_CosineSmooth.h"
 #include "sm_const.h"
-#include "sm_math.h"
+#include "SM_Math.h"
 
 #include <cmath>
 
@@ -29,7 +29,7 @@ void cosine_smooth(const std::vector<vec2>& src,
 		{
 			vec2 pt;
 			pt.x = p0.x + j * dx;
-			pt.y = ymid + ampl * sm_cos(da * j);
+			pt.y = ymid + ampl * sm::cos(da * j);
 			dst.push_back(pt);
 		}
 	}

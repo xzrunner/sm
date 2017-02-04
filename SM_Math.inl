@@ -111,15 +111,25 @@ float cos_high_precision(float x)
 inline
 float sin(float x)
 {
+#ifdef SM_SIN_COS_LOW_PRECISION
 	return sin_low_precision(x);
-//	return sin_high_precision(x);
+#elif defined SM_SIN_COS_HIGH_PRECISION
+	return sin_high_precision(x);
+#else
+	return sinf(x);
+#endif
 }
 
 inline
 float cos(float x)
 {
+#ifdef SM_SIN_COS_LOW_PRECISION
 	return cos_low_precision(x);
-//	return cos_high_precision(x);
+#elif defined SM_SIN_COS_HIGH_PRECISION
+	return cos_high_precision(x);
+#else
+	return cosf(x);
+#endif
 }
 
 }

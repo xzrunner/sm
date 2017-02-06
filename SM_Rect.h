@@ -33,6 +33,8 @@ public:
 	void Combine(const Vector2<T>& v);
 	void Combine(const Rect<T>& r);
 
+	T Width() const;
+	T Height() const;
 	Vector2<T> Size() const;
 	Vector2<T> Center() const;
 

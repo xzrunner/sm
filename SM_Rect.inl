@@ -98,6 +98,18 @@ void Rect<T>::Combine(const Rect<T>& r)
 }
 
 template <typename T>
+T Rect<T>::Width() const
+{
+	return xmax - xmin;
+}
+
+template <typename T>
+T Rect<T>::Height() const
+{
+	return ymax - ymin;
+}
+
+template <typename T>
 Vector2<T> Rect<T>::Size() const
 {
 	return Vector2<T>(xmax - xmin, ymax - ymin);

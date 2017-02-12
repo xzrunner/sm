@@ -60,30 +60,8 @@ static void implement(struct triangulateio& in, struct triangulateio& out, Trian
 	}
 }
 
-static void finish(struct triangulateio& in, 
-				   struct triangulateio& out, 
-				   const std::vector<vec2>& bound, 
-				   std::vector<vec2>& result)
+static void finish(struct triangulateio& in, struct triangulateio& out)
 {
-	int index = 0;
-	for (int i = 0; i < out.numberoftriangles; ++i)
-	{
-		std::vector<vec2> tri;
-		for (int j = 0; j < out.numberofcorners; ++j)
-		{
-			int pIndex = out.trianglelist[index++];
-
-			vec2 p;
-			p.x = out.pointlist[pIndex * 2];
-			p.y = out.pointlist[pIndex * 2 + 1];
-			tri.push_back(p);
-		}
-
-		vec2 center = get_tri_gravity_center(tri[0], tri[1], tri[2]);
-		if (is_point_in_area(center, bound))
-			copy(tri.begin(), tri.end(), back_inserter(result));
-	}
-
 	trifree((VOID*)in.pointlist);
 	trifree((VOID*)in.pointattributelist);
 	trifree((VOID*)in.pointmarkerlist);
@@ -107,6 +85,66 @@ static void finish(struct triangulateio& in,
 	trifree((VOID*)out.edgelist);
 	trifree((VOID*)out.edgemarkerlist);
 	trifree((VOID*)out.normlist);
+}
+
+static void finish(struct triangulateio& in, 
+				   struct triangulateio& out, 
+				   const std::vector<vec2>& bound, 
+				   std::vector<vec2>& result)
+{
+	int index = 0;
+	for (int i = 0; i < out.numberoftriangles; ++i)
+	{
+		std::vector<vec2> tri;
+		for (int j = 0; j < out.numberofcorners; ++j)
+		{
+			int pIndex = out.trianglelist[index++];
+
+			vec2 p;
+			p.x = out.pointlist[pIndex * 2];
+			p.y = out.pointlist[pIndex * 2 + 1];
+			tri.push_back(p);
+		}
+
+		vec2 center = get_tri_gravity_center(tri[0], tri[1], tri[2]);
+		if (is_point_in_area(center, bound)) {
+			copy(tri.begin(), tri.end(), back_inserter(result));
+		}
+	}
+
+	finish(in, out);
+}
+
+static void finish(struct triangulateio& in, 
+                   struct triangulateio& out, 
+				   const std::vector<vec2>& bound, 
+				   std::vector<vec2>& out_vertices,
+				   std::vector<int>& out_triangles)
+{
+	out_vertices.reserve(out.numberofpoints);
+	int ptr = 0;
+	for (int i = 0; i < out.numberofpoints; ++i) 
+	{
+		float x = out.pointlist[ptr++],
+			  y = out.pointlist[ptr++];
+		out_vertices.push_back(vec2(x, y));
+	}
+
+	out_triangles.reserve(out.numberoftriangles);
+	for (int i = 0; i < out.numberoftriangles; ++i) 
+	{
+		std::vector<int> tri;
+		for (int j = 0; j < out.numberofcorners; ++j) {
+			tri.push_back(out.trianglelist[i]);
+		}
+
+		vec2 center = get_tri_gravity_center(out_vertices[tri[0]], out_vertices[tri[1]], out_vertices[tri[2]]);
+		if (is_point_in_area(center, bound)) {
+			copy(tri.begin(), tri.end(), back_inserter(out_triangles));
+		}
+	}
+
+	finish(in, out);
 }
 
 static void verify_bound(const std::vector<vec2>& src, std::vector<vec2>& dst)
@@ -328,55 +366,84 @@ void triangulate_holes_new(const std::vector<vec2>& bound,
 	finish(in, out, bound_fixed, result);
 }
 
-void triangulate_points(const std::vector<vec2>& bound, 
-						const std::vector<vec2>& points,
-						std::vector<vec2>& result, 
-						TriangulateConstrained tc)
+static void triangulate_points_prepare(triangulateio& in, 
+									   triangulateio& out, 
+									   const std::vector<vec2>& bound,
+									   const std::vector<vec2>& points)
 {
-	struct triangulateio in, out;
 	init(in, out);
 
-	std::vector<vec2> bound_fixed;
-	verify_bound(bound, bound_fixed);
-
-	std::vector<vec2> points_fixed(points);
-	verify_inner(bound_fixed, points_fixed);
-
-	in.numberofpoints = bound_fixed.size() + points_fixed.size();
+	in.numberofpoints = bound.size() + points.size();
 	in.numberofpointattributes = 0;
 	in.pointlist = (REAL *) malloc(in.numberofpoints * 2 * sizeof(REAL));
 	in.pointmarkerlist = (int *) NULL;
 	int index = 0;
-	for (int i = 0, n = bound_fixed.size(); i < n; ++i)
+	for (int i = 0, n = bound.size(); i < n; ++i)
 	{
-		in.pointlist[index++] = bound_fixed[i].x;
-		in.pointlist[index++] = bound_fixed[i].y;
+		in.pointlist[index++] = bound[i].x;
+		in.pointlist[index++] = bound[i].y;
 	}
-	for (int i = 0, n = points_fixed.size(); i < n; ++i)
+	for (int i = 0, n = points.size(); i < n; ++i)
 	{
-		in.pointlist[index++] = points_fixed[i].x;
-		in.pointlist[index++] = points_fixed[i].y;
+		in.pointlist[index++] = points[i].x;
+		in.pointlist[index++] = points[i].y;
 	}
 
-	in.numberofsegments = bound_fixed.size();
+	in.numberofsegments = bound.size();
 	in.segmentlist = (int *) malloc(in.numberofsegments * 2 * sizeof(int));
 
 	index = 0;
-	for (int i = 0, n = bound_fixed.size() - 1; i < n; ++i)
+	for (int i = 0, n = bound.size() - 1; i < n; ++i)
 	{
 		in.segmentlist[index++] = i;
 		in.segmentlist[index++] = i + 1;
 	}
-	in.segmentlist[index++] = bound_fixed.size() - 1;
+	in.segmentlist[index++] = bound.size() - 1;
 	in.segmentlist[index++] = 0;
 
 	in.segmentmarkerlist = (int *) NULL;
 
 	in.numberofholes = 0;
 	in.numberofregions = 0;
+}
+
+void triangulate_points(const std::vector<vec2>& bound, 
+						const std::vector<vec2>& points,
+						std::vector<vec2>& result, 
+						TriangulateConstrained tc)
+{
+	std::vector<vec2> bound_fixed;
+	verify_bound(bound, bound_fixed);
+
+	std::vector<vec2> points_fixed(points);
+	verify_inner(bound_fixed, points_fixed);
+
+	struct triangulateio in, out;
+	triangulate_points_prepare(in, out, bound_fixed, points_fixed);
 
 	implement(in, out, tc);
+
 	finish(in, out, bound_fixed, result);
+}
+
+void triangulate_points(const std::vector<vec2>& bound, 
+						const std::vector<vec2>& points,
+						std::vector<vec2>& out_vertices,
+						std::vector<int>& out_triangles,
+						TriangulateConstrained tc)
+{
+	std::vector<vec2> bound_fixed;
+	verify_bound(bound, bound_fixed);
+
+	std::vector<vec2> points_fixed(points);
+	verify_inner(bound_fixed, points_fixed);
+
+	struct triangulateio in, out;
+	triangulate_points_prepare(in, out, bound_fixed, points_fixed);
+
+	implement(in, out, tc);
+
+	finish(in, out, bound_fixed, out_vertices, out_triangles);
 }
 
 void triangulate_lines(const std::vector<vec2>& bound, 

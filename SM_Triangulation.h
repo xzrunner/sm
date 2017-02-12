@@ -34,6 +34,11 @@ void triangulate_points(const std::vector<vec2>& bound,
 						const std::vector<vec2>& points,
 						std::vector<vec2>& result, 
 						TriangulateConstrained tc = TC_CONSTRAINED);
+void triangulate_points(const std::vector<vec2>& bound, 
+						const std::vector<vec2>& points,
+						std::vector<vec2>& out_vertices,
+						std::vector<int>& out_triangles,
+						TriangulateConstrained tc = TC_CONSTRAINED);
 
 void triangulate_lines(const std::vector<vec2>& bound, 
 					   const std::vector<vec2>& lines, 

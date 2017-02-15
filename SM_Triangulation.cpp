@@ -130,12 +130,13 @@ static void finish(struct triangulateio& in,
 		out_vertices.push_back(vec2(x, y));
 	}
 
+	int index = 0;
 	out_triangles.reserve(out.numberoftriangles);
 	for (int i = 0; i < out.numberoftriangles; ++i) 
 	{
 		std::vector<int> tri;
 		for (int j = 0; j < out.numberofcorners; ++j) {
-			tri.push_back(out.trianglelist[i]);
+			tri.push_back(out.trianglelist[index++]);
 		}
 
 		vec2 center = get_tri_gravity_center(out_vertices[tri[0]], out_vertices[tri[1]], out_vertices[tri[2]]);

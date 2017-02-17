@@ -2,6 +2,7 @@
 #define _SPATIAL_MATH_VECTOR_H_
 
 #include <float.h>
+#include <stdint.h>
 
 namespace sm
 {
@@ -176,6 +177,8 @@ public:
 }; // Vector4
 
 typedef Vector2<bool> bvec2;
+
+typedef Vector2<uint16_t> i16_vec2;
 
 typedef Vector2<int> ivec2;
 typedef Vector3<int> ivec3;

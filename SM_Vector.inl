@@ -206,21 +206,21 @@ template <typename T>
 bool Vector2Cmp::operator () (const Vector2<T>& p0, const Vector2<T>& p1) const 
 {
 	return p0.x < p1.x 
-		|| p0.x == p1.x && p0.y < p1.y;
+		|| (p0.x == p1.x && p0.y < p1.y);
 }
 
 template <typename T>
 bool Vector2CmpX::operator () (const Vector2<T>& p0, const Vector2<T>& p1) const 
 {
 	return p0.x < p1.x 
-		|| p0.x == p1.x && p0.y < p1.y;
+		|| (p0.x == p1.x && p0.y < p1.y);
 }
 
 template <typename T>
 bool Vector2CmpY::operator () (const Vector2<T>& p0, const Vector2<T>& p1) const 
 {
 	return p0.y < p1.y
-		|| p0.y == p1.y && p0.x < p1.x;
+		|| (p0.y == p1.y && p0.x < p1.x);
 }
 
 /************************************************************************/

@@ -40,8 +40,8 @@ bool is_point_in_area(const vec2& v, const std::vector<vec2>& area)
 	bool odd_nodes = false;
 	for (int i = 0, n = area.size(), j = n - 1; i < n; ++i)
 	{
-		if ((area[i].y < v.y && area[j].y >= v.y ||
-			 area[j].y < v.y && area[i].y >= v.y) &&
+		if (((area[i].y < v.y && area[j].y >= v.y) ||
+			 (area[j].y < v.y && area[i].y >= v.y)) &&
 			(area[i].x <= v.x || area[j].x <= v.x))
 		{
 			odd_nodes ^= (area[i].x + (v.y - area[i].y) / (area[j].y - area[i].y) * (area[j].x - area[i].x) < v.x);

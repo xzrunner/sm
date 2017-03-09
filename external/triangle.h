@@ -248,8 +248,22 @@
 /*                                                                           */
 /*****************************************************************************/
 
-// #define ANSI_DECLARATORS
-// #define REAL float
+#ifndef _TRIANGLE_H_
+#define _TRIANGLE_H_
+
+#define ANSI_DECLARATORS
+
+#ifndef REAL
+#ifdef SINGLE
+#define REAL float
+#else /* not SINGLE */
+#define REAL double
+#endif /* not SINGLE */
+#endif
+
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 struct triangulateio {
   REAL *pointlist;                                               /* In / out */
@@ -285,8 +299,14 @@ struct triangulateio {
 #ifdef ANSI_DECLARATORS
 void triangulate(char *, struct triangulateio *, struct triangulateio *,
                  struct triangulateio *);
-void trifree(VOID *memptr);
+void trifree(void *memptr);
 #else /* not ANSI_DECLARATORS */
 void triangulate();
 void trifree();
 #endif /* not ANSI_DECLARATORS */
+
+#ifdef __cplusplus
+}
+#endif
+
+#endif // _TRIANGLE_H_

@@ -2,7 +2,7 @@
 #include "SM_Calc.h"
 #include "SM_Test.h"
 
-#include "external/triangle.cpp"
+#include "external/triangle.h"
 
 #include <assert.h>
 
@@ -62,29 +62,29 @@ static void implement(struct triangulateio& in, struct triangulateio& out, Trian
 
 static void finish(struct triangulateio& in, struct triangulateio& out)
 {
-	trifree((VOID*)in.pointlist);
-	trifree((VOID*)in.pointattributelist);
-	trifree((VOID*)in.pointmarkerlist);
-	trifree((VOID*)in.trianglelist);
-	trifree((VOID*)in.triangleattributelist);
-	trifree((VOID*)in.trianglearealist);
-	trifree((VOID*)in.segmentlist);
-	trifree((VOID*)in.segmentmarkerlist);
-	trifree((VOID*)in.holelist);
-	trifree((VOID*)in.regionlist);
+	trifree((void*)in.pointlist);
+	trifree((void*)in.pointattributelist);
+	trifree((void*)in.pointmarkerlist);
+	trifree((void*)in.trianglelist);
+	trifree((void*)in.triangleattributelist);
+	trifree((void*)in.trianglearealist);
+	trifree((void*)in.segmentlist);
+	trifree((void*)in.segmentmarkerlist);
+	trifree((void*)in.holelist);
+	trifree((void*)in.regionlist);
 
-	trifree((VOID*)out.pointlist);
-	trifree((VOID*)out.pointattributelist);
-	trifree((VOID*)out.pointmarkerlist);
-	trifree((VOID*)out.trianglelist);
-	trifree((VOID*)out.triangleattributelist);
-	trifree((VOID*)out.trianglearealist);
-	trifree((VOID*)out.neighborlist);
-	trifree((VOID*)out.segmentlist);
-	trifree((VOID*)out.segmentmarkerlist);
-	trifree((VOID*)out.edgelist);
-	trifree((VOID*)out.edgemarkerlist);
-	trifree((VOID*)out.normlist);
+	trifree((void*)out.pointlist);
+	trifree((void*)out.pointattributelist);
+	trifree((void*)out.pointmarkerlist);
+	trifree((void*)out.trianglelist);
+	trifree((void*)out.triangleattributelist);
+	trifree((void*)out.trianglearealist);
+	trifree((void*)out.neighborlist);
+	trifree((void*)out.segmentlist);
+	trifree((void*)out.segmentmarkerlist);
+	trifree((void*)out.edgelist);
+	trifree((void*)out.edgemarkerlist);
+	trifree((void*)out.normlist);
 }
 
 static void finish(struct triangulateio& in, 

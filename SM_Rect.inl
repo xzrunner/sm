@@ -54,6 +54,12 @@ bool Rect<T>::operator == (const Rect<T>& r) const
 }
 
 template <typename T>
+bool Rect<T>::operator != (const Rect<T>& r) const
+{
+	return !(*this == r);
+}
+
+template <typename T>
 void Rect<T>::Build(T width, T height)
 {
 	T hw = width * 0.5f,

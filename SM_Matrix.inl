@@ -102,9 +102,15 @@ Matrix4<T>::Matrix4(const QuaternionT<T>& q)
 }
 
 template <typename T>
+bool Matrix4<T>::operator == (const Matrix4<T>& b) const
+{
+	return memcmp(x, b.x, sizeof(x)) == 0;
+}
+
+template <typename T>
 bool Matrix4<T>::operator != (const Matrix4<T>& b) const
 {
-	return memcmp(x, b.x, sizeof(x)) != 0;
+	return !(*this == b);
 }
 
 template <typename T>

@@ -37,8 +37,8 @@ public:
 	void MakeInvalid();
 	bool IsValid() const;
 
-	bool operator != (const Vector2& v) const;
 	bool operator == (const Vector2& v) const;
+	bool operator != (const Vector2& v) const;
 
 	Vector2<T> operator - () const;
 
@@ -115,8 +115,8 @@ public:
 	Vector3& operator = (const Vector3& v);
 	void Assign(T x, T y, T z);
 
-	bool operator != (const Vector3& v) const;
 	bool operator == (const Vector3& v) const;
+	bool operator != (const Vector3& v) const;
 
 	Vector3 operator - () const;
 
@@ -169,8 +169,8 @@ public:
 	Vector4& operator = (const Vector4& v);
 	void Assign(T x, T y, T z, T w);
 
-	bool operator != (const Vector4& v) const;
 	bool operator == (const Vector4& v) const;
+	bool operator != (const Vector4& v) const;
 
 	T Dot(const Vector4& v) const;
 

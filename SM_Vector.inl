@@ -56,15 +56,15 @@ bool Vector2<T>::IsValid() const
 }
 
 template <typename T>
-bool Vector2<T>::operator != (const Vector2& v) const
-{
-	return x != v.x || y != v.y;
-}
-
-template <typename T>
 bool Vector2<T>::operator == (const Vector2& v) const
 {
 	return x == v.x && y == v.y;
+}
+
+template <typename T>
+bool Vector2<T>::operator != (const Vector2& v) const
+{
+	return !(*this == v);
 }
 
 template <typename T>
@@ -263,15 +263,15 @@ void Vector3<T>::Assign(T x, T y, T z)
 }
 
 template <typename T>
-bool Vector3<T>::operator != (const Vector3& v) const
-{
-	return x != v.x || y != v.y || z != v.z;
-}
-
-template <typename T>
 bool Vector3<T>::operator == (const Vector3& v) const
 {
 	return x == v.x && y == v.y && z == v.z;
+}
+
+template <typename T>
+bool Vector3<T>::operator != (const Vector3& v) const
+{
+	return !(*this == v);
 }
 
 template <typename T>
@@ -414,15 +414,15 @@ void Vector4<T>::Assign(T x, T y, T z, T w)
 }
 
 template <typename T>
-bool Vector4<T>::operator != (const Vector4& v) const
-{
-	return x != v.x || y != v.y || z != v.z || w != v.w;
-}
-
-template <typename T>
 bool Vector4<T>::operator == (const Vector4& v) const
 {
 	return x == v.x && y == v.y && z == v.z && w == v.w;
+}
+
+template <typename T>
+bool Vector4<T>::operator != (const Vector4& v) const
+{
+	return !(*this == v);
 }
 
 template <typename T>

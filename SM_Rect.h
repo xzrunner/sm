@@ -23,6 +23,7 @@ public:
 	Rect(T xmin, T ymin, T xmax, T ymax);
 
 	bool operator == (const Rect& r) const;
+	bool operator != (const Rect& r) const;
 
 	void Build(T width, T height);
 	void Build(const Vector2<T>& center, T width, T height);

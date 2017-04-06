@@ -60,20 +60,26 @@ bool is_point_in_circle(const vec2& v, const vec2& center, float radius)
 inline
 bool is_point_in_convex(const vec2& pos, const std::vector<vec2>& convex) 
 {
-	if (convex.size() < 3) {
+	return is_point_in_convex(pos, &convex[0], convex.size());
+}
+
+inline
+bool is_point_in_convex(const vec2& pos, const vec2* convex, int num) 
+{
+	if (num < 3) {
 		return false;
 	}
 
 	int count = 0;
-	for (int i = 0, n = convex.size(); i < n; ++i)
+	for (int i = 0; i < num; ++i)
 	{
 		vec2 s = convex[i], 
-			     e = i == convex.size() - 1 ? convex[0] : convex[i + 1];
+			 e = i == num - 1 ? convex[0] : convex[i + 1];
 		if (is_point_at_line_left(pos, s, e)) {
 			++count;
 		}
 	}
-	return count == convex.size() || count == 0;
+	return count == num || count == 0;
 }
 
 inline

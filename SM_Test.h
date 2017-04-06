@@ -35,6 +35,7 @@ bool is_point_in_rect(const vec2& v, const rect& r);
 bool is_point_in_area(const vec2& v, const std::vector<vec2>& area);
 bool is_point_in_circle(const vec2& v, const vec2& center, float radius);
 bool is_point_in_convex(const vec2& pos, const std::vector<vec2>& convex);
+bool is_point_in_convex(const vec2& pos, const vec2* convex, int num);
 bool is_point_intersect_polyline(const vec2& point, const std::vector<vec2>& polyline);
 
 /**

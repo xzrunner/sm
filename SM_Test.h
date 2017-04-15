@@ -50,7 +50,7 @@ bool is_segment_intersect_polyline(const vec2& s, const vec2& e, const std::vect
  *    rect
  */
 bool is_rect_contain_point(const rect& r, const vec2& v);
-bool is_rect_contain_rect(const rect& r0, const rect& r1);
+bool is_rect_contain_rect(const rect& outer, const rect& inner);
 bool is_rect_intersect_rect(const rect& r0, const rect& r1);
 bool is_rect_intersect_segment(const rect& r, const vec2& s, const vec2& e);
 bool is_rect_intersect_polyline(const rect& r, const std::vector<vec2>& poly, bool loop);

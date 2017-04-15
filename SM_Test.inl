@@ -104,10 +104,10 @@ bool is_rect_contain_point(const rect& r, const vec2& v)
 }
 
 inline
-bool is_rect_contain_rect(const rect& r0, const rect& r1)
+bool is_rect_contain_rect(const rect& outer, const rect& inner)
 {
-	return r1.xmin >= r0.xmin && r1.xmax <= r0.xmax 
-		&& r1.ymin >= r0.ymin && r1.ymax <= r0.ymax;
+	return inner.xmin >= outer.xmin && inner.xmax <= outer.xmax 
+		&& inner.ymin >= outer.ymin && inner.ymax <= outer.ymax;
 }
 
 inline

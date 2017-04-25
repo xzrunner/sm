@@ -1,4 +1,5 @@
 #include "SM_Matrix2D.h"
+#include "string.h"
 
 namespace sm
 {

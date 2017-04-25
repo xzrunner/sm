@@ -27,6 +27,6 @@ public:
 
 }
 
-#include "SM_Matrix2D.h"
+#include "SM_Matrix2D.inl"
 
 #endif // _SPATIAL_MATH_MATRIX_2D_H_

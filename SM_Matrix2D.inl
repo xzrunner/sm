@@ -3,6 +3,7 @@
 namespace sm
 {
 
+inline
 void Matrix2D::Identity()
 {
 	x[0] = 1;

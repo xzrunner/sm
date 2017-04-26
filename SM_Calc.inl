@@ -3,6 +3,7 @@
 
 #include "SM_Test.h"
 #include "SM_MatrixFix.h"
+#include "SM_Matrix2D.h"
 #include "SM_Math.h"
 
 #include <float.h>
@@ -63,7 +64,7 @@ vec2 rotate_vector_right_angle(const vec2& v, bool turn_left)
 }
 
 inline
-float mat_trans_len(float len, const mat4& mat)
+float mat_trans_len(float len, const Matrix2D& mat)
 {
 	vec2 p0 = mat * vec2(0, 0),
 		 p1 = mat * vec2(len, 0);

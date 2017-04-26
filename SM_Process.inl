@@ -30,7 +30,7 @@ void rm_duplicate_nodes(const std::vector<vec2>& src, std::vector<vec2>& dst)
 }
 
 inline
-void trans_vertices(const mat4& mt, const std::vector<vec2>& src, std::vector<vec2>& dst)
+void trans_vertices(const Matrix2D& mt, const std::vector<vec2>& src, std::vector<vec2>& dst)
 {
 	dst.clear();
 	dst.reserve(src.size());

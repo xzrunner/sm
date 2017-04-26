@@ -2,7 +2,6 @@
 #define _SPATIAL_MATH_CALC_H_
 
 #include "SM_Vector.h"
-#include "SM_Matrix.h"
 
 #include <vector>
 
@@ -11,6 +10,7 @@
 namespace sm
 {
 
+class Matrix2D;
 class MatrixFix;
 
 float find_x_on_seg(const vec2& s, const vec2& e, float y);
@@ -19,7 +19,7 @@ float find_y_on_seg(const vec2& s, const vec2& e, float x);
 vec2 rotate_vector(const vec2& v, float rad);
 vec2 rotate_vector_right_angle(const vec2& v, bool turn_left);
 
-float mat_trans_len(float len, const mat4& mat);
+float mat_trans_len(float len, const Matrix2D& mat);
 float mat_trans_len(float len, const MatrixFix& mat);
 
 float get_line_angle(const vec2& s, const vec2& e);

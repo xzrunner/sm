@@ -1,7 +1,7 @@
 #ifndef _SPATIAL_MATH_MATRIX_2D_H_
 #define _SPATIAL_MATH_MATRIX_2D_H_
 
-#include "SM_Matrix.h"
+#include "SM_Vector.h"
 
 namespace sm
 {
@@ -13,15 +13,22 @@ public:
 
 public:
 	Matrix2D();
-	Matrix2D(const mat4& mt);
 	Matrix2D(const Matrix2D& mt);
 	Matrix2D& operator = (const Matrix2D& mt);
-	
+
+	Matrix2D operator * (const Matrix2D& b) const;
 	vec2 operator * (const vec2& v) const;
 
 	void Identity();
 
-	mat4 ToMat4() const;
+	Matrix2D Inverted() const;
+
+	void Shear(float kx, float ky);
+	void Scale(float sx, float sy);
+	void Rotate(float angle);
+	void Translate(float x, float y);
+
+	void SetTransformation(float x, float y, float angle, float sx, float sy, float ox, float oy, float kx, float ky);
 
 }; // Matrix2D
 

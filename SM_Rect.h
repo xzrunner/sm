@@ -31,8 +31,8 @@ public:
 	void MakeEmpty();
 	bool IsValid() const;
 
-	void Combine(const Vector2<T>& v);
-	void Combine(const Rect<T>& r);
+	bool Combine(const Vector2<T>& v);
+	bool Combine(const Rect<T>& r);
 
 	T Width() const;
 	T Height() const;

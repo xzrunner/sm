@@ -86,21 +86,49 @@ bool Rect<T>::IsValid() const
 }
 
 template <typename T>
-void Rect<T>::Combine(const Vector2<T>& v)
+bool Rect<T>::Combine(const Vector2<T>& v)
 {
-	if (v.x < xmin) xmin = v.x;
-	if (v.x > xmax) xmax = v.x;
-	if (v.y < ymin) ymin = v.y;
-	if (v.y > ymax) ymax = v.y;
+	bool ret = false;
+	if (v.x < xmin) {
+		xmin = v.x;
+		ret = true;
+	}
+	if (v.x > xmax) {
+		xmax = v.x;
+		ret = true;
+	}
+	if (v.y < ymin) {
+		ymin = v.y;
+		ret = true;
+	}
+	if (v.y > ymax) {
+		ymax = v.y;
+		ret = true;
+	}
+	return ret;
 }
 
 template <typename T>
-void Rect<T>::Combine(const Rect<T>& r)
+bool Rect<T>::Combine(const Rect<T>& r)
 {
-	if (r.xmin < xmin) xmin = r.xmin;
-	if (r.xmax > xmax) xmax = r.xmax;
-	if (r.ymin < ymin) ymin = r.ymin;
-	if (r.ymax > ymax) ymax = r.ymax;
+	bool ret = false;
+	if (r.xmin < xmin) {
+		xmin = r.xmin;
+		ret = true;
+	}
+	if (r.xmax > xmax) {
+		xmax = r.xmax;
+		ret = true;
+	}
+	if (r.ymin < ymin) {
+		ymin = r.ymin;
+		ret = true;
+	}
+	if (r.ymax > ymax) {
+		ymax = r.ymax;
+		ret = true;
+	}
+	return ret;
 }
 
 template <typename T>

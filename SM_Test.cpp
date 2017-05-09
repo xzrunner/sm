@@ -140,7 +140,7 @@ bool is_polygon_colckwise(const std::vector<vec2>& poly)
 	}
 
 	float left = FLT_MAX;
-	int left_idx;
+	int left_idx = 0;
 	int sz = poly.size();
 	for (int i = 0; i < sz; ++i) {
 		if (poly[i].x < left) {

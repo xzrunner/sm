@@ -86,12 +86,13 @@ Matrix2D Matrix2D::Inverted() const
 void Matrix2D::Shear(float kx, float ky)
 {
 	Matrix2D m = *this;
-	x[0] = m.x[0] + m.x[1] * ky;
-	x[1] = m.x[0] * kx + m.x[1];
-	x[2] = m.x[2] + m.x[3] * ky;
-	x[3] = m.x[2] * kx + m.x[3];
-	x[4] = m.x[4] + m.x[5] * ky;
-	x[5] = m.x[4] * kx + m.x[5];
+	x[0] = m.x[0] + m.x[1] * kx;
+	x[1] = m.x[0] * ky + m.x[1];
+	x[2] = m.x[2] + m.x[3] * kx;
+	x[3] = m.x[2] * ky + m.x[3];
+	x[4] = m.x[4] + m.x[5] * kx;
+	x[5] = m.x[4] * ky + m.x[5];
+
 }
 
 void Matrix2D::Scale(float sx, float sy)

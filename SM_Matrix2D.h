@@ -30,6 +30,8 @@ public:
 
 	void SetTransformation(float x, float y, float angle, float sx, float sy, float ox, float oy, float kx, float ky);
 
+	static void Mul(const Matrix2D& m0, const Matrix2D& m1, Matrix2D& out);
+
 }; // Matrix2D
 
 }

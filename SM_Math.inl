@@ -132,6 +132,18 @@ float cos(float x)
 #endif
 }
 
+inline
+float sin_fast(float x)
+{
+	return sin_low_precision(x);
+}
+
+inline
+float cos_fast(float x)
+{
+	return cos_low_precision(x);
+}
+
 }
 
 #endif // _SPATIAL_MATH_MATH_INL_

@@ -5,8 +5,10 @@ namespace sm
 {
 
 float sin(float x);
-
 float cos(float x);
+
+float sin_fast(float x);
+float cos_fast(float x);
 
 }
 

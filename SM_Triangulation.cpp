@@ -41,19 +41,19 @@ static void implement(struct triangulateio& in, struct triangulateio& out, Trian
 	switch (tc)
 	{
 	case TC_CONSTRAINED:
-		triangulate("pz", &in, &out, (struct triangulateio *) NULL);
+		triangulate((char*)"Qpz", &in, &out, (struct triangulateio *) NULL);
 		break;
 	case TC_CONFORMING:
-		triangulate("pzD", &in, &out, (struct triangulateio *) NULL);
+		triangulate((char*)"QpzD", &in, &out, (struct triangulateio *) NULL);
 		break;
 	case TC_CONSTRAINED_CONFORMING_ANGLE:
-		triangulate("pzq", &in, &out, (struct triangulateio *) NULL);
+		triangulate((char*)"Qpzq", &in, &out, (struct triangulateio *) NULL);
 		break;
 	case TC_CONSTRAINED_CONFORMING_AREA:
-		triangulate("pza10000", &in, &out, (struct triangulateio *) NULL);
+		triangulate((char*)"Qpza10000", &in, &out, (struct triangulateio *) NULL);
 		break;
 	case TC_CONSTRAINED_CONFORMING_COUNT:
-		triangulate("pzu100", &in, &out, (struct triangulateio *) NULL);
+		triangulate((char*)"Qpzu100", &in, &out, (struct triangulateio *) NULL);
 		break;
 	default:
 		assert(0);

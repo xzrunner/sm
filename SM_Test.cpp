@@ -317,8 +317,8 @@ bool is_polygon_in_polygon(const std::vector<vec2>& in, const std::vector<vec2>&
 		return false;
 	}
 
-	int sz0 = in.size(),
-		sz1 = out.size();
+	int sz0 = (int)in.size(),
+		sz1 = (int)out.size();
 	for (int i = 0; i < sz0; ++i) {
 		if (is_point_intersect_polyline(in[i], out)) { continue; }
 		if (!is_point_in_area(in[i], out)) {
@@ -336,7 +336,7 @@ bool is_polygon_in_polygon(const std::vector<vec2>& in, const std::vector<vec2>&
 		const vec2& start0 = in[idx0];
 		int next_idx0 = get_next_idx_in_ring(sz0, idx0, step0);
 		const vec2& end0 = in[next_idx0];
-		for (int i = 0; i < sz1; ++i) {
+		for (int j = 0; j < sz1; ++j) {
 			const vec2& start1 = out[idx1];
 			int next_idx1 = get_next_idx_in_ring(sz1, idx1, step1);
 			const vec2& end1 = out[next_idx1];
@@ -353,8 +353,8 @@ bool is_polygon_in_polygon(const std::vector<vec2>& in, const std::vector<vec2>&
 
 					float angle_start1 = get_angle(end0, end_next0, start1),
 						angle_end_next1 = get_angle(end0, end_next0, end_next1);
-					if (angle0 > angle_start1 && angle_start1 != 0 ||
-						angle0 > angle_end_next1 && angle_end_next1 != 0) {
+					if ((angle0 > angle_start1 && angle_start1) != 0 ||
+						(angle0 > angle_end_next1 && angle_end_next1 != 0)) {
 							return false;
 					}
 				} else if (is_cross0) {

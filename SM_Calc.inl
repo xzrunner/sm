@@ -148,13 +148,13 @@ float dis_pos_to_multi_pos(const vec2& pos, const std::vector<vec2>& multi_pos, 
 {
 	float nearest = FLT_MAX;
 	int idx = -1;
-	for (int i = 0, n = multi_pos.size(); i < n; ++i)
+	for (size_t i = 0, n = multi_pos.size(); i < n; ++i)
 	{
 		const float dis = dis_pos_to_pos(pos, multi_pos[i]);
 		if (dis < nearest)
 		{
 			nearest = dis;
-			idx = i;
+			idx = (int)i;
 		}
 	}
 	if (nearest_idx) {

@@ -196,7 +196,7 @@ float in_out_circ(float t)
 inline
 float in_elastic_function(float t)
 {
-	float p = t;
+	const float p = 0.5f;
 	t -= 1;
 	return -1 * (pow(2, 10*t) * sin((t-p/4)*(2*SM_PI)/p));
 }
@@ -204,14 +204,14 @@ float in_elastic_function(float t)
 inline
 float out_elastic_function(float t)
 {
-	float p = t;
+	const float p = 0.5f;
 	return pow(2, -10*t) * sin((t-p/4)*(2*SM_PI/p)) + 1;
 }
 
 inline
 float in_out_elastic_function(float t)
 {
-	float p = t;
+	const float p = 0.5f;
 	t *= 2;
 	if (t < 1) {
 		t -= 1;
@@ -237,7 +237,7 @@ float out_elastic(float t)
 inline
 float in_out_elastic(float t) 
 {
-	return in_out_elastic_function(0.5f);
+	return in_out_elastic_function(t);
 }
 
 inline

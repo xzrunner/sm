@@ -117,19 +117,19 @@ float in_out_quint(float t)
 inline
 float in_sine(float t) 
 {
-	return -1 * cos(t * SM_PI / 2) + 1;
+	return -1 * cosf(t * SM_PI / 2) + 1;
 }
 
 inline
 float out_sine(float t) 
 {
-	return sin(t * SM_PI / 2);
+	return sinf(t * SM_PI / 2);
 }
 
 inline
 float in_out_sine(float t) 
 {
-	return -0.5f * (cos(SM_PI * t) - 1);
+	return -0.5f * (cosf(SM_PI * t) - 1);
 }
 
 inline
@@ -138,7 +138,7 @@ float in_expo(float t)
 	if (t == 0) {
 		return 0;
 	} else {
-		return pow(2, 10*(t-1));
+		return powf(2, 10*(t-1));
 	}
 }
 
@@ -148,7 +148,7 @@ float out_expo(float t)
 	if (t == 1) {
 		return 1;
 	} else {
-		return 1 - pow(2, -10*t);
+		return 1 - powf(2, -10*t);
 	}
 }
 
@@ -161,9 +161,9 @@ float in_out_expo(float t)
 		return 1;
 	} else {
 		if (t < 0.5f) {
-			return 0.5f * pow(2, (20*t)-10);
+			return 0.5f * powf(2, (20*t)-10);
 		} else {
-			return 1 - 0.5f * pow(2, (-20*t)+10);
+			return 1 - 0.5f * powf(2, (-20*t)+10);
 		}
 	}
 }
@@ -171,14 +171,14 @@ float in_out_expo(float t)
 inline
 float in_circ(float t) 
 {
-	return -1 * (sqrt(1-t*t) - 1);
+	return -1 * (sqrtf(1-t*t) - 1);
 }
 
 inline
 float out_circ(float t) 
 {
 	t -= 1;
-	return sqrt(1 - (t * t));
+	return sqrtf(1 - (t * t));
 }
 
 inline
@@ -186,10 +186,10 @@ float in_out_circ(float t)
 {
 	t *= 2;
 	if (t < 1) {
-		return -0.5f * (sqrt(1-t*t) - 1);
+		return -0.5f * (sqrtf(1-t*t) - 1);
 	} else {
 		t = t - 2;
-		return 0.5f * (sqrt(1-t*t) + 1);
+		return 0.5f * (sqrtf(1-t*t) + 1);
 	}
 }
 
@@ -198,14 +198,14 @@ float in_elastic_function(float t)
 {
 	const float p = 0.5f;
 	t -= 1;
-	return -1 * (pow(2, 10*t) * sin((t-p/4)*(2*SM_PI)/p));
+	return -1 * (powf(2, 10*t) * sinf((t-p/4)*(2*SM_PI)/p));
 }
 
 inline
 float out_elastic_function(float t)
 {
 	const float p = 0.5f;
-	return pow(2, -10*t) * sin((t-p/4)*(2*SM_PI/p)) + 1;
+	return powf(2, -10*t) * sinf((t-p/4)*(2*SM_PI/p)) + 1;
 }
 
 inline
@@ -215,10 +215,10 @@ float in_out_elastic_function(float t)
 	t *= 2;
 	if (t < 1) {
 		t -= 1;
-		return -0.5f * (pow(2, 10*t) * sin((t-p/4)*2*SM_PI/p));
+		return -0.5f * (powf(2, 10*t) * sinf((t-p/4)*2*SM_PI/p));
 	} else {
 		t -= 1;
-		return pow(2, -10*t)*sin((t-p/4)*2*SM_PI/p)*0.5f + 1;
+		return powf(2, -10*t)*sinf((t-p/4)*2*SM_PI/p)*0.5f + 1;
 	}
 }
 

@@ -68,7 +68,7 @@ Matrix2D Matrix2D::Inverted() const
 	}
 
 	Matrix2D ret;
-	int t = x[0] * x[3] - x[1] * x[2] ;
+	int t = static_cast<int>(x[0] * x[3] - x[1] * x[2]);
 	if (t == 0) {
 		return ret;
 	}
@@ -115,21 +115,21 @@ void Matrix2D::Rotate(float rotate)
 		return;
 	}
 
-	int cosd = cosf(rotate);
-	int sind = sinf(rotate);
+	float cosd = cosf(rotate);
+	float sind = sinf(rotate);
 
-	int m0_cosd = x[0] * cosd;
-	int m0_sind = x[0] * sind;
-	int m1_cosd = x[1] * cosd;
-	int m1_sind = x[1] * sind;
-	int m2_cosd = x[2] * cosd;
-	int m2_sind = x[2] * sind;
-	int m3_cosd = x[3] * cosd;
-	int m3_sind = x[3] * sind;
-	int m4_cosd = x[4] * cosd;
-	int m4_sind = x[4] * sind;
-	int m5_cosd = x[5] * cosd;
-	int m5_sind = x[5] * sind;
+	float m0_cosd = x[0] * cosd;
+	float m0_sind = x[0] * sind;
+	float m1_cosd = x[1] * cosd;
+	float m1_sind = x[1] * sind;
+	float m2_cosd = x[2] * cosd;
+	float m2_sind = x[2] * sind;
+	float m3_cosd = x[3] * cosd;
+	float m3_sind = x[3] * sind;
+	float m4_cosd = x[4] * cosd;
+	float m4_sind = x[4] * sind;
+	float m5_cosd = x[5] * cosd;
+	float m5_sind = x[5] * sind;
 
 	x[0] = m0_cosd - m1_sind;
 	x[1] = m0_sind + m1_cosd;

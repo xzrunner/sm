@@ -94,21 +94,21 @@ MatrixFix MatrixFix::Inverted() const
 
 void MatrixFix::Translate(float _x, float _y)
 {
-	x[4] += roundf(_x * TRANSLATE_SCALE);
-	x[5] += roundf(_y * TRANSLATE_SCALE);
+	x[4] += static_cast<int>(roundf(_x * TRANSLATE_SCALE));
+	x[5] += static_cast<int>(roundf(_y * TRANSLATE_SCALE));
 }
 
 void MatrixFix::Scale(float sx, float sy)
 {
 	if (sx != 1) {
-		x[0] *= sx;
-		x[2] *= sx;
-		x[4] *= sx;
+		x[0] = static_cast<int>(x[0] * sx);
+		x[2] = static_cast<int>(x[2] * sx);
+		x[4] = static_cast<int>(x[4] * sx);
 	}
 	if (sy != 1) {
-		x[1] *= sy;
-		x[3] *= sy;
-		x[5] *= sy;
+		x[1] = static_cast<int>(x[1] * sy);
+		x[3] = static_cast<int>(x[3] * sy);
+		x[5] = static_cast<int>(x[5] * sy);
 	}
 }
 
@@ -271,9 +271,9 @@ void MatrixFix::Rotate(float rotate)
 		return;
 	}
 
-	int deg = SM_RAD_TO_DEG * -rotate;
+	float deg = SM_RAD_TO_DEG * -rotate;
 	deg = deg - floor(deg / 360.0f) * 360;
-	int d = deg * (ROTATE_SCALE / 360.0);
+	int d = static_cast<int>(deg * (ROTATE_SCALE / 360.0));
 
 	int cosd = icosd(d);
 	int sind = isind(d);

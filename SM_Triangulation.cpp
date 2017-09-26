@@ -319,12 +319,12 @@ void triangulate_holes_new(const std::vector<vec2>& bound,
 
 		hold_center += hole_fixed[i];
 	}
-	hold_center /= hole_fixed.size();
+	hold_center /= static_cast<float>(hole_fixed.size());
 
 	in.numberofsegments = in.numberofpoints;
 	in.segmentlist = (int *) malloc(in.numberofsegments * 2 * sizeof(int));
 	index = 0;
-	for (int i = 0; i < bound_fixed.size() - 1; ++i)
+	for (size_t i = 0; i < bound_fixed.size() - 1; ++i)
 	{
 		in.segmentlist[index++] = i;
 		in.segmentlist[index++] = i + 1;
@@ -332,7 +332,7 @@ void triangulate_holes_new(const std::vector<vec2>& bound,
 	in.segmentlist[index++] = bound_fixed.size() - 1;
 	in.segmentlist[index++] = 0;
 
-	for (int i = 0; i < hole_fixed.size() - 1; ++i)
+	for (size_t i = 0; i < hole_fixed.size() - 1; ++i)
 	{
 		in.segmentlist[index++] = i;
 		in.segmentlist[index++] = i + 1;

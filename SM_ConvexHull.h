@@ -3,13 +3,13 @@
 
 #include "SM_Vector.h"
 
-#include <vector>
+#include <cu/cu_stl.h>
 
 namespace sm
 {
 
-void convex_hull(const std::vector<vec2>& points, 
-				 std::vector<vec2>& convex_hull);
+void convex_hull(const CU_VEC<vec2>& points, 
+				 CU_VEC<vec2>& convex_hull);
 
 }
 

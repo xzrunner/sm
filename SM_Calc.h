@@ -3,7 +3,7 @@
 
 #include "SM_Vector.h"
 
-#include <vector>
+#include <cu/cu_stl.h>
 
 #include <stddef.h>
 
@@ -45,7 +45,7 @@ bool is_turn_right(const vec2& a, const vec2& center, const vec2& b);
  */
 float dis_pos_to_pos(const vec2& v0, const vec2& v1);
 float dis_square_pos_to_pos(const vec2& v0, const vec2& v1);
-float dis_pos_to_multi_pos(const vec2& pos, const std::vector<vec2>& multi_pos, int* nearest_idx = NULL);
+float dis_pos_to_multi_pos(const vec2& pos, const CU_VEC<vec2>& multi_pos, int* nearest_idx = NULL);
 float dis_pos_to_seg(const vec2& v, const vec2& s0, const vec2& s1);
 
 float distance_aabb(const vec3& pos, const vec3& aabb_min, const vec3& aabb_max);

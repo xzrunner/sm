@@ -7,9 +7,9 @@ namespace sm
 {
 
 static inline
-void points_reduction(const std::vector<vec2>& line, 
+void points_reduction(const CU_VEC<vec2>& line, 
 					  float precision, 
-					  std::vector<bool>& flag,
+					  CU_VEC<bool>& flag,
 					  int begin, 
 					  int end)
 {
@@ -53,9 +53,9 @@ void points_reduction(const std::vector<vec2>& line,
 	}
 }
 
-void douglas_peucker(const std::vector<vec2>& line, 
+void douglas_peucker(const CU_VEC<vec2>& line, 
 					 float precision, 
-					 std::vector<vec2>& dst)
+					 CU_VEC<vec2>& dst)
 {
 	if (line.empty()) {
 		return;
@@ -63,7 +63,8 @@ void douglas_peucker(const std::vector<vec2>& line,
 
 	dst.clear();
 
-	std::vector<bool> flag(line.size(), false);
+	CU_VEC<bool> flag;
+	flag.resize(line.size(), false);
 	points_reduction(line, precision, flag, 0, line.size() - 1);
 	for (int i = 0, n = line.size(); i < n; ++i) {
 		if (flag[i]) dst.push_back(line[i]);

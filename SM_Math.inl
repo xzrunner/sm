@@ -5,6 +5,8 @@
 
 #include "sm_const.h"
 
+#include <math.h>
+
 namespace sm
 {
 

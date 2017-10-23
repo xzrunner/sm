@@ -6,6 +6,10 @@ include $(CLEAR_VARS)
 
 LOCAL_MODULE := sm
 
+LOCAL_C_INCLUDES  := \
+	${CLIB_PATH} \
+	${MEMMGR_SRC_PATH}/include \
+	
 LOCAL_SRC_FILES := \
 	$(subst $(LOCAL_PATH)/,,$(shell find $(LOCAL_PATH) -name "*.cpp" -print)) \
 	$(subst $(LOCAL_PATH)/,,$(shell find $(LOCAL_PATH) -name "*.c" -print)) \

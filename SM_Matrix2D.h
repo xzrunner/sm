@@ -34,6 +34,14 @@ public:
 
 }; // Matrix2D
 
+#define SM_MAT2D_MUL(m0, m1, out)                   \
+	out[0] = m0[0] * m1[0] + m0[1] * m1[2];         \
+	out[1] = m0[0] * m1[1] + m0[1] * m1[3];         \
+	out[2] = m0[2] * m1[0] + m0[3] * m1[2];         \
+	out[3] = m0[2] * m1[1] + m0[3] * m1[3];         \
+	out[4] = m0[4] * m1[0] + m0[5] * m1[2] + m1[4]; \
+	out[5] = m0[4] * m1[1] + m0[5] * m1[3] + m1[5]; \
+
 }
 
 #include "SM_Matrix2D.inl"

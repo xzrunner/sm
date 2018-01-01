@@ -112,6 +112,9 @@ public:
 	Vector3(T x, T y, T z);
 	Vector3(const Vector3& v);
 
+	T operator[](size_t i) const;
+	T& operator[](size_t i);
+
 	Vector3& operator = (const Vector3& v);
 	void Assign(T x, T y, T z);
 
@@ -165,6 +168,9 @@ public:
 	Vector4();
 	Vector4(T x, T y, T z, T w);
 	Vector4(const Vector4& v);
+
+	T operator[](size_t i) const;
+	T& operator[](size_t i);
 
 	Vector4& operator = (const Vector4& v);
 	void Assign(T x, T y, T z, T w);

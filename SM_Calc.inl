@@ -178,6 +178,18 @@ float dis_pos_to_seg(const vec2& v, const vec2& s0, const vec2& s1)
 }
 
 inline
+float dis_pos3_to_pos3(const vec3& v0, const vec3& v1)
+{
+	return (v0 - v1).Length();
+}
+
+inline
+float dis_square_pos3_to_pos3(const vec3& v0, const vec3& v1)
+{
+	return (v0 - v1).LengthSquared();
+}
+
+inline
 float distance_aabb(const vec3& pos, const vec3& aabb_min, const vec3& aabb_max)
 {
 	vec3 center;

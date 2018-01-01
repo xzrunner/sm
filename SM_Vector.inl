@@ -4,6 +4,7 @@
 #include <limits>
 
 #include <math.h>
+#include <assert.h>
 
 namespace sm
 {
@@ -246,6 +247,20 @@ Vector3<T>::Vector3(const Vector3& v)
 }
 
 template <typename T>
+T Vector3<T>::operator[](size_t i) const
+{
+	assert(i < 3);
+	return xyz[i];
+}
+
+template <typename T>
+T& Vector3<T>::operator[](size_t i)
+{
+	assert(i < 3);
+	return xyz[i];
+}
+
+template <typename T>
 Vector3<T>& Vector3<T>::operator = (const Vector3& v)
 {
 	x = v.x;
@@ -392,6 +407,20 @@ template <typename T>
 Vector4<T>::Vector4(const Vector4& v)
 	: x(v.x), y(v.y), z(v.z), w(v.w)
 {
+}
+
+template <typename T>
+T Vector4<T>::operator[](size_t i) const
+{
+	assert(i < 4);
+	return xyzw[i];
+}
+
+template <typename T>
+T& Vector4<T>::operator[](size_t i)
+{
+	assert(i < 4);
+	return xyzw[i];
 }
 
 template <typename T>

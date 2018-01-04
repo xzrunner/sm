@@ -192,10 +192,29 @@ inline QuaternionT<T> QuaternionT<T>::Scaled(T s) const
 }
 
 template <typename T>
-Vector4<T> QuaternionT<T>::ToVector() const
+inline Vector4<T> QuaternionT<T>::ToVector() const
 {
 	return Vector4<T>(x, y, z, w);
 }
+
+//template <typename T>
+//inline Matrix3<T> QuaternionT<T>::ToMatrix() const
+//{
+//	const T s = 2;
+//	T xs, ys, zs;
+//	T wx, wy, wz;
+//	T xx, xy, xz;
+//	T yy, yz, zz;
+//	xs = x * s;  ys = y * s;  zs = z * s;
+//	wx = w * xs; wy = w * ys; wz = w * zs;
+//	xx = x * xs; xy = x * ys; xz = x * zs;
+//	yy = y * ys; yz = y * zs; zz = z * zs;
+//	Matrix3<T> m;
+//	m.x.x = 1 - (yy + zz); m.y.x = xy - wz;  m.z.x = xz + wy;
+//	m.x.y = xy + wz; m.y.y = 1 - (xx + zz); m.z.y = yz - wx;
+//	m.x.z = xz - wy; m.y.z = yz + wx;  m.z.z = 1 - (xx + yy);
+//	return m;
+//}
 
 // Compute the quaternion that rotates from a to b, avoiding numerical instability.
 // Taken from "The Shortest Arc Quaternion" by Stan Melax in "Game Programming Gems".

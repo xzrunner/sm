@@ -479,6 +479,23 @@ Matrix4<T> Matrix4<T>::Perspective(T l, T r, T b, T t, T n, T f)
 }
 
 template <typename T>
+Matrix4<T> Matrix4<T>::Perspective(T fovy, T aspect, T znear, T zfar)
+{
+	assert(abs(aspect - std::numeric_limits<T>::epsilon()) > static_cast<T>(0));
+
+	Matrix4 m;
+
+	T const tan_half_fovy = tan(fovy / static_cast<T>(2) * SM_DEG_TO_RAD);
+	m.c[0][0] = static_cast<T>(1) / (aspect * tan_half_fovy);
+	m.c[1][1] = static_cast<T>(1) / (tan_half_fovy);
+	m.c[2][2] = zfar / (znear - zfar);
+	m.c[2][3] = -static_cast<T>(1);
+	m.c[3][2] = -(zfar * znear) / (zfar - znear);
+
+	return m;
+}
+
+template <typename T>
 Matrix4<T> Matrix4<T>::Orthographic(T l, T r, T b, T t, T n, T f)
 {
 	Matrix4 m;

@@ -47,7 +47,7 @@ bool QuaternionT<T>::operator != (const QuaternionT<T>& q) const
 template <typename T>
 QuaternionT<T> QuaternionT<T>::operator - () const
 {
-	return QuaternionT<T>(-x, -y, -z, -w);
+	return QuaternionT<T>(x, y, z, -w);
 }
 
 template <typename T>

@@ -65,11 +65,11 @@ QuaternionT<T> QuaternionT<T>::operator - (const QuaternionT<T>& q) const
 template <typename T>
 QuaternionT<T> QuaternionT<T>::operator * (const QuaternionT<T>& q) const
 {
-	T x = y * q.z - z * q.y + q.x * w + x * q.w;
-	T y = z * q.x - x * q.z + q.y * w + y * q.w;
-	T z = x * q.y - y * q.x + q.z * w + z * q.w;
-	T w = w * q.w - (x * q.x + y * q.y + z * q.z);
-	return QuaternionT<T>(x, y, z, w);
+	T _x = y * q.z - z * q.y + q.x * w + x * q.w;
+	T _y = z * q.x - x * q.z + q.y * w + y * q.w;
+	T _z = x * q.y - y * q.x + q.z * w + z * q.w;
+	T _w = w * q.w - (x * q.x + y * q.y + z * q.z);
+	return QuaternionT<T>(_x, _y, _z, _w);
 }
 
 template <typename T>

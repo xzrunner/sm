@@ -249,5 +249,36 @@ QuaternionT<T>  QuaternionT<T>::CreateFromAxisAngle(const Vector3<T>& axis, T ra
 	return q;
 }
 
+template <typename T>
+QuaternionT<T> QuaternionT<T>::CreateFromEulerAngle(T roll, T pitch, T yaw)
+{
+	QuaternionT<T> q;
+	T r = roll / 2;
+	T p = pitch / 2;
+	T y = yaw / 2;
+	q.w = sm::cos(y) * sm::cos(p) * sm::cos(r) + sm::sin(y) * sm::sin(p) * sm::sin(r);
+	q.x = sm::cos(y) * sm::sin(p) * sm::cos(r) + sm::sin(y) * sm::cos(p) * sm::sin(r);
+	q.y = sm::sin(y) * sm::cos(p) * sm::cos(r) - sm::cos(y) * sm::sin(p) * sm::sin(r);
+	q.z = sm::cos(y) * sm::cos(p) * sm::sin(r) - sm::sin(y) * sm::sin(p) * sm::cos(r);
+	return q;
+}
+
+template <typename T>
+void QuaternionT<T>::TransToEulerAngle(const QuaternionT<T>& q, T& roll, T& pitch, T& yaw)
+{
+	T sp = -2 * (q.y * q.z - q.w * q.x);
+	if (fabs(sp) > 0.9999f)
+	{
+		pitch = SM_PI / 2 * sp;
+		yaw = atan2(-q.x * q.z + q.w * q.y, 0.5 - q.y * q.y - q.z * q.z);
+		roll = 0;
+	}
+	else
+	{
+		pitch = asin(sp);
+		yaw = atan2(q.x * q.z + q.w * q.y, 0.5 - q.x * q.x - q.y * q.y);
+		roll = atan2(q.x * q.y + q.w * q.z, 0.5 - q.x * q.x - q.z * q.z);
+	}
+}
 
 }

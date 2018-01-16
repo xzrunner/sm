@@ -43,6 +43,9 @@ public:
 
 	static QuaternionT<T> CreateFromVectors(const Vector3<T>& v0, const Vector3<T>& v1);
 	static QuaternionT<T> CreateFromAxisAngle(const Vector3<T>& axis, T radians);
+	static QuaternionT<T> CreateFromEulerAngle(T roll, T pitch, T yaw);
+
+	static void TransToEulerAngle(const QuaternionT<T>& q, T& roll, T& pitch, T& yaw);
 
 public:
 	T x;

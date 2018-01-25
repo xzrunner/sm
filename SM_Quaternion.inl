@@ -270,14 +270,14 @@ void QuaternionT<T>::TransToEulerAngle(const QuaternionT<T>& q, T& roll, T& pitc
 	if (fabs(sp) > 0.9999f)
 	{
 		pitch = SM_PI / 2 * sp;
-		yaw = atan2(-q.x * q.z + q.w * q.y, 0.5 - q.y * q.y - q.z * q.z);
+		yaw = static_cast<T>(atan2(-q.x * q.z + q.w * q.y, 0.5 - q.y * q.y - q.z * q.z));
 		roll = 0;
 	}
 	else
 	{
-		pitch = asin(sp);
-		yaw = atan2(q.x * q.z + q.w * q.y, 0.5 - q.x * q.x - q.y * q.y);
-		roll = atan2(q.x * q.y + q.w * q.z, 0.5 - q.x * q.x - q.z * q.z);
+		pitch = static_cast<T>(asin(sp));
+		yaw = static_cast<T>(atan2(q.x * q.z + q.w * q.y, 0.5 - q.x * q.x - q.y * q.y));
+		roll = static_cast<T>(atan2(q.x * q.y + q.w * q.z, 0.5 - q.x * q.x - q.z * q.z));
 	}
 }
 

@@ -241,8 +241,8 @@ template <typename T>
 QuaternionT<T>  QuaternionT<T>::CreateFromAxisAngle(const Vector3<T>& axis, T radians)
 {
 	QuaternionT<T> q;
-	q.w = sm::cos(radians / 2);
-	q.x = q.y = q.z = sm::sin(radians / 2);
+	q.w = cos(radians / 2);
+	q.x = q.y = q.z = sin(radians / 2);
 	q.x *= axis.x;
 	q.y *= axis.y;
 	q.z *= axis.z;
@@ -256,10 +256,10 @@ QuaternionT<T> QuaternionT<T>::CreateFromEulerAngle(T roll, T pitch, T yaw)
 	T r = roll / 2;
 	T p = pitch / 2;
 	T y = yaw / 2;
-	q.w = sm::cos(y) * sm::cos(p) * sm::cos(r) + sm::sin(y) * sm::sin(p) * sm::sin(r);
-	q.x = sm::cos(y) * sm::sin(p) * sm::cos(r) + sm::sin(y) * sm::cos(p) * sm::sin(r);
-	q.y = sm::sin(y) * sm::cos(p) * sm::cos(r) - sm::cos(y) * sm::sin(p) * sm::sin(r);
-	q.z = sm::cos(y) * sm::cos(p) * sm::sin(r) - sm::sin(y) * sm::sin(p) * sm::cos(r);
+	q.w = cos(y) * cos(p) * cos(r) + sin(y) * sin(p) * sin(r);
+	q.x = cos(y) * sin(p) * cos(r) + sin(y) * cos(p) * sin(r);
+	q.y = sin(y) * cos(p) * cos(r) - cos(y) * sin(p) * sin(r);
+	q.z = cos(y) * cos(p) * sin(r) - sin(y) * sin(p) * cos(r);
 	return q;
 }
 

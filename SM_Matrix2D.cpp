@@ -147,7 +147,7 @@ void Matrix2D::Translate(float _x, float _y)
 
 void Matrix2D::SetTransformation(float _x, float _y, float angle, float sx, float sy, float ox, float oy, float kx, float ky)
 {
-	float c = sm::cos(angle), s = sm::sin(angle);
+	float c = cos(angle), s = sin(angle);
 	// matrix multiplication carried out on paper:
 	// |1   x| |c -s  | |sx     | | 1 ky  | |1   -ox|
 	// |  1 y| |s  c  | |   sy  | |kx  1  | |  1 -oy|

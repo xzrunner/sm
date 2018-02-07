@@ -46,6 +46,8 @@ bool is_point_intersect_polyline(const vec2& point, const CU_VEC<vec2>& polyline
 bool is_segment_intersect_segment(const vec2& s0, const vec2& e0, const vec2& s1, const vec2& e1);
 bool is_segment_intersect_polyline(const vec2& s, const vec2& e, const CU_VEC<vec2>& poly);
 
+bool is_two_line_parallel(const vec2& s0, const vec2& e0, const vec2& s1, const vec2& e1);
+
 /**
  *  @brief
  *    rect

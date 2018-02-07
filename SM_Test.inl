@@ -103,6 +103,14 @@ bool is_segment_intersect_segment(const vec2& s0, const vec2& e0, const vec2& s1
 }
 
 inline
+bool is_two_line_parallel(const vec2& s0, const vec2& e0, const vec2& s1, const vec2& e1)
+{
+	float denominatorX = (e1.y - s1.y) * (e0.x - s0.x) - (e0.y - s0.y) * (e1.x - s1.x),
+		denominatorY = (e1.x - s1.x) * (e0.y - s0.y) - (e0.x - s0.x) * (e1.y - s1.y);
+	return fabs(denominatorX) < FLT_EPSILON || fabs(denominatorY) < FLT_EPSILON;
+}
+
+inline
 bool is_rect_contain_point(const rect& r, const vec2& v)
 {
 	return v.x >= r.xmin && v.x <= r.xmax

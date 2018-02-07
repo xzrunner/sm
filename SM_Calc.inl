@@ -39,8 +39,8 @@ vec2 rotate_vector(const vec2& v, float rad)
 	}
 
 	vec2 ret;
-	float s = sm::sin(rad),
-		  c = sm::cos(rad);
+	float s = sin(rad),
+		  c = cos(rad);
 	ret.x = v.x * c - v.y * s;
 	ret.y = v.x * s + v.y * c;
 	return ret;
@@ -286,6 +286,47 @@ inline
 vec2 get_tri_gravity_center(const vec2& p0, const vec2& p1, const vec2& p2)
 {
 	return vec2((p0.x + p1.x + p2.x) / 3, (p0.y + p1.y + p2.y) / 3);
+}
+
+inline
+float get_polygon_area(const CU_VEC<sm::vec2>& polygon)
+{
+	if (polygon.size() < 3)
+		return 0;
+
+	float s = 0;
+	for (int i = 0, n = polygon.size(); i < n; i++) {
+		int next = (i + 1) % n;
+		s += (polygon[i].y + polygon[next].y) * (polygon[i].x - polygon[next].x);
+	}
+
+	return fabs(s / 2.0f);
+}
+
+inline
+float get_triangle_area(const sm::vec2& p0, const sm::vec2& p1, const sm::vec2& p2)
+{
+	float s = 0;
+	s += (p1.y + p0.y) * (p1.x - p0.x);
+	s += (p2.y + p1.y) * (p2.x - p1.x);
+	s += (p0.y + p2.y) * (p0.x - p2.x);
+	return fabs(s / 2.0f);
+}
+
+inline
+float get_polygon_perimeter(const CU_VEC<sm::vec2>& poly)
+{
+	if (poly.size() < 2) {
+		return 0;
+	}
+
+	float perimeter = 0.0f;
+	for (int i = 0, n = poly.size() - 1; i < n; ++i) {
+		perimeter += sm::dis_pos_to_pos(poly[i], poly[i + 1]);
+	}
+	perimeter += sm::dis_pos_to_pos(poly[0], poly[poly.size() - 1]);
+
+	return perimeter;
 }
 
 }

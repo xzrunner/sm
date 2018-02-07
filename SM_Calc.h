@@ -73,6 +73,19 @@ int get_foot_of_perpendicular(const vec2& s, const vec2& e, const vec2& out, vec
  */
 vec2 get_tri_gravity_center(const vec2& p0, const vec2& p1, const vec2& p2);
 
+/**
+*  @brief
+*    area
+*/
+float get_polygon_area(const CU_VEC<sm::vec2>& polygon);
+float get_triangle_area(const sm::vec2& p0, const sm::vec2& p1, const sm::vec2& p2);
+
+/**
+*  @brief
+*    perimeter
+*/
+float get_polygon_perimeter(const CU_VEC<sm::vec2>& poly);
+
 }
 
 #include "SM_Calc.inl"

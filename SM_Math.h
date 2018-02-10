@@ -10,6 +10,9 @@ float cos(float x);
 float sin_fast(float x);
 float cos_fast(float x);
 
+int next_p2(int a);
+bool is_power_of_two(int x);
+
 }
 
 #include "SM_Math.inl"

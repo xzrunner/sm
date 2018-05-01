@@ -270,7 +270,7 @@ Vector3<T>& Vector3<T>::operator = (const Vector3& v)
 }
 
 template <typename T>
-void Vector3<T>::Assign(T x, T y, T z) 
+void Vector3<T>::Set(T x, T y, T z) 
 {
 	this->x = x;
 	this->y = y;

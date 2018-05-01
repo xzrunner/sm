@@ -116,7 +116,7 @@ public:
 	T& operator[](size_t i);
 
 	Vector3& operator = (const Vector3& v);
-	void Assign(T x, T y, T z);
+	void Set(T x, T y, T z);
 
 	bool operator == (const Vector3& v) const;
 	bool operator != (const Vector3& v) const;

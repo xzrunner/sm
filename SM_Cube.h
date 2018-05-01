@@ -12,9 +12,27 @@ template <typename T>
 class Cube
 {
 public:
-	T xmin, ymin;
-	T xmax, ymax;
-	T zmin, zmax;
+	union
+	{
+		struct
+		{
+			T xmin;
+			T ymin;
+			T zmin;
+
+			T xmax;
+			T ymax;
+			T zmax;
+		};
+
+		struct
+		{
+			T min[3];
+			T max[3];
+		};
+	};
+
+
 
 public:
 	Cube();
@@ -43,6 +61,9 @@ public:
 
 	void Translate(const Vector3<T>& trans);
 	void Scale(const Vector3<T>& scale);
+
+	const T* Max() const { return max; }
+	const T* Min() const { return min; }
 
 }; // Cube
 

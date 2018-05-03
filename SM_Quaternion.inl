@@ -93,7 +93,7 @@ void QuaternionT<T>::Slerp(const QuaternionT<T>& a, const QuaternionT<T>& b, T t
 		x = -b.x; y = -b.y;
 		z = -b.z; w = -b.w;
 	} else {
-		*this = *b;
+		*this = b;
 	}
 	T scale0 = 1 - t, scale1 = t;
 	if( (1 - cos_theta) > 0.001f ) {

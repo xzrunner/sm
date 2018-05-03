@@ -33,6 +33,15 @@ QuaternionT<T>::QuaternionT(T x, T y, T z, T w)
 }
 
 template <typename T>
+QuaternionT<T>::QuaternionT(const Vector4<T>& vec4)
+	: x(vec4.x)
+	, y(vec4.y)
+	, z(vec4.z)
+	, w(vec4.w)
+{
+}
+
+template <typename T>
 bool QuaternionT<T>::operator == (const QuaternionT<T>& q) const
 {
 	return x == q.x && y == q.y && z == q.z && w == q.w;

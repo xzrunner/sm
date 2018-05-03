@@ -13,6 +13,7 @@ public:
 	QuaternionT();
 	QuaternionT(T x, T y, T z);
 	QuaternionT(T x, T y, T z, T w);
+	QuaternionT(const Vector4<T>& vec4);
 
 	bool operator == (const QuaternionT<T>& q) const;
 	bool operator != (const QuaternionT<T>& q) const;

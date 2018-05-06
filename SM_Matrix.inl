@@ -225,6 +225,41 @@ void Matrix4<T>::SetTransformation(T x, T y, T angle, T sx, T sy, T ox, T oy, T 
 }
 
 template <typename T>
+void Matrix4<T>::SetTransformation(const Vector3<T>& scale, 
+	                               const Vector3<T>& rotation_origin,
+	                               const Vector4<T>& rotation_quaternion, 
+	                               const Vector3<T>& translation)
+{
+	Identity();
+
+	// scale
+	c[0][0] = scale.x;
+	c[1][1] = scale.x;
+	c[2][2] = scale.x;
+
+	// rotate
+	c[3][0] -= rotation_origin.x;
+	c[3][1] -= rotation_origin.y;
+	c[3][2] -= rotation_origin.z;
+
+	operator *= (Matrix4<T>(QuaternionT<T>(
+		rotation_quaternion.x, 
+		rotation_quaternion.y, 
+		rotation_quaternion.z,
+		rotation_quaternion.w
+	)));
+
+	c[3][0] += rotation_origin.x;
+	c[3][1] += rotation_origin.y;
+	c[3][2] += rotation_origin.z;
+
+	// translate
+	c[3][0] += translation.x;
+	c[3][1] += translation.y;
+	c[3][2] += translation.z;
+}
+
+template <typename T>
 Matrix4<T> Matrix4<T>::FastMul43(const Matrix4<T>& b)
 {
 	// Note: m may not be the same as m1 or m2

@@ -98,6 +98,9 @@ public:
 	**/
 	void SetTransformation(T x, T y, T angle, T sx, T sy, T ox, T oy, T kx, T ky);
 
+	void SetTransformation(const Vector3<T>& scale, const Vector3<T>& rotation_origin,
+		const Vector4<T>& rotation_quaternion, const Vector3<T>& translation);
+
 	Matrix4<T> FastMul43(const Matrix4<T>& b);
 
 	void Transposed();

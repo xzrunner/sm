@@ -14,18 +14,18 @@ namespace sm
 /************************************************************************/
 
 template <typename T>
-Vector2<T>::Vector2() 
-	: x(0), y(0) 
+Vector2<T>::Vector2()
+	: x(0), y(0)
 {}
 
 template <typename T>
-Vector2<T>::Vector2(T x, T y) 
-	: x(x), y(y) 
+Vector2<T>::Vector2(T x, T y)
+	: x(x), y(y)
 {}
 
 template <typename T>
-Vector2<T>::Vector2(const Vector2& v) 
-	: x(v.x), y(v.y) 
+Vector2<T>::Vector2(const Vector2& v)
+	: x(v.x), y(v.y)
 {}
 
 template <typename T>
@@ -37,7 +37,7 @@ Vector2<T>& Vector2<T>::operator = (const Vector2& v)
 }
 
 template <typename T>
-void Vector2<T>::Set(T x, T y) 
+void Vector2<T>::Set(T x, T y)
 {
 	this->x = x;
 	this->y = y;
@@ -52,7 +52,7 @@ void Vector2<T>::MakeInvalid()
 template <typename T>
 bool Vector2<T>::IsValid() const
 {
-	return x != std::numeric_limits<T>::max() 
+	return x != std::numeric_limits<T>::max()
 		|| y != std::numeric_limits<T>::max();
 }
 
@@ -184,7 +184,7 @@ void Vector2<T>::Normalize()
 }
 
 template <typename T>
-Vector2<T> Vector2<T>::Normalized() const 
+Vector2<T> Vector2<T>::Normalized() const
 {
 	Vector2 v = *this;
 	v.Normalize();
@@ -203,22 +203,22 @@ T Vector2<T>::Dot(const Vector2& v) const
 	return x * v.x + y * v.y;
 }
 
-template <typename T> 
-bool Vector2Cmp::operator () (const Vector2<T>& p0, const Vector2<T>& p1) const 
+template <typename T>
+bool Vector2Cmp::operator () (const Vector2<T>& p0, const Vector2<T>& p1) const
 {
-	return p0.x < p1.x 
+	return p0.x < p1.x
 		|| (p0.x == p1.x && p0.y < p1.y);
 }
 
 template <typename T>
-bool Vector2CmpX::operator () (const Vector2<T>& p0, const Vector2<T>& p1) const 
+bool Vector2CmpX::operator () (const Vector2<T>& p0, const Vector2<T>& p1) const
 {
-	return p0.x < p1.x 
+	return p0.x < p1.x
 		|| (p0.x == p1.x && p0.y < p1.y);
 }
 
 template <typename T>
-bool Vector2CmpY::operator () (const Vector2<T>& p0, const Vector2<T>& p1) const 
+bool Vector2CmpY::operator () (const Vector2<T>& p0, const Vector2<T>& p1) const
 {
 	return p0.y < p1.y
 		|| (p0.y == p1.y && p0.x < p1.x);
@@ -231,6 +231,12 @@ bool Vector2CmpY::operator () (const Vector2<T>& p0, const Vector2<T>& p1) const
 template <typename T>
 Vector3<T>::Vector3()
 	: x(0), y(0), z(0)
+{
+}
+
+template <typename T>
+Vector3<T>::Vector3(const T* xyz)
+	: x(xyz[0]), y(xyz[1]), z(xyz[2])
 {
 }
 
@@ -270,7 +276,7 @@ Vector3<T>& Vector3<T>::operator = (const Vector3& v)
 }
 
 template <typename T>
-void Vector3<T>::Set(T x, T y, T z) 
+void Vector3<T>::Set(T x, T y, T z)
 {
 	this->x = x;
 	this->y = y;
@@ -434,7 +440,7 @@ Vector4<T>& Vector4<T>::operator = (const Vector4& v)
 }
 
 template <typename T>
-void Vector4<T>::Assign(T x, T y, T z, T w) 
+void Vector4<T>::Assign(T x, T y, T z, T w)
 {
 	this->x = x;
 	this->y = y;

@@ -17,7 +17,7 @@ class Vector2
 public:
 	union
 	{
-		struct 
+		struct
 		{
 			T x;
 			T y;
@@ -97,7 +97,7 @@ class Vector3
 public:
 	union
 	{
-		struct 
+		struct
 		{
 			T x;
 			T y;
@@ -109,6 +109,7 @@ public:
 
 public:
 	Vector3();
+	Vector3(const T* xyz);
 	Vector3(T x, T y, T z);
 	Vector3(const Vector3& v);
 
@@ -153,7 +154,7 @@ class Vector4
 public:
 	union
 	{
-		struct 
+		struct
 		{
 			T x;
 			T y;

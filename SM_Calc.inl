@@ -111,7 +111,7 @@ float get_angle_in_direction(const vec2& center, const vec2& start, const vec2& 
 }
 
 inline
-bool is_acute_angle(const vec2& a, const vec2& center, const vec2& b) 
+bool is_acute_angle(const vec2& a, const vec2& center, const vec2& b)
 {
 	float lac = (a - center).LengthSquared(),
 		  lbc = (b - center).LengthSquared(),
@@ -120,7 +120,7 @@ bool is_acute_angle(const vec2& a, const vec2& center, const vec2& b)
 }
 
 inline
-bool is_turn_left(const vec2& a, const vec2& center, const vec2& b) 
+bool is_turn_left(const vec2& a, const vec2& center, const vec2& b)
 {
 	return (center.x - a.x) * (b.y - center.y) - (b.x - center.x) * (center.y - a.y) > 0;
 }
@@ -140,7 +140,7 @@ float dis_pos_to_pos(const vec2& v0, const vec2& v1)
 inline
 float dis_square_pos_to_pos(const vec2& v0, const vec2& v1)
 {
-	return (v0 - v1).LengthSquared();	
+	return (v0 - v1).LengthSquared();
 }
 
 inline
@@ -211,7 +211,7 @@ float distance_aabb(const vec3& pos, const vec3& aabb_min, const vec3& aabb_max)
 }
 
 inline
-bool intersect_line_line(const vec2& s0, const vec2& e0, const vec2& s1, const vec2& e1, vec2* cross) 
+bool intersect_line_line(const vec2& s0, const vec2& e0, const vec2& s1, const vec2& e1, vec2* cross)
 {
 	// If they are parallel ?
 	float denominator_x = (e1.y - s1.y) * (e0.x - s0.x) - (e0.y - s0.y) * (e1.x - s1.x),
@@ -239,7 +239,7 @@ bool intersect_segment_segment(const vec2& s0, const vec2& e0, const vec2& s1, c
 }
 
 inline
-int get_foot_of_perpendicular(const vec2& s, const vec2& e, const vec2& out, vec2* foot) 
+int get_foot_of_perpendicular(const vec2& s, const vec2& e, const vec2& out, vec2* foot)
 {
 	const float dx = e.x - s.x, dy = e.y - s.y;
 	const float dx_square = dx * dx, dy_square = dy * dy;
@@ -327,6 +327,19 @@ float get_polygon_perimeter(const CU_VEC<sm::vec2>& poly)
 	perimeter += sm::dis_pos_to_pos(poly[0], poly[poly.size() - 1]);
 
 	return perimeter;
+}
+
+inline
+bool intersect_planes(const Plane& p0, const Plane& p1, const Plane& p2, vec3* cross)
+{
+	float denom = p0.normal.Dot(p1.normal.Cross(p2.normal));
+	if (fabs(denom) < SM_LARGE_EPSILON) {
+		return false;
+	}
+
+	*cross = ((p1.normal.Cross(p2.normal)) * -p0.dist - (p2.normal.Cross(p0.normal)) * p1.dist - (p0.normal.Cross(p1.normal)) * p2.dist) / denom;
+
+	return true;
 }
 
 }

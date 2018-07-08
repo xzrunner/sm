@@ -2,6 +2,7 @@
 #define _SPATIAL_MATH_CALC_H_
 
 #include "SM_Vector.h"
+#include "SM_Plane.h"
 
 #include <cu/cu_stl.h>
 
@@ -85,6 +86,12 @@ float get_triangle_area(const sm::vec2& p0, const sm::vec2& p1, const sm::vec2& 
 *    perimeter
 */
 float get_polygon_perimeter(const CU_VEC<sm::vec2>& poly);
+
+/**
+*  @brief
+*    Get the cross point of three planes.
+*/
+bool intersect_planes(const Plane& p0, const Plane& p1, const Plane& p2, vec3* cross);
 
 }
 

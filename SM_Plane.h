@@ -10,14 +10,15 @@ template <typename T>
 class PlaneT
 {
 public:
+	PlaneT() : dist(0) {}
 	PlaneT(const Vector3<T>& normal, T d);
 	PlaneT(const Vector3<T>& v0, const Vector3<T>& v1, const Vector3<T>& v2);
 
 	void GetDistance(const Vector3<T>& v) const;
 
-private:
-	Vector3<T> m_normal;
-	T m_dist;
+public:
+	Vector3<T> normal;
+	T          dist;
 
 }; // PlaneT
 

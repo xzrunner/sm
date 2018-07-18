@@ -91,7 +91,7 @@ Matrix4<T>::Matrix4(const QuaternionT<T>& q)
 	T yy = q.y * y2,  yz = q.y * z2,  zz = q.z * z2;
 	T wx = q.w * x2,  wy = q.w * y2,  wz = q.w * z2;
 
-	c[0][0] = 1 - (yy + zz);  c[1][0] = xy - wz;	
+	c[0][0] = 1 - (yy + zz);  c[1][0] = xy - wz;
 	c[2][0] = xz + wy;        c[3][0] = 0;
 	c[0][1] = xy + wz;        c[1][1] = 1 - (xx + zz);
 	c[2][1] = yz - wx;        c[3][1] = 0;
@@ -225,9 +225,9 @@ void Matrix4<T>::SetTransformation(T x, T y, T angle, T sx, T sy, T ox, T oy, T 
 }
 
 template <typename T>
-void Matrix4<T>::SetTransformation(const Vector3<T>& scale, 
+void Matrix4<T>::SetTransformation(const Vector3<T>& scale,
 	                               const Vector3<T>& rotation_origin,
-	                               const Vector4<T>& rotation_quaternion, 
+	                               const Vector4<T>& rotation_quaternion,
 	                               const Vector3<T>& translation)
 {
 	Identity();
@@ -243,8 +243,8 @@ void Matrix4<T>::SetTransformation(const Vector3<T>& scale,
 	c[3][2] -= rotation_origin.z;
 
 	operator *= (Matrix4<T>(QuaternionT<T>(
-		rotation_quaternion.x, 
-		rotation_quaternion.y, 
+		rotation_quaternion.x,
+		rotation_quaternion.y,
 		rotation_quaternion.z,
 		rotation_quaternion.w
 	)));
@@ -304,7 +304,7 @@ void Matrix4<T>::Transposed()
 template <typename T>
 T Matrix4<T>::Determinant() const
 {
-	return 
+	return
 		c[0][3]*c[1][2]*c[2][1]*c[3][0] - c[0][2]*c[1][3]*c[2][1]*c[3][0] - c[0][3]*c[1][1]*c[2][2]*c[3][0] + c[0][1]*c[1][3]*c[2][2]*c[3][0] +
 		c[0][2]*c[1][1]*c[2][3]*c[3][0] - c[0][1]*c[1][2]*c[2][3]*c[3][0] - c[0][3]*c[1][2]*c[2][0]*c[3][1] + c[0][2]*c[1][3]*c[2][0]*c[3][1] +
 		c[0][3]*c[1][0]*c[2][2]*c[3][1] - c[0][0]*c[1][3]*c[2][2]*c[3][1] - c[0][2]*c[1][0]*c[2][3]*c[3][1] + c[0][0]*c[1][2]*c[2][3]*c[3][1] +
@@ -380,7 +380,7 @@ void Matrix4<T>::Decompose(Vector3<T>& trans, Vector3<T>& rot, Vector3<T>& scale
 
 	// Combined rotation matrix YXZ
 	//
-	// Cos[y]*Cos[z]+Sin[x]*Sin[y]*Sin[z]   Cos[z]*Sin[x]*Sin[y]-Cos[y]*Sin[z]  Cos[x]*Sin[y]	
+	// Cos[y]*Cos[z]+Sin[x]*Sin[y]*Sin[z]   Cos[z]*Sin[x]*Sin[y]-Cos[y]*Sin[z]  Cos[x]*Sin[y]
 	// Cos[x]*Sin[z]                        Cos[x]*Cos[z]                       -Sin[x]
 	// -Cos[z]*Sin[y]+Cos[y]*Sin[x]*Sin[z]  Cos[y]*Cos[z]*Sin[x]+Sin[y]*Sin[z]  Cos[x]*Cos[y]
 
@@ -481,9 +481,9 @@ template <typename T>
 Matrix4<T> Matrix4<T>::RotatedAxis(const Vector3<T>& axis, T angle)
 {
 	T t = sin(angle * 0.5f);
-	T x = axis->x * t;
-	T y = axis->y * t;
-	T z = axis->z * t;
+	T x = axis.x * t;
+	T y = axis.y * t;
+	T z = axis.z * t;
 	return Matrix4(QuaternionT<T>(x, y, z, cos(angle * 0.5f)));
 }
 

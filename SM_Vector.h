@@ -144,6 +144,13 @@ public:
 
 }; // Vector3
 
+class Vector3Cmp
+{
+public:
+	template <typename T>
+	bool operator () (const Vector3<T> & p0, const Vector3<T> & p1) const;
+}; // Vector3Cmp
+
 /**
  *  @brief
  *    vector4

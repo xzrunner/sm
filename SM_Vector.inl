@@ -284,6 +284,20 @@ void Vector3<T>::Set(T x, T y, T z)
 }
 
 template <typename T>
+void Vector3<T>::MakeInvalid()
+{
+	x = y = z = std::numeric_limits<T>::max();
+}
+
+template <typename T>
+bool Vector3<T>::IsValid() const
+{
+	return x != std::numeric_limits<T>::max()
+		|| y != std::numeric_limits<T>::max()
+		|| z != std::numeric_limits<T>::max();
+}
+
+template <typename T>
 bool Vector3<T>::operator == (const Vector3& v) const
 {
 	return x == v.x && y == v.y && z == v.z;

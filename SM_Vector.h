@@ -119,6 +119,9 @@ public:
 	Vector3& operator = (const Vector3& v);
 	void Set(T x, T y, T z);
 
+	void MakeInvalid();
+	bool IsValid() const;
+
 	bool operator == (const Vector3& v) const;
 	bool operator != (const Vector3& v) const;
 

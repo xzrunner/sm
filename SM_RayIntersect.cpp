@@ -101,11 +101,8 @@ bool ray_triangle_intersect(const mat4& mat, const vec3& v0, const vec3& v1,
 	                        const vec3& v2, const Ray& ray, vec3* coord)
 {
 	auto _v0 = mat * v0;
-	// fixme
-	//auto _v1 = mat * v1;
-	//auto _v2 = mat * v2;
-	auto _v1 = mat * v2;
-	auto _v2 = mat * v1;
+	auto _v1 = mat * v1;
+	auto _v2 = mat * v2;
 
 	auto e1 = _v1 - _v0;
 	auto e2 = _v2 - _v0;

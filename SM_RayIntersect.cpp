@@ -100,7 +100,7 @@ bool ray_plane_intersect(const Ray& ray, const Plane& plane, vec3* coord)
 {
 	float d = ray.dir.Dot(plane.normal);
 	if (d < -std::numeric_limits<float>::epsilon()) {
-		float dist = (plane.normal * plane.dist - ray.origin).Dot(plane.normal) / d;
+		float dist = -(ray.origin.Dot(plane.normal) + plane.dist) / d;
 		*coord = ray.origin + ray.dir * dist;
 		return true;
 	}

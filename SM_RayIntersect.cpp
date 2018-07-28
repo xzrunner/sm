@@ -96,6 +96,17 @@ bool ray_obb_intersect(const cube& aabb, const vec3& pos, const Quaternion& angl
 	return ray_aabb_intersect(aabb_scaled, ray_fix, coord);
 }
 
+bool ray_plane_intersect(const Ray& ray, const Plane& plane, vec3* coord)
+{
+	float d = ray.dir.Dot(plane.normal);
+	if (d < -std::numeric_limits<float>::epsilon()) {
+		float dist = (plane.normal * plane.dist - ray.origin).Dot(plane.normal) / d;
+		*coord = ray.origin + ray.dir * dist;
+		return true;
+	}
+	return false;
+}
+
 // Code from glm/gtx/intersect.h intersectRayTriangle
 bool ray_triangle_intersect(const mat4& mat, const vec3& v0, const vec3& v1,
 	                        const vec3& v2, const Ray& ray, vec3* coord)

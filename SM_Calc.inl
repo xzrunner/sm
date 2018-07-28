@@ -332,12 +332,21 @@ float get_polygon_perimeter(const CU_VEC<sm::vec2>& poly)
 inline
 bool intersect_planes(const Plane& p0, const Plane& p1, const Plane& p2, vec3* cross)
 {
-	float denom = p0.normal.Dot(p1.normal.Cross(p2.normal));
+	auto c0 = p1.normal.Cross(p2.normal);
+
+	float denom = p0.normal.Dot(c0);
 	if (fabs(denom) < SM_LARGE_EPSILON) {
 		return false;
 	}
 
-	*cross = ((p1.normal.Cross(p2.normal)) * -p0.dist - (p2.normal.Cross(p0.normal)) * p1.dist - (p0.normal.Cross(p1.normal)) * p2.dist) / denom;
+	auto c1 = p2.normal.Cross(p0.normal);
+	auto c2 = p0.normal.Cross(p1.normal);
+
+	auto d0 = - c0 * p0.dist;
+	auto d1 = - c1 * p1.dist;
+	auto d2 = - c2 * p2.dist;
+
+	*cross = (d0 + d1 + d2) / denom;
 
 	return true;
 }

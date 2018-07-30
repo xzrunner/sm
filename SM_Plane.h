@@ -16,6 +16,8 @@ public:
 
 	void GetDistance(const Vector3<T>& v) const;
 
+	void Build(const Vector3<T>& v0, const Vector3<T>& v1, const Vector3<T>& v2);
+
 public:
 	Vector3<T> normal;
 	T          dist;

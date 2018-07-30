@@ -3,6 +3,82 @@
 namespace sm
 {
 
+bool ray_ray_intersect(const Ray& ray0, const Ray& ray1, vec3* cross)
+{
+	auto& da = ray0.dir;
+	auto& db = ray1.dir;
+	auto  dc = ray1.origin - ray0.origin;
+	auto cross_ab = da.Cross(db);
+	if (fabs(dc.Dot(cross_ab)) > SM_LARGE_EPSILON) {
+		return false;
+	}
+	float d = cross_ab.LengthSquared();
+	// collinear
+	if (d < std::numeric_limits<float>::epsilon()) {
+		return false;
+	}
+	auto s = dc.Cross(db).Dot(cross_ab) / d;
+	auto t = dc.Cross(da).Dot(cross_ab) / d;
+	//if (s >= 0.0f && s <= 1.0f) {
+	//	*cross = ray0.origin + ray0.dir * s;
+	//	return true;
+	//}
+	if (s >= 0 && t >= 0) {
+		*cross = ray0.origin + ray0.dir * s;
+		return true;
+	}
+	return false;
+}
+
+// code from http://paulbourke.net/geometry/pointlineplane/lineline.c
+bool line_line_intersect(const sm::vec3& p1, const sm::vec3& p2,
+	                     const sm::vec3& p3, const sm::vec3& p4,
+	                     sm::vec3* pa, sm::vec3* pb, float* mua, float* mub)
+{
+	sm::vec3 p13,p43,p21;
+	float d1343,d4321,d1321,d4343,d2121;
+	float numer,denom;
+
+	float EPS = std::numeric_limits<float>::epsilon();
+
+	p13.x = p1.x - p3.x;
+	p13.y = p1.y - p3.y;
+	p13.z = p1.z - p3.z;
+	p43.x = p4.x - p3.x;
+	p43.y = p4.y - p3.y;
+	p43.z = p4.z - p3.z;
+	if (fabs(p43.x) < EPS && fabs(p43.y) < EPS && fabs(p43.z) < EPS)
+		return false;
+	p21.x = p2.x - p1.x;
+	p21.y = p2.y - p1.y;
+	p21.z = p2.z - p1.z;
+	if (fabs(p21.x) < EPS && fabs(p21.y) < EPS && fabs(p21.z) < EPS)
+		return false;
+
+	d1343 = p13.x * p43.x + p13.y * p43.y + p13.z * p43.z;
+	d4321 = p43.x * p21.x + p43.y * p21.y + p43.z * p21.z;
+	d1321 = p13.x * p21.x + p13.y * p21.y + p13.z * p21.z;
+	d4343 = p43.x * p43.x + p43.y * p43.y + p43.z * p43.z;
+	d2121 = p21.x * p21.x + p21.y * p21.y + p21.z * p21.z;
+
+	denom = d2121 * d4343 - d4321 * d4321;
+	if (fabs(denom) < EPS)
+		return false;
+	numer = d1343 * d4321 - d1321 * d4343;
+
+	*mua = numer / denom;
+	*mub = (d1343 + d4321 * (*mua)) / d4343;
+
+	pa->x = p1.x + *mua * p21.x;
+	pa->y = p1.y + *mua * p21.y;
+	pa->z = p1.z + *mua * p21.z;
+	pb->x = p3.x + *mub * p43.x;
+	pb->y = p3.y + *mub * p43.y;
+	pb->z = p3.z + *mub * p43.z;
+
+	return true;
+}
+
 #define NUMDIM	3
 #define RIGHT	0
 #define LEFT	1

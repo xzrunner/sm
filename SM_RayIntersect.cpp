@@ -10,7 +10,7 @@ namespace sm
 
 // This code from GraphicsGems's RayBox.c
 // https://github.com/erich666/GraphicsGems/blob/master/gems/RayBox.c
-bool ray_aabb_intersect(const cube& aabb, const Ray& ray, vec3* coord)
+bool ray_aabb_intersect(const cube& aabb, const Ray& ray, vec3* _cross)
 {
 	vec3 cross;
 
@@ -74,15 +74,15 @@ bool ray_aabb_intersect(const cube& aabb, const Ray& ray, vec3* coord)
 		}
 	}
 
-	if (coord) {
-		*coord = cross;
+	if (_cross) {
+		*_cross = cross;
 	}
 
 	return true;
 }
 
 bool ray_obb_intersect(const cube& aabb, const vec3& pos, const Quaternion& angle,
-	                   const vec3& scale, const Ray& ray, vec3* coord)
+	                   const vec3& scale, const Ray& ray, vec3* cross)
 {
 	mat4 rot_mat(-angle);
 
@@ -93,15 +93,15 @@ bool ray_obb_intersect(const cube& aabb, const vec3& pos, const Quaternion& angl
 	auto aabb_scaled = aabb;
 	aabb_scaled.Scale(scale);
 
-	return ray_aabb_intersect(aabb_scaled, ray_fix, coord);
+	return ray_aabb_intersect(aabb_scaled, ray_fix, cross);
 }
 
-bool ray_plane_intersect(const Ray& ray, const Plane& plane, vec3* coord)
+bool ray_plane_intersect(const Ray& ray, const Plane& plane, vec3* cross)
 {
 	float d = ray.dir.Dot(plane.normal);
 	if (d < -std::numeric_limits<float>::epsilon()) {
 		float dist = -(ray.origin.Dot(plane.normal) + plane.dist) / d;
-		*coord = ray.origin + ray.dir * dist;
+		*cross = ray.origin + ray.dir * dist;
 		return true;
 	}
 	return false;
@@ -109,7 +109,7 @@ bool ray_plane_intersect(const Ray& ray, const Plane& plane, vec3* coord)
 
 // Code from glm/gtx/intersect.h intersectRayTriangle
 bool ray_triangle_intersect(const mat4& mat, const vec3& v0, const vec3& v1,
-	                        const vec3& v2, const Ray& ray, vec3* coord)
+	                        const vec3& v2, const Ray& ray, vec3* cross)
 {
 	auto _v0 = mat * v0;
 	auto _v1 = mat * v1;
@@ -129,32 +129,32 @@ bool ray_triangle_intersect(const mat4& mat, const vec3& v0, const vec3& v1,
 	float f = 1.0f / a;
 
 	auto s = ray.origin - _v0;
-	coord->x = f * s.Dot(p);
-	if (coord->x < 0.0f) {
+	cross->x = f * s.Dot(p);
+	if (cross->x < 0.0f) {
 		return false;
 	}
-	if (coord->x > 1.0f) {
+	if (cross->x > 1.0f) {
 		return false;
 	}
 
 	auto q = s.Cross(e1);
-	coord->y = f * ray.dir.Dot(q);
-	if (coord->y < 0.0f) {
+	cross->y = f * ray.dir.Dot(q);
+	if (cross->y < 0.0f) {
 		return false;
 	}
-	if (coord->y + coord->x > 1.0f) {
+	if (cross->y + cross->x > 1.0f) {
 		return false;
 	}
 
-	coord->z = f * e2.Dot(q);
+	cross->z = f * e2.Dot(q);
 
-	return coord->z >= 0.0f;
+	return cross->z >= 0.0f;
 }
 
-bool ray_polygon_intersect(const mat4& mat, const std::vector<vec3>& polygon, const Ray& ray, vec3* coord)
+bool ray_polygon_intersect(const mat4& mat, const std::vector<vec3>& polygon, const Ray& ray, vec3* cross)
 {
 	for (int i = 1, n = polygon.size(); i < n - 1; ++i) {
-		if (ray_triangle_intersect(mat, polygon[0], polygon[i], polygon[i + 1], ray, coord)) {
+		if (ray_triangle_intersect(mat, polygon[0], polygon[i], polygon[i + 1], ray, cross)) {
 			return true;
 		}
 	}

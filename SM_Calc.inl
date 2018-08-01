@@ -283,6 +283,15 @@ int get_foot_of_perpendicular(const vec2& s, const vec2& e, const vec2& out, vec
 }
 
 inline
+int get_foot_of_perpendicular(const vec3& s, const vec3& e, const vec3& out, vec3* foot)
+{
+	auto u = e - s;
+	auto pq = out - s;
+	auto w2 = pq - u * (pq.Dot(u) / u.LengthSquared());
+	*foot = out - w2;
+}
+
+inline
 vec2 get_tri_gravity_center(const vec2& p0, const vec2& p1, const vec2& p2)
 {
 	return vec2((p0.x + p1.x + p2.x) / 3, (p0.y + p1.y + p2.y) / 3);

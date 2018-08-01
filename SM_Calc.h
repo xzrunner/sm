@@ -67,6 +67,7 @@ bool intersect_segment_segment(const vec2& s0, const vec2& e0, const vec2& s1, c
  *    Is return -1 the foot is outside the line(s, e), return 0 the foot on the line(s, e).
  */
 int get_foot_of_perpendicular(const vec2& s, const vec2& e, const vec2& out, vec2* foot);
+int get_foot_of_perpendicular(const vec3& s, const vec3& e, const vec3& out, vec3* foot);
 
 /**
  *  @brief

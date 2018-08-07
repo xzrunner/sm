@@ -8,9 +8,7 @@ template <typename T>
 inline PlaneT<T>::PlaneT(const Vector3<T>& n, T d)
 	: normal(n)
 {
-	T inv_len = 1.0f / normal.Length();
-	normal *= inv_len;
-	dist = d * inv_len;
+	Build(n, d);
 }
 
 template <typename T>
@@ -34,6 +32,14 @@ inline void PlaneT<T>::Build(const Vector3<T>& v0, const Vector3<T>& v1, const V
 	normal = a.Cross(b);
 	normal.Normalize();
 	dist = -normal.Dot(v0);
+}
+
+template <typename T>
+inline void PlaneT<T>::Build(const Vector3<T>& normal, T d)
+{
+	T inv_len = 1.0f / normal.Length();
+	this->normal = normal * inv_len;
+	this->dist = d * inv_len;
 }
 
 }

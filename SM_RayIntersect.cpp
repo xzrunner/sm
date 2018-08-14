@@ -183,6 +183,18 @@ bool ray_plane_intersect(const Ray& ray, const Plane& plane, vec3* cross)
 	return false;
 }
 
+bool ray_plane_no_dir_intersect(const Ray& ray, const Plane& plane, vec3* cross)
+{
+	float d = ray.dir.Dot(plane.normal);
+	if (d < -std::numeric_limits<float>::epsilon() ||
+		d > std::numeric_limits<float>::epsilon()) {
+		float dist = -(ray.origin.Dot(plane.normal) + plane.dist) / d;
+		*cross = ray.origin + ray.dir * dist;
+		return true;
+	}
+	return false;
+}
+
 // Code from glm/gtx/intersect.h intersectRayTriangle
 bool ray_triangle_intersect(const mat4& mat, const vec3& v0, const vec3& v1,
 	                        const vec3& v2, const Ray& ray, vec3* cross)

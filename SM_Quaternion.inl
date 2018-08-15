@@ -98,7 +98,7 @@ void QuaternionT<T>::Slerp(const QuaternionT<T>& a, const QuaternionT<T>& b, T t
 {
 	T cos_theta = a.x * b.x + a.y * b.y + a.z * b.z + a.w * b.w;
 	if (cos_theta < 0) {
-		cos_theta = -cos_theta; 
+		cos_theta = -cos_theta;
 		x = -b.x; y = -b.y;
 		z = -b.z; w = -b.w;
 	} else {
@@ -151,7 +151,7 @@ template <typename T>
 void QuaternionT<T>::Inverted()
 {
 	T len = x * x + y * y + z * z + w * w;
-	if( len > 0 ) 
+	if( len > 0 )
 	{
 		T invLen = - 1.0f / len;
 		x *= invLen;
@@ -159,8 +159,8 @@ void QuaternionT<T>::Inverted()
 		z *= invLen;
 		w *= invLen;
 		w = -w;
-	} 
-	else 
+	}
+	else
 	{
 		x = y = z = w = 0;
 	}
@@ -225,25 +225,53 @@ inline Vector4<T> QuaternionT<T>::ToVector() const
 //	return m;
 //}
 
-// Compute the quaternion that rotates from a to b, avoiding numerical instability.
-// Taken from "The Shortest Arc Quaternion" by Stan Melax in "Game Programming Gems".
+//// Compute the quaternion that rotates from a to b, avoiding numerical instability.
+//// Taken from "The Shortest Arc Quaternion" by Stan Melax in "Game Programming Gems".
+//template <typename T>
+//QuaternionT<T> QuaternionT<T>::CreateFromVectors(const Vector3<T>& v0, const Vector3<T>& v1)
+//{
+//	if (v0 == -v1) {
+//		return QuaternionT<T>::CreateFromAxisAngle(vec3(1, 0, 0), SM_PI);
+//	}
+//
+//	Vector3<T> c = v0.Cross(v1);
+//	T d = v0.Dot(v1);
+//	T s = sqrt((1 + d) * 2);
+//
+//	QuaternionT<T> q;
+//	q.x = c.x / s;
+//	q.y = c.y / s;
+//	q.z = c.z / s;
+//	q.w = s / 2.0f;
+//	return q;
+//}
+
+// code from Urho3D's Quaternion.cpp
 template <typename T>
 QuaternionT<T> QuaternionT<T>::CreateFromVectors(const Vector3<T>& v0, const Vector3<T>& v1)
 {
-	if (v0 == -v1) {
-		return QuaternionT<T>::CreateFromAxisAngle(vec3(1, 0, 0), SM_PI);
+	auto normStart = v0.Normalized();
+	auto normEnd = v1.Normalized();
+	float d = normStart.Dot(normEnd);
+
+	if (d > -1.0f + FLT_EPSILON)
+	{
+		auto c = normStart.Cross(normEnd);
+		float s = sqrtf((1.0f + d) * 2.0f);
+		float invS = 1.0f / s;
+
+		auto q = sm::Quaternion(c.x * invS, c.y * invS, c.z * invS, 0.5f * s);
+		q.Normalize();
+		return q;
 	}
+	else
+	{
+		auto axis = sm::vec3(1, 0, 0).Cross(normStart);
+		if (axis.Length() < FLT_EPSILON)
+			axis = sm::vec3(0, 1, 1).Cross(normStart);
 
-	Vector3<T> c = v0.Cross(v1);
-	T d = v0.Dot(v1);
-	T s = sqrt((1 + d) * 2);
-
-	QuaternionT<T> q;
-	q.x = c.x / s;
-	q.y = c.y / s;
-	q.z = c.z / s;
-	q.w = s / 2.0f;
-	return q;
+		return sm::Quaternion::CreateFromAxisAngle(axis, 180.f);
+	}
 }
 
 template <typename T>

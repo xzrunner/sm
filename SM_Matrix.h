@@ -107,6 +107,8 @@ public:
 	T Determinant() const;
 	Matrix4<T> Inverted() const;
 
+	QuaternionT<T> ToQuaternion() const;
+
 	Vector3<T> GetTranslate() const;
 	Vector3<T> GetScale() const;
 	void Decompose(Vector3<T>& trans, Vector3<T>& rot, Vector3<T>& scale) const;

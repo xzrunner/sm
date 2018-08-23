@@ -402,16 +402,16 @@ void Matrix4<T>::Decompose(Vector3<T>& trans, Vector3<T>& rot, Vector3<T>& scale
 	trans = GetTranslate();
 	scale = GetScale();
 
-	if( scale->x == 0 || scale->y == 0 || scale->z == 0 ) {
-		rot->x = 0;
-		rot->y = 0;
-		rot->z = 0;
+	if( scale.x == 0 || scale.y == 0 || scale.z == 0 ) {
+		rot.x = 0;
+		rot.y = 0;
+		rot.z = 0;
 		return;
 	}
 
 	// Detect negative scale with determinant and flip one arbitrary axis
 	if(Determinant() < 0) {
-		scale->x = -scale->x;
+		scale.x = -scale.x;
 	}
 
 	// Combined rotation matrix YXZ
@@ -420,23 +420,23 @@ void Matrix4<T>::Decompose(Vector3<T>& trans, Vector3<T>& rot, Vector3<T>& scale
 	// Cos[x]*Sin[z]                        Cos[x]*Cos[z]                       -Sin[x]
 	// -Cos[z]*Sin[y]+Cos[y]*Sin[x]*Sin[z]  Cos[y]*Cos[z]*Sin[x]+Sin[y]*Sin[z]  Cos[x]*Cos[y]
 
-	rot->x = asinf(-c[2][1] / scale->z);
+	rot.x = asinf(-c[2][1] / scale.z);
 
 	// Special case: Cos[x] == 0 (when Sin[x] is +/-1)
-	T f = fabsf(c[2][1] / scale->z);
+	T f = fabsf(c[2][1] / scale.z);
 
 	if(f > 0.999f && f < 1.001f) {
 		// Pin arbitrarily one of y or z to zero
 		// Mathematical equivalent of gimbal lock
-		rot->y = 0;
+		rot.y = 0;
 
 		// Now: Cos[x] = 0, Sin[x] = +/-1, Cos[y] = 1, Sin[y] = 0
 		// => m[0][0] = Cos[z] and m[1][0] = Sin[z]
-		rot->z = atan2f(-c[1][0] / scale->y, c[0][0] / scale->x);
+		rot.z = atan2f(-c[1][0] / scale.y, c[0][0] / scale.x);
 	} else {
 		// Standard case
-		rot->y = atan2f(c[2][0] / scale->z, c[2][2] / scale->z);
-		rot->z = atan2f(c[0][1] / scale->x, c[1][1] / scale->y);
+		rot.y = atan2f(c[2][0] / scale.z, c[2][2] / scale.z);
+		rot.z = atan2f(c[0][1] / scale.x, c[1][1] / scale.y);
 	}
 }
 

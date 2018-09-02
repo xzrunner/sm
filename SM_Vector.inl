@@ -483,6 +483,54 @@ bool Vector4<T>::operator != (const Vector4& v) const
 }
 
 template <typename T>
+void Vector4<T>::operator += (const Vector4& v)
+{
+	x += v.x; y += v.y; z += v.z; w += v.w;
+}
+
+template <typename T>
+void Vector4<T>::operator -= (const Vector4& v)
+{
+	x -= v.x; y -= v.y; z -= v.z; w -= v.w;
+}
+
+template <typename T>
+void Vector4<T>::operator *= (T f)
+{
+	x *= f; y *= f; z *= f; w *= f;
+}
+
+template <typename T>
+void Vector4<T>::operator /= (T f)
+{
+	x /= f; y /= f; z /= f; w /= f;
+}
+
+template <typename T>
+Vector4<T> Vector4<T>::operator + (const Vector4& v) const
+{
+	return Vector4(x + v.x, y + v.y, z + v.z, w + z.w);
+}
+
+template <typename T>
+Vector4<T> Vector4<T>::operator - (const Vector4& v) const
+{
+	return Vector4(x - v.x, y - v.y, z - v.z, w - v.w);
+}
+
+template <typename T>
+Vector4<T> Vector4<T>::operator * (T f) const
+{
+	return Vector4(x * f, y * f, z * f, w * f);
+}
+
+template <typename T>
+Vector4<T> Vector4<T>::operator / (T f) const
+{
+	return Vector4(x / f, y / f, z / f, w / f);
+}
+
+template <typename T>
 T Vector4<T>::Dot(const Vector4& v) const
 {
 	return x * v.x + y * v.y + z * v.z + w * v.w;

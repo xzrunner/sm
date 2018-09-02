@@ -189,6 +189,16 @@ public:
 	bool operator == (const Vector4& v) const;
 	bool operator != (const Vector4& v) const;
 
+	void operator += (const Vector4& v);
+	void operator -= (const Vector4& v);
+	void operator *= (T f);
+	void operator /= (T f);
+
+	Vector4 operator + (const Vector4& v) const;
+	Vector4 operator - (const Vector4& v) const;
+	Vector4 operator * (T f) const;
+	Vector4 operator / (T f) const;
+
 	T Dot(const Vector4& v) const;
 
 }; // Vector4

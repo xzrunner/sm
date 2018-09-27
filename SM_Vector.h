@@ -204,8 +204,12 @@ public:
 }; // Vector4
 
 typedef Vector2<bool> bvec2;
+typedef Vector3<bool> bvec3;
+typedef Vector4<bool> bvec4;
 
 typedef Vector2<uint16_t> i16_vec2;
+typedef Vector3<uint16_t> i16_vec3;
+typedef Vector4<uint16_t> i16_vec4;
 
 typedef Vector2<int> ivec2;
 typedef Vector3<int> ivec3;

@@ -67,7 +67,7 @@ void Rect<T>::Build(T width, T height)
 	xmin = -hw;
 	xmax =  hw;
 	ymin = -hh;
-	ymax =  hh;	
+	ymax =  hh;
 }
 
 template <typename T>
@@ -152,7 +152,7 @@ Vector2<T> Rect<T>::Size() const
 template <typename T>
 Vector2<T> Rect<T>::Center() const
 {
-	return Vector2<T>((xmin + xmax) * 0.5f, (ymin + ymax) * 0.5f);	
+	return Vector2<T>((xmin + xmax) * 0.5f, (ymin + ymax) * 0.5f);
 }
 
 template <typename T>

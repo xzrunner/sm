@@ -10,7 +10,7 @@
 namespace sm
 {
 
-static inline 
+static inline
 float prepare_angle(float x) {
 	//always wrap input angle to -PI..PI
 	while (x < -SM_PI) {
@@ -148,7 +148,7 @@ float cos_fast(float x)
 
 ///This function gets the first power of 2 >= the
 ///int that we pass it.
-inline 
+inline
 int next_p2(int a)
 {
 	int rval = 1;
@@ -158,7 +158,7 @@ int next_p2(int a)
 	return rval;
 }
 
-inline 
+inline
 bool is_power_of_two(int x)
 {
 	return (x != 0) && ((x & (x - 1)) == 0);

@@ -26,7 +26,7 @@ void rm_duplicate_nodes(const CU_VEC<vec2>& src, CU_VEC<vec2>& dst)
 	else
 	{
 		dst = src;
-	} 
+	}
 }
 
 inline

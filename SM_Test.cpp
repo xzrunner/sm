@@ -9,22 +9,22 @@ bool is_rect_intersect_segment(const rect& r, const vec2& s, const vec2& e)
 	unsigned char type_s, type_e;
 	type_s = type_e = 0;
 	if (s.x < r.xmin)      // left:  1000
-		type_s |= 0x8; 
+		type_s |= 0x8;
 	else if (s.x > r.xmax) // right: 0100
-		type_s |= 0x4; 
+		type_s |= 0x4;
 	if (s.y < r.ymin)      // down:  0001
-		type_s |= 0x1; 
+		type_s |= 0x1;
 	else if (s.y > r.ymax) // up:    0010
-		type_s |= 0x2; 
+		type_s |= 0x2;
 
 	if (e.x < r.xmin)      // left:  1000
-		type_e |= 0x8; 
+		type_e |= 0x8;
 	else if (e.x > r.xmax) // right: 0100
-		type_e |= 0x4; 
+		type_e |= 0x4;
 	if (e.y < r.ymin)      // down:  0001
-		type_e |= 0x1; 
+		type_e |= 0x1;
 	else if (e.y > r.ymax) // up:    0010
-		type_e |= 0x2; 
+		type_e |= 0x2;
 
 	unsigned char comp;
 	comp = type_s & type_e;
@@ -111,7 +111,7 @@ bool is_convex_intersect_convex(const CU_VEC<vec2>& c0, const CU_VEC<vec2>& c1, 
 	for (int i = 0, n = c0.size() - 1; i < n; ++i) {
 		if (!is_convex_intersect_convex(c0, c1, proj[i], proj[i+1])) {
 			return false;
-		}				
+		}
 	}
 	if (!is_convex_intersect_convex(c0, c1, proj[c0.size() - 1], proj[0])) {
 		return false;
@@ -132,7 +132,7 @@ bool is_convex_intersect_convex(const CU_VEC<vec2>& c0, const CU_VEC<vec2>& c1)
 	}
 }
 
-static inline 
+static inline
 bool is_polygon_colckwise(const CU_VEC<vec2>& poly)
 {
 	if (poly.size() < 3) {
@@ -157,13 +157,13 @@ bool is_polygon_colckwise(const CU_VEC<vec2>& poly)
 }
 
 static inline
-int get_next_idx_in_ring(int sz, int curr, int step) 
+int get_next_idx_in_ring(int sz, int curr, int step)
 {
 	return (curr + sz + step) % sz;
 }
 
 static inline
-bool is_two_points_same(const vec2& p0, const vec2& p1) 
+bool is_two_points_same(const vec2& p0, const vec2& p1)
 {
 	return fabs(p0.x - p1.x) < SM_LARGE_EPSILON
 		&& fabs(p0.y - p1.y) < SM_LARGE_EPSILON;
@@ -185,12 +185,12 @@ bool is_segment_intersect_polyline(const vec2& s, const vec2& e, const CU_VEC<ve
 	}
 
 	int sz = poly.size();
-	for (int i = 0; i < sz; ++i) 
+	for (int i = 0; i < sz; ++i)
 	{
 		const vec2& start = poly[i];
 		int end_idx = get_next_idx_in_ring(sz, i, 1);
 		const vec2& end = poly[end_idx];
-		vec2 cross; 
+		vec2 cross;
 		if (intersect_segment_segment(s, e, start, end, &cross)) {
 			if (is_two_points_same(s, cross) || is_two_points_same(e, cross)) {
 				continue;
@@ -268,29 +268,29 @@ bool is_polygon_intersect_polygon(const CU_VEC<vec2>& poly0, const CU_VEC<vec2>&
 					// 					const vec2& end_next0 = poly0[get_next_idx_in_ring(sz0, next_idx0, step0)];
 					// 					vec2 seg01 = end_next0 - end0;
 					// 					seg01.normalize();
-					// 
+					//
 					// 					vec2 seg10 = start1 - end1;
 					// 					seg10.normalize();
 					// 					const vec2& end_next1 = poly0[get_next_idx_in_ring(sz1, next_idx1, step1)];
 					// 					vec2 seg11 = end_next1 - end1;
 					// 					seg11.normalize();
-					// 
+					//
 					// 					if (IsTwoSegmentIntersect(seg00, seg01, seg10, seg11) &&
-					// 						!is_two_points_same(seg00, seg10) && !is_two_points_same(seg00, seg11) && 
+					// 						!is_two_points_same(seg00, seg10) && !is_two_points_same(seg00, seg11) &&
 					// 						!is_two_points_same(seg01, seg10) && !is_two_points_same(seg01, seg11)) {
 					// 							return true;
 					// 					}
 				} else if (is_cross0) {
 					const vec2& end_next0 = poly0[get_next_idx_in_ring(sz0, next_idx0, step0)];
-					if (is_turn_left(end_next0, end0, end1)) { 
-						return true; 
+					if (is_turn_left(end_next0, end0, end1)) {
+						return true;
 					}
 				} else if (is_cross1) {
 					const vec2& end_next1 = poly0[get_next_idx_in_ring(sz1, next_idx1, step1)];
-					if (is_turn_left(end_next1, end1, end0)) { 
-						return true; 
+					if (is_turn_left(end_next1, end1, end0)) {
+						return true;
 					}
-				} else if (!is_two_points_same(cross, start0) 
+				} else if (!is_two_points_same(cross, start0)
 					&& !is_two_points_same(cross, start1)) {
 						return true;
 				}
@@ -359,15 +359,15 @@ bool is_polygon_in_polygon(const CU_VEC<vec2>& in, const CU_VEC<vec2>& out)
 					}
 				} else if (is_cross0) {
 					const vec2& end_next0 = in[get_next_idx_in_ring(sz0, next_idx0, step0)];
-					if (is_turn_left(end_next0, end0, end1)) { 
-						return false; 
+					if (is_turn_left(end_next0, end0, end1)) {
+						return false;
 					}
 				} else if (is_cross1) {
 					const vec2& end_next1 = in[get_next_idx_in_ring(sz1, next_idx1, step1)];
-					if (is_turn_left(end_next1, end1, end0)) { 
-						return false; 
+					if (is_turn_left(end_next1, end1, end0)) {
+						return false;
 					}
-				} else if (!is_two_points_same(cross, start0) 
+				} else if (!is_two_points_same(cross, start0)
 					&& !is_two_points_same(cross, start1)) {
 						return false;
 				}
@@ -377,7 +377,7 @@ bool is_polygon_in_polygon(const CU_VEC<vec2>& in, const CU_VEC<vec2>& out)
 		idx0 = next_idx0;
 	}
 
-	return true;	
+	return true;
 }
 
 }

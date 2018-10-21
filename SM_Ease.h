@@ -11,25 +11,25 @@ namespace sm
 {
 
 inline
-float linear(float t) 
+float linear(float t)
 {
 	return t;
 }
 
 inline
-float in_quad(float t) 
+float in_quad(float t)
 {
 	return t * t;
 }
 
 inline
-float out_quad(float t) 
+float out_quad(float t)
 {
 	return -t * (t - 2);
 }
 
 inline
-float in_out_quad(float t) 
+float in_out_quad(float t)
 {
 	if (t < 0.5f) {
 		return 2 * t * t;
@@ -40,20 +40,20 @@ float in_out_quad(float t)
 }
 
 inline
-float in_cubic(float t) 
+float in_cubic(float t)
 {
 	return t * t * t;
 }
 
 inline
-float out_cubic(float t) 
+float out_cubic(float t)
 {
 	t -= 1;
 	return t*t*t + 1;
 }
 
 inline
-float in_out_cubic(float t) 
+float in_out_cubic(float t)
 {
 	t *= 2;
 	if (t < 1) {
@@ -65,20 +65,20 @@ float in_out_cubic(float t)
 }
 
 inline
-float in_quart(float t) 
+float in_quart(float t)
 {
 	return t * t * t * t;
 }
 
 inline
-float out_quart(float t) 
+float out_quart(float t)
 {
 	t -= 1;
 	return -(t*t*t*t - 1);
 }
 
 inline
-float in_out_quart(float t) 
+float in_out_quart(float t)
 {
 	t *= 2;
 	if (t < 1) {
@@ -90,20 +90,20 @@ float in_out_quart(float t)
 }
 
 inline
-float in_quint(float t) 
+float in_quint(float t)
 {
 	return t * t * t * t * t;
 }
 
 inline
-float out_quint(float t) 
+float out_quint(float t)
 {
 	t -= 1;
 	return t*t*t*t*t + 1;
 }
 
 inline
-float in_out_quint(float t) 
+float in_out_quint(float t)
 {
 	t *= 2;
 	if (t < 1) {
@@ -115,25 +115,25 @@ float in_out_quint(float t)
 }
 
 inline
-float in_sine(float t) 
+float in_sine(float t)
 {
 	return -1 * cosf(t * SM_PI / 2) + 1;
 }
 
 inline
-float out_sine(float t) 
+float out_sine(float t)
 {
 	return sinf(t * SM_PI / 2);
 }
 
 inline
-float in_out_sine(float t) 
+float in_out_sine(float t)
 {
 	return -0.5f * (cosf(SM_PI * t) - 1);
 }
 
 inline
-float in_expo(float t) 
+float in_expo(float t)
 {
 	if (t == 0) {
 		return 0;
@@ -143,7 +143,7 @@ float in_expo(float t)
 }
 
 inline
-float out_expo(float t) 
+float out_expo(float t)
 {
 	if (t == 1) {
 		return 1;
@@ -153,7 +153,7 @@ float out_expo(float t)
 }
 
 inline
-float in_out_expo(float t) 
+float in_out_expo(float t)
 {
 	if (t == 0) {
 		return 0;
@@ -169,20 +169,20 @@ float in_out_expo(float t)
 }
 
 inline
-float in_circ(float t) 
+float in_circ(float t)
 {
 	return -1 * (sqrtf(1-t*t) - 1);
 }
 
 inline
-float out_circ(float t) 
+float out_circ(float t)
 {
 	t -= 1;
 	return sqrtf(1 - (t * t));
 }
 
 inline
-float in_out_circ(float t) 
+float in_out_circ(float t)
 {
 	t *= 2;
 	if (t < 1) {
@@ -223,32 +223,32 @@ float in_out_elastic_function(float t)
 }
 
 inline
-float in_elastic(float t) 
+float in_elastic(float t)
 {
 	return in_elastic_function(0.5f);
 }
 
 inline
-float out_elastic(float t) 
+float out_elastic(float t)
 {
 	return out_elastic_function(0.5f);
 }
 
 inline
-float in_out_elastic(float t) 
+float in_out_elastic(float t)
 {
 	return in_out_elastic_function(t);
 }
 
 inline
-float in_back(float t) 
+float in_back(float t)
 {
 	float s = 1.70158f;
 	return t * t * ((s+1)*t - s);
 }
 
 inline
-float out_back(float t) 
+float out_back(float t)
 {
 	float s = 1.70158f;
 	t -= 1;
@@ -256,7 +256,7 @@ float out_back(float t)
 }
 
 inline
-float in_out_back(float t) 
+float in_out_back(float t)
 {
 	float s = 1.70158f;
 	t *= 2;
@@ -271,7 +271,7 @@ float in_out_back(float t)
 }
 
 inline
-float out_bounce(float t) 
+float out_bounce(float t)
 {
 	if (t < 4/11.0f) {
 		return (121 * t * t) / 16.0f;
@@ -285,13 +285,13 @@ float out_bounce(float t)
 }
 
 inline
-float in_bounce(float t) 
+float in_bounce(float t)
 {
 	return 1 - out_bounce(1-t);
 }
 
 inline
-float in_out_bounce(float t) 
+float in_out_bounce(float t)
 {
 	if (t < 0.5f) {
 		return in_bounce(2*t) * 0.5f;
@@ -301,7 +301,7 @@ float in_out_bounce(float t)
 }
 
 inline
-float in_square(float t) 
+float in_square(float t)
 {
 	if (t < 1) {
 		return 0;
@@ -311,7 +311,7 @@ float in_square(float t)
 }
 
 inline
-float out_square(float t) 
+float out_square(float t)
 {
 	if (t > 0) {
 		return 1;
@@ -321,7 +321,7 @@ float out_square(float t)
 }
 
 inline
-float in_out_square(float t) 
+float in_out_square(float t)
 {
 	if (t < 0.5f) {
 		return 0;

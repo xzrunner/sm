@@ -8,8 +8,8 @@
 namespace sm
 {
 
-void douglas_peucker(const CU_VEC<vec2>& line, 
-					 float precision, 
+void douglas_peucker(const CU_VEC<vec2>& line,
+					 float precision,
 					 CU_VEC<vec2>& dst);
 
 }

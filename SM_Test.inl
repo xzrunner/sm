@@ -35,7 +35,7 @@ bool is_point_in_rect(const vec2& v, const rect& r)
 }
 
 inline
-bool is_point_on_rect(const vec2& v, const rect& r) 
+bool is_point_on_rect(const vec2& v, const rect& r)
 {
 	return v.x == r.xmin || v.y == r.xmax || v.y == r.ymin || v.y == r.ymax;
 }
@@ -64,13 +64,13 @@ bool is_point_in_circle(const vec2& v, const vec2& center, float radius)
 }
 
 inline
-bool is_point_in_convex(const vec2& pos, const CU_VEC<vec2>& convex) 
+bool is_point_in_convex(const vec2& pos, const CU_VEC<vec2>& convex)
 {
 	return is_point_in_convex(pos, &convex[0], convex.size());
 }
 
 inline
-bool is_point_in_convex(const vec2& pos, const vec2* convex, int num) 
+bool is_point_in_convex(const vec2& pos, const vec2* convex, int num)
 {
 	if (num < 3) {
 		return false;
@@ -79,7 +79,7 @@ bool is_point_in_convex(const vec2& pos, const vec2* convex, int num)
 	int count = 0;
 	for (int i = 0; i < num; ++i)
 	{
-		vec2 s = convex[i], 
+		vec2 s = convex[i],
 			 e = i == num - 1 ? convex[0] : convex[i + 1];
 		if (is_point_at_line_left(pos, s, e)) {
 			++count;
@@ -99,7 +99,7 @@ inline
 bool is_segment_intersect_segment(const vec2& s0, const vec2& e0, const vec2& s1, const vec2& e1)
 {
 	return is_point_at_line_left(s0, s1, e1) != is_point_at_line_left(e0, s1, e1)
-		&& is_point_at_line_left(s1, s0, e0) != is_point_at_line_left(e1, s0, e0);	
+		&& is_point_at_line_left(s1, s0, e0) != is_point_at_line_left(e1, s0, e0);
 }
 
 inline
@@ -120,7 +120,7 @@ bool is_rect_contain_point(const rect& r, const vec2& v)
 inline
 bool is_rect_contain_rect(const rect& outer, const rect& inner)
 {
-	return inner.xmin >= outer.xmin && inner.xmax <= outer.xmax 
+	return inner.xmin >= outer.xmin && inner.xmax <= outer.xmax
 		&& inner.ymin >= outer.ymin && inner.ymax <= outer.ymax;
 }
 
@@ -168,13 +168,13 @@ bool is_rect_intersect_polygon(const rect& rect, const CU_VEC<vec2>& poly)
 }
 
 inline
-bool is_ray_intersect_triangle(const vec3& ray_ori, const vec3& ray_dir, 
-							   const vec3& tri0, const vec3& tri1, 
+bool is_ray_intersect_triangle(const vec3& ray_ori, const vec3& ray_dir,
+							   const vec3& tri0, const vec3& tri1,
 							   const vec3& tri2, vec3& out)
 {
 		// Idea: Tomas Moeller and Ben Trumbore
-	// in Fast, Minimum Storage Ray/Triangle Intersection 
-	
+	// in Fast, Minimum Storage Ray/Triangle Intersection
+
 	// Find vectors for two edges sharing vert0
 	vec3 edge1 = tri1 - tri0,
 		 edge2 = tri2 - tri0;
@@ -195,7 +195,7 @@ bool is_ray_intersect_triangle(const vec3& ray_ori, const vec3& ray_dir,
 
 	// Calculate U parameter and test bounds
 	float u = sm_vec3_dot(&tvec, &pvec);
-	if (u < 0 || u > det) 
+	if (u < 0 || u > det)
 		return NULL;
 
 	// Prepare to test V parameter
@@ -204,7 +204,7 @@ bool is_ray_intersect_triangle(const vec3& ray_ori, const vec3& ray_dir,
 
 	// Calculate V parameter and test bounds
 	float v = sm_vec3_dot(rayDir, &qvec);
-	if (v < 0 || u + v > det) 
+	if (v < 0 || u + v > det)
 		return NULL;
 
 	// Calculate t, scale parameters, ray intersects triangle
@@ -243,7 +243,7 @@ bool is_ray_intersect_triangle(const vec3& ray_ori, const vec3& ray_dir,
 	out.z = ray_ori.z + ray_dir.z * t;
 
 	vec3 vec = out - ray_ori;
-	if (vec.Dot(ray_dir) < 0 || 
+	if (vec.Dot(ray_dir) < 0 ||
 		vec.Length() > ray_dir.Length()) {
 		return false;
 	}
@@ -252,7 +252,7 @@ bool is_ray_intersect_triangle(const vec3& ray_ori, const vec3& ray_dir,
 }
 
 inline
-bool is_ray_intersect_aabb(const vec3& ray_ori, const vec3& ray_dir, 
+bool is_ray_intersect_aabb(const vec3& ray_ori, const vec3& ray_dir,
 						   const vec3& aabb_min, const vec3& aabb_max)
 {
 	// SLAB based optimized ray/AABB intersection routine
@@ -278,7 +278,7 @@ bool is_ray_intersect_aabb(const vec3& ray_ori, const vec3& ray_dir,
 		vec3 ray_dst(ray_ori.x + ray_dir.x , ray_ori.y + ray_dir.y , ray_ori.z + ray_dir.z),
 			 ray_min(std::min(ray_dst.x, ray_ori.x), std::min(ray_dst.y, ray_ori.y), std::min(ray_dst.z, ray_ori.z)),
 			 ray_max(std::max(ray_dst.x, ray_ori.x), std::max(ray_dst.y, ray_ori.y), std::max(ray_dst.z, ray_ori.z));
-		return 
+		return
 			(ray_min.x < aabb_max.x) && (ray_max.x > aabb_min.x) &&
 			(ray_min.y < aabb_max.y) && (ray_max.y > aabb_min.y) &&
 			(ray_min.z < aabb_max.z) && (ray_max.z > aabb_min.z);

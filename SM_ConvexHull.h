@@ -8,7 +8,7 @@
 namespace sm
 {
 
-void convex_hull(const CU_VEC<vec2>& points, 
+void convex_hull(const CU_VEC<vec2>& points,
 				 CU_VEC<vec2>& convex_hull);
 
 }

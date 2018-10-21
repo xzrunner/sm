@@ -87,9 +87,9 @@ static void finish(struct triangulateio& in, struct triangulateio& out)
 	trifree((VOID*)out.normlist);
 }
 
-static void finish(struct triangulateio& in, 
-				   struct triangulateio& out, 
-				   const CU_VEC<vec2>& bound, 
+static void finish(struct triangulateio& in,
+				   struct triangulateio& out,
+				   const CU_VEC<vec2>& bound,
 				   CU_VEC<vec2>& result)
 {
 	int index = 0;
@@ -115,15 +115,15 @@ static void finish(struct triangulateio& in,
 	finish(in, out);
 }
 
-static void finish(struct triangulateio& in, 
-                   struct triangulateio& out, 
-				   const CU_VEC<vec2>& bound, 
+static void finish(struct triangulateio& in,
+                   struct triangulateio& out,
+				   const CU_VEC<vec2>& bound,
 				   CU_VEC<vec2>& out_vertices,
 				   CU_VEC<int>& out_triangles)
 {
 	out_vertices.reserve(out.numberofpoints);
 	int ptr = 0;
-	for (int i = 0; i < out.numberofpoints; ++i) 
+	for (int i = 0; i < out.numberofpoints; ++i)
 	{
 		float x = out.pointlist[ptr++],
 			  y = out.pointlist[ptr++];
@@ -132,7 +132,7 @@ static void finish(struct triangulateio& in,
 
 	int index = 0;
 	out_triangles.reserve(out.numberoftriangles);
-	for (int i = 0; i < out.numberoftriangles; ++i) 
+	for (int i = 0; i < out.numberoftriangles; ++i)
 	{
 		CU_VEC<int> tri;
 		for (int j = 0; j < out.numberofcorners; ++j) {
@@ -169,7 +169,7 @@ static void verify_bound(const CU_VEC<vec2>& src, CU_VEC<vec2>& dst)
 static void verify_inner(const CU_VEC<vec2>& outer, CU_VEC<vec2>& inner)
 {
 	CU_VEC<vec2>::iterator itr = inner.begin();
-	for ( ; itr != inner.end(); ) 
+	for ( ; itr != inner.end(); )
 	{
 		bool find = false;
 		for (int i = 0, n = outer.size(); i < n; ++i) {
@@ -185,8 +185,8 @@ static void verify_inner(const CU_VEC<vec2>& outer, CU_VEC<vec2>& inner)
 	}
 }
 
-void triangulate_normal(const CU_VEC<vec2>& bound, 
-						CU_VEC<vec2>& result, 
+void triangulate_normal(const CU_VEC<vec2>& bound,
+						CU_VEC<vec2>& result,
 						TriangulateConstrained tc)
 {
 	struct triangulateio in, out;
@@ -226,9 +226,9 @@ void triangulate_normal(const CU_VEC<vec2>& bound,
 	finish(in, out, bound_fixed, result);
 }
 
-void triangulate_holes(const CU_VEC<vec2>& bound, 
+void triangulate_holes(const CU_VEC<vec2>& bound,
 					   const CU_VEC<CU_VEC<vec2> >& holes,
-					   CU_VEC<vec2>& result, 
+					   CU_VEC<vec2>& result,
 					   TriangulateConstrained tc)
 {
 	if (!holes.empty()) {
@@ -289,9 +289,9 @@ void triangulate_holes(const CU_VEC<vec2>& bound,
 	finish(in, out, bound_fixed, result);
 }
 
-void triangulate_holes_new(const CU_VEC<vec2>& bound, 
+void triangulate_holes_new(const CU_VEC<vec2>& bound,
 						   const CU_VEC<vec2>& hole,
-						   CU_VEC<vec2>& result, 
+						   CU_VEC<vec2>& result,
 						   TriangulateConstrained tc)
 {
 	struct triangulateio in, out;
@@ -367,8 +367,8 @@ void triangulate_holes_new(const CU_VEC<vec2>& bound,
 	finish(in, out, bound_fixed, result);
 }
 
-static void triangulate_points_prepare(triangulateio& in, 
-									   triangulateio& out, 
+static void triangulate_points_prepare(triangulateio& in,
+									   triangulateio& out,
 									   const CU_VEC<vec2>& bound,
 									   const CU_VEC<vec2>& points)
 {
@@ -408,9 +408,9 @@ static void triangulate_points_prepare(triangulateio& in,
 	in.numberofregions = 0;
 }
 
-void triangulate_points(const CU_VEC<vec2>& bound, 
+void triangulate_points(const CU_VEC<vec2>& bound,
 						const CU_VEC<vec2>& points,
-						CU_VEC<vec2>& result, 
+						CU_VEC<vec2>& result,
 						TriangulateConstrained tc)
 {
 	CU_VEC<vec2> bound_fixed;
@@ -427,7 +427,7 @@ void triangulate_points(const CU_VEC<vec2>& bound,
 	finish(in, out, bound_fixed, result);
 }
 
-void triangulate_points(const CU_VEC<vec2>& bound, 
+void triangulate_points(const CU_VEC<vec2>& bound,
 						const CU_VEC<vec2>& points,
 						CU_VEC<vec2>& out_vertices,
 						CU_VEC<int>& out_triangles,
@@ -447,9 +447,9 @@ void triangulate_points(const CU_VEC<vec2>& bound,
 	finish(in, out, bound_fixed, out_vertices, out_triangles);
 }
 
-void triangulate_lines(const CU_VEC<vec2>& bound, 
+void triangulate_lines(const CU_VEC<vec2>& bound,
 					   const CU_VEC<vec2>& lines,
-					   CU_VEC<vec2>& result, 
+					   CU_VEC<vec2>& result,
 					   TriangulateConstrained tc)
 {
 	struct triangulateio in, out;
@@ -502,10 +502,10 @@ void triangulate_lines(const CU_VEC<vec2>& bound,
 	finish(in, out, bound_fixed, result);
 }
 
-void triangulate_points_and_lines(const CU_VEC<vec2>& bound, 
+void triangulate_points_and_lines(const CU_VEC<vec2>& bound,
 								  const CU_VEC<vec2>& points,
-								  const CU_VEC<vec2>& lines, 
-								  CU_VEC<vec2>& result, 
+								  const CU_VEC<vec2>& lines,
+								  CU_VEC<vec2>& result,
 								  TriangulateConstrained tc)
 {
 	struct triangulateio in, out;
@@ -566,10 +566,10 @@ void triangulate_points_and_lines(const CU_VEC<vec2>& bound,
 	finish(in, out, bound_fixed, result);
 }
 
-void triangulate_lines_and_loops(const CU_VEC<vec2>& bound, 
+void triangulate_lines_and_loops(const CU_VEC<vec2>& bound,
 								 const CU_VEC<vec2>& lines,
-								 const CU_VEC<CU_VEC<vec2> >& loops, 
-								 CU_VEC<vec2>& result, 
+								 const CU_VEC<CU_VEC<vec2> >& loops,
+								 CU_VEC<vec2>& result,
 								 TriangulateConstrained tc)
 {
 	struct triangulateio in, out;

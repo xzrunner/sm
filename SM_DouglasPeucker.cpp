@@ -7,10 +7,10 @@ namespace sm
 {
 
 static inline
-void points_reduction(const CU_VEC<vec2>& line, 
-					  float precision, 
+void points_reduction(const CU_VEC<vec2>& line,
+					  float precision,
 					  CU_VEC<bool>& flag,
-					  int begin, 
+					  int begin,
 					  int end)
 {
 	if (begin > end)
@@ -53,8 +53,8 @@ void points_reduction(const CU_VEC<vec2>& line,
 	}
 }
 
-void douglas_peucker(const CU_VEC<vec2>& line, 
-					 float precision, 
+void douglas_peucker(const CU_VEC<vec2>& line,
+					 float precision,
 					 CU_VEC<vec2>& dst)
 {
 	if (line.empty()) {

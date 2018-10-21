@@ -17,44 +17,44 @@ enum TriangulateConstrained
 	TC_CONSTRAINED_CONFORMING_COUNT
 };
 
-void triangulate_normal(const CU_VEC<vec2>& bound, 
-						CU_VEC<vec2>& result, 
+void triangulate_normal(const CU_VEC<vec2>& bound,
+						CU_VEC<vec2>& result,
 						TriangulateConstrained tc = TC_CONSTRAINED);
 
-void triangulate_holes(const CU_VEC<vec2>& bound, 
+void triangulate_holes(const CU_VEC<vec2>& bound,
 					   const CU_VEC<CU_VEC<vec2> >& holes,
-					   CU_VEC<vec2>& result, 
+					   CU_VEC<vec2>& result,
 					   TriangulateConstrained tc = TC_CONSTRAINED);
-void triangulate_holes_new(const CU_VEC<vec2>& bound, 
+void triangulate_holes_new(const CU_VEC<vec2>& bound,
 						   const CU_VEC<vec2>& hole,
-						   CU_VEC<vec2>& result, 
+						   CU_VEC<vec2>& result,
 						   TriangulateConstrained tc = TC_CONSTRAINED);
 
-void triangulate_points(const CU_VEC<vec2>& bound, 
+void triangulate_points(const CU_VEC<vec2>& bound,
 						const CU_VEC<vec2>& points,
-						CU_VEC<vec2>& result, 
+						CU_VEC<vec2>& result,
 						TriangulateConstrained tc = TC_CONSTRAINED);
-void triangulate_points(const CU_VEC<vec2>& bound, 
+void triangulate_points(const CU_VEC<vec2>& bound,
 						const CU_VEC<vec2>& points,
 						CU_VEC<vec2>& out_vertices,
 						CU_VEC<int>& out_triangles,
 						TriangulateConstrained tc = TC_CONSTRAINED);
 
-void triangulate_lines(const CU_VEC<vec2>& bound, 
-					   const CU_VEC<vec2>& lines, 
-					   CU_VEC<vec2>& result, 
+void triangulate_lines(const CU_VEC<vec2>& bound,
+					   const CU_VEC<vec2>& lines,
+					   CU_VEC<vec2>& result,
 					   TriangulateConstrained tc = TC_CONSTRAINED);
 
-void triangulate_points_and_lines(const CU_VEC<vec2>& bound, 
+void triangulate_points_and_lines(const CU_VEC<vec2>& bound,
 								  const CU_VEC<vec2>& points,
-								  const CU_VEC<vec2>& lines, 
-								  CU_VEC<vec2>& result, 
+								  const CU_VEC<vec2>& lines,
+								  CU_VEC<vec2>& result,
 								  TriangulateConstrained tc = TC_CONSTRAINED);
 
-void triangulate_lines_and_loops(const CU_VEC<vec2>& bound, 
+void triangulate_lines_and_loops(const CU_VEC<vec2>& bound,
 								 const CU_VEC<vec2>& lines,
-								 const CU_VEC<CU_VEC<vec2> >& loops, 
-								 CU_VEC<vec2>& result, 
+								 const CU_VEC<CU_VEC<vec2> >& loops,
+								 CU_VEC<vec2>& result,
 								 TriangulateConstrained tc = TC_CONSTRAINED);
 
 }

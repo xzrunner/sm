@@ -8,8 +8,8 @@
 namespace sm
 {
 
-void cosine_smooth(const CU_VEC<vec2>& src, 
-				   float sampling_width, 
+void cosine_smooth(const CU_VEC<vec2>& src,
+				   float sampling_width,
 				   CU_VEC<vec2>& dst);
 
 }

@@ -23,7 +23,7 @@ Matrix2D& Matrix2D::operator = (const Matrix2D& mt)
 }
 
 static inline Matrix2D
-inverse_scale(const Matrix2D& m) 
+inverse_scale(const Matrix2D& m)
 {
 	Matrix2D ret;
 	if (m.x[0] == 0 || m.x[3] == 0) {
@@ -41,7 +41,7 @@ inverse_scale(const Matrix2D& m)
 }
 
 static inline Matrix2D
-inverse_rot(const Matrix2D& m) 
+inverse_rot(const Matrix2D& m)
 {
 	Matrix2D ret;
 	if (m.x[1] == 0 || m.x[2] == 0) {

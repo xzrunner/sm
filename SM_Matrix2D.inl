@@ -36,7 +36,7 @@ void Matrix2D::Identity()
 // static float IDENTITY[6] = {
 // 	1, 0, 0, 1, 0, 0
 // };
-// 
+//
 // static bool _is_identity(const Matrix2D& m)
 // {
 // 	return memcmp(m.x, IDENTITY, sizeof(IDENTITY)) == 0;
@@ -61,13 +61,13 @@ void Matrix2D::Identity()
 //		m[3] = m0[2] * m1[1] + m0[3] * m1[3];
 //		m[4] = m0[4] * m1[0] + m0[5] * m1[2] + m1[4];
 //		m[5] = m0[4] * m1[1] + m0[5] * m1[3] + m1[5];
-////	}	
+////	}
 //}
 
  static float MAT1001[4] = {
  	1, 0, 0, 1
  };
- 
+
  static bool _is_mat1001(const float* m)
  {
  	return memcmp(m, MAT1001, sizeof(MAT1001)) == 0;

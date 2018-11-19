@@ -202,6 +202,30 @@ float dis_pos_to_polyline(const vec2& pos, const CU_VEC<vec2>& polyline, int* ne
 }
 
 inline
+float dis_pos_to_polygon(const vec2& pos, const CU_VEC<vec2>& polygon, int* nearest_idx)
+{
+	if (polygon.size() < 2) {
+		return FLT_MAX;
+	}
+
+	float min_dis = FLT_MAX;
+	size_t nearest = -1;
+	for (size_t i = 0, n = polygon.size(); i < n; ++i)
+	{
+		const float dis = dis_pos_to_seg(pos, polygon[i], polygon[(i + 1) % n]);
+		if (dis < min_dis)
+		{
+			min_dis = dis;
+			nearest = i;
+		}
+	}
+	if (nearest_idx) {
+		*nearest_idx = nearest;
+	}
+	return min_dis;
+}
+
+inline
 float dis_pos3_to_pos3(const vec3& v0, const vec3& v1)
 {
 	return (v0 - v1).Length();

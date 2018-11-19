@@ -49,6 +49,7 @@ float dis_square_pos_to_pos(const vec2& v0, const vec2& v1);
 float dis_pos_to_multi_pos(const vec2& pos, const CU_VEC<vec2>& multi_pos, int* nearest_idx = NULL);
 float dis_pos_to_seg(const vec2& v, const vec2& s0, const vec2& s1);
 float dis_pos_to_polyline(const vec2& pos, const CU_VEC<vec2>& polyline, int* nearest_idx = NULL);
+float dis_pos_to_polygon(const vec2& pos, const CU_VEC<vec2>& polygon, int* nearest_idx = NULL);
 
 float dis_pos3_to_pos3(const vec3& v0, const vec3& v1);
 float dis_square_pos3_to_pos3(const vec3& v0, const vec3& v1);

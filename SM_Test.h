@@ -72,16 +72,6 @@ bool is_convex_intersect_convex(const CU_VEC<vec2>& c0, const CU_VEC<vec2>& c1);
 bool is_polygon_intersect_polygon(const CU_VEC<vec2>& poly0, const CU_VEC<vec2>& poly1);
 bool is_polygon_in_polygon(const CU_VEC<vec2>& poly0, const CU_VEC<vec2>& poly1);
 
-/**
- *  @brief
- *    ray
- */
-bool is_ray_intersect_triangle(const vec3& ray_ori, const vec3& ray_dir,
-							   const vec3& tri0, const vec3& tri1,
-							   const vec3& tri2, vec3& out);
-bool is_ray_intersect_aabb(const vec3& ray_ori, const vec3& ray_dir,
-						   const vec3& aabb_min, const vec3& aabb_max);
-
 }
 
 #include "SM_Test.inl"

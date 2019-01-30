@@ -29,7 +29,7 @@ public:
 public:
 	Vector2();
 	Vector2(T x, T y);
-	Vector2(const Vector2& v);
+//	Vector2(const Vector2& v);
 
 	Vector2& operator = (const Vector2& v);
 	void Set(T x, T y);
@@ -111,7 +111,7 @@ public:
 	Vector3();
 	Vector3(const T* xyz);
 	Vector3(T x, T y, T z);
-	Vector3(const Vector3& v);
+//	Vector3(const Vector3& v);
 
 	T operator[](size_t i) const;
 	T& operator[](size_t i);
@@ -178,7 +178,7 @@ public:
 public:
 	Vector4();
 	Vector4(T x, T y, T z, T w);
-	Vector4(const Vector4& v);
+//	Vector4(const Vector4& v);
 
 	T operator[](size_t i) const;
 	T& operator[](size_t i);

@@ -23,10 +23,10 @@ Vector2<T>::Vector2(T x, T y)
 	: x(x), y(y)
 {}
 
-template <typename T>
-Vector2<T>::Vector2(const Vector2& v)
-	: x(v.x), y(v.y)
-{}
+//template <typename T>
+//Vector2<T>::Vector2(const Vector2& v)
+//	: x(v.x), y(v.y)
+//{}
 
 template <typename T>
 Vector2<T>& Vector2<T>::operator = (const Vector2& v)
@@ -246,11 +246,11 @@ Vector3<T>::Vector3(T x, T y, T z)
 {
 }
 
-template <typename T>
-Vector3<T>::Vector3(const Vector3& v)
-	: x(v.x), y(v.y), z(v.z)
-{
-}
+//template <typename T>
+//Vector3<T>::Vector3(const Vector3& v)
+//	: x(v.x), y(v.y), z(v.z)
+//{
+//}
 
 template <typename T>
 T Vector3<T>::operator[](size_t i) const
@@ -431,11 +431,11 @@ Vector4<T>::Vector4(T x, T y, T z, T w)
 {
 }
 
-template <typename T>
-Vector4<T>::Vector4(const Vector4& v)
-	: x(v.x), y(v.y), z(v.z), w(v.w)
-{
-}
+//template <typename T>
+//Vector4<T>::Vector4(const Vector4& v)
+//	: x(v.x), y(v.y), z(v.z), w(v.w)
+//{
+//}
 
 template <typename T>
 T Vector4<T>::operator[](size_t i) const

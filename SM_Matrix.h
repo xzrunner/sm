@@ -103,7 +103,7 @@ public:
 
 	Matrix4<T> FastMul43(const Matrix4<T>& b);
 
-	void Transposed();
+    Matrix4<T> Transposed() const;
 	T Determinant() const;
 	Matrix4<T> Inverted() const;
 

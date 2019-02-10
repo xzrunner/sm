@@ -290,15 +290,17 @@ Matrix4<T> Matrix4<T>::FastMul43(const Matrix4<T>& b)
 }
 
 template <typename T>
-void Matrix4<T>::Transposed()
+Matrix4<T> Matrix4<T>::Transposed() const
 {
+    Matrix4<T> dst(*this);
 	for (int y = 0; y < 4; ++y ) {
 		for(int x = y + 1; x < 4; ++x ) {
-			T tmp = c[x][y];
-			c[x][y] = c[y][x];
-			c[y][x] = tmp;
+			T tmp = dst.c[x][y];
+            dst.c[x][y] = dst.c[y][x];
+            dst.c[y][x] = tmp;
 		}
 	}
+    return dst;
 }
 
 template <typename T>

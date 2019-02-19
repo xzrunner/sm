@@ -183,7 +183,7 @@ bool ray_plane_intersect(const Ray& ray, const Plane& plane, vec3* cross)
 	return false;
 }
 
-bool ray_plane_no_dir_intersect(const Ray& ray, const Plane& plane, vec3* cross)
+bool ray_plane_intersect_both_faces(const Ray& ray, const Plane& plane, vec3* cross)
 {
 	float d = ray.dir.Dot(plane.normal);
 	if (d < -std::numeric_limits<float>::epsilon() ||
@@ -239,10 +239,59 @@ bool ray_triangle_intersect(const mat4& mat, const vec3& v0, const vec3& v1,
 	return cross->z >= 0.0f;
 }
 
-bool ray_polygon_intersect(const mat4& mat, const std::vector<vec3>& polygon, const Ray& ray, vec3* cross)
+// Code from glm/gtx/intersect.h intersectRayTriangle
+bool ray_triangle_intersect_both_faces(const mat4& mat, const vec3& v0, const vec3& v1,
+	                                   const vec3& v2, const Ray& ray, vec3* cross)
 {
-	for (int i = 1, n = polygon.size(); i < n - 1; ++i) {
+	auto _v0 = mat * v0;
+	auto _v1 = mat * v1;
+	auto _v2 = mat * v2;
+
+	auto e1 = _v1 - _v0;
+	auto e2 = _v2 - _v0;
+
+	auto p = ray.dir.Cross(e2);;
+	auto a = e1.Dot(p);
+
+	float f = 1.0f / a;
+
+	auto s = ray.origin - _v0;
+	cross->x = f * s.Dot(p);
+	if (cross->x < 0.0f) {
+		return false;
+	}
+	if (cross->x > 1.0f) {
+		return false;
+	}
+
+	auto q = s.Cross(e1);
+	cross->y = f * ray.dir.Dot(q);
+	if (cross->y < 0.0f) {
+		return false;
+	}
+	if (cross->y + cross->x > 1.0f) {
+		return false;
+	}
+
+	cross->z = f * e2.Dot(q);
+
+	return cross->z >= 0.0f;
+}
+
+bool ray_polygon_intersect(const mat4& mat, const vec3* polygon, size_t polygon_n, const Ray& ray, vec3* cross)
+{
+	for (int i = 1; i < polygon_n - 1; ++i) {
 		if (ray_triangle_intersect(mat, polygon[0], polygon[i], polygon[i + 1], ray, cross)) {
+			return true;
+		}
+	}
+	return false;
+}
+
+bool ray_polygon_intersect_both_faces(const mat4& mat, const vec3* polygon, size_t polygon_n, const Ray& ray, vec3* cross)
+{
+	for (int i = 1; i < polygon_n - 1; ++i) {
+		if (ray_triangle_intersect_both_faces(mat, polygon[0], polygon[i], polygon[i + 1], ray, cross)) {
 			return true;
 		}
 	}

@@ -280,7 +280,7 @@ bool ray_triangle_intersect_both_faces(const mat4& mat, const vec3& v0, const ve
 
 bool ray_polygon_intersect(const mat4& mat, const vec3* polygon, size_t polygon_n, const Ray& ray, vec3* cross)
 {
-	for (int i = 1; i < polygon_n - 1; ++i) {
+	for (size_t i = 1; i < polygon_n - 1; ++i) {
 		if (ray_triangle_intersect(mat, polygon[0], polygon[i], polygon[i + 1], ray, cross)) {
 			return true;
 		}
@@ -290,7 +290,7 @@ bool ray_polygon_intersect(const mat4& mat, const vec3* polygon, size_t polygon_
 
 bool ray_polygon_intersect_both_faces(const mat4& mat, const vec3* polygon, size_t polygon_n, const Ray& ray, vec3* cross)
 {
-	for (int i = 1; i < polygon_n - 1; ++i) {
+	for (size_t i = 1; i < polygon_n - 1; ++i) {
 		if (ray_triangle_intersect_both_faces(mat, polygon[0], polygon[i], polygon[i + 1], ray, cross)) {
 			return true;
 		}

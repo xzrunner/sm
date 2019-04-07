@@ -2,6 +2,7 @@
 #define _SPATIAL_MATH_MATRIX_2D_H_
 
 #include "SM_Vector.h"
+#include "SM_Matrix.h"
 
 namespace sm
 {
@@ -18,6 +19,8 @@ public:
 
 	Matrix2D operator * (const Matrix2D& b) const;
 	vec2 operator * (const vec2& v) const;
+
+    explicit operator mat4 () const;
 
 	void Identity();
 

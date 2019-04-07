@@ -23,6 +23,19 @@ vec2 Matrix2D::operator * (const vec2& v) const
 }
 
 inline
+Matrix2D::operator mat4() const
+{
+    mat4 ret;
+    ret.x[0]  = x[0];
+	ret.x[1]  = x[1];
+	ret.x[4]  = x[2];
+	ret.x[5]  = x[3];
+	ret.x[12] = x[4];
+	ret.x[13] = x[5];
+    return ret;
+}
+
+inline
 void Matrix2D::Identity()
 {
 	x[0] = 1;

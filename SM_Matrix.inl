@@ -612,7 +612,7 @@ Matrix4<T> Matrix4<T>::Orthographic(T l, T r, T b, T t, T n, T f)
 	Matrix4 m;
 	m.x[0] = 2 / (r - l);
 	m.x[5] = 2 / (t - b);
-	m.x[10] = -2 / (f - n);
+	m.x[10] = 2 / (f - n);
 	m.x[12] = -(r + l) / (r - l);
 	m.x[13] = -(t + b) / (t - b);
 	m.x[14] = -(f + n) / (f - n);

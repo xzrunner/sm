@@ -2,6 +2,12 @@
 
 Spatial math.
 
-This project contains code from the book IPhone 3D Programming by Philip Rideout.
+## Reference
 
-And code from ejoy3d https://github.com/cloudwu/ejoy3d
+[glm](https://glm.g-truc.net/)
+
+[Horde3d](http://www.horde3d.org/)
+
+[IPhone 3D Programming](http://shop.oreilly.com/product/9780596804831.do)
+
+[Love2D](https://love2d.org/)

@@ -19,13 +19,6 @@ Matrix2<T>::Matrix2()
 	c[1][0] = 0; c[1][1] = 1;
 }
 
-template <typename T>
-Matrix2<T>::Matrix2(const T* m)
-{
-	c[0][0] = m[0]; c[0][1] = m[1];
-	c[1][0] = m[2]; c[1][1] = m[3];
-}
-
 /************************************************************************/
 /* Matrix3                                                              */
 /************************************************************************/
@@ -39,19 +32,11 @@ Matrix3<T>::Matrix3()
 }
 
 template <typename T>
-Matrix3<T>::Matrix3(const T* m)
-{
-	c[0][0] = m[0]; c[0][1] = m[1]; c[0][2] = m[2];
-	c[1][0] = m[3]; c[1][1] = m[4]; c[1][2] = m[5];
-	c[2][0] = m[6]; c[2][1] = m[7]; c[2][2] = m[8];
-}
-
-template <typename T>
 Matrix3<T>::Matrix3(const Matrix4<T>& m)
 {
-	x[0] = m.c[0][0]; x[1] = m.c[0][1]; x[2] = m.c[0][2];
-	x[3] = m.c[1][0]; x[4] = m.c[1][1]; x[5] = m.c[1][2];
-	x[6] = m.c[2][0]; x[7] = m.c[2][1]; x[8] = m.c[2][2];
+    c[0][0] = m.c[0][0]; c[1][0] = m.c[1][0]; c[2][0] = m.c[2][0];
+    c[0][1] = m.c[0][1]; c[1][1] = m.c[1][1]; c[2][1] = m.c[2][1];
+    c[0][2] = m.c[0][2]; c[1][2] = m.c[1][2]; c[2][2] = m.c[2][2];
 }
 
 /************************************************************************/
@@ -62,15 +47,6 @@ template <typename T>
 Matrix4<T>::Matrix4()
 {
 	Identity();
-}
-
-template <typename T>
-Matrix4<T>::Matrix4(const T* m)
-{
-	c[0][0] = m[0];  c[0][1] = m[1];  c[0][2] = m[2];  c[0][3] = m[3];
-	c[1][0] = m[4];  c[1][1] = m[5];  c[1][2] = m[6];  c[1][3] = m[7];
-	c[2][0] = m[8];  c[2][1] = m[9];  c[2][2] = m[10]; c[2][3] = m[11];
-	c[3][0] = m[12]; c[3][1] = m[13]; c[3][2] = m[14]; c[3][3] = m[15];
 }
 
 template <typename T>
@@ -114,26 +90,31 @@ bool Matrix4<T>::operator != (const Matrix4<T>& b) const
 }
 
 template <typename T>
-Matrix4<T> Matrix4<T>::operator * (const Matrix4<T>& b) const
+Matrix4<T> Matrix4<T>::operator * (const Matrix4<T>& m) const
 {
-	Matrix4 m;
-	m.c[0][0] = c[0][0] * b.c[0][0] + c[0][1] * b.c[1][0] + c[0][2] * b.c[2][0] + c[0][3] * b.c[3][0];
-	m.c[0][1] = c[0][0] * b.c[0][1] + c[0][1] * b.c[1][1] + c[0][2] * b.c[2][1] + c[0][3] * b.c[3][1];
-	m.c[0][2] = c[0][0] * b.c[0][2] + c[0][1] * b.c[1][2] + c[0][2] * b.c[2][2] + c[0][3] * b.c[3][2];
-	m.c[0][3] = c[0][0] * b.c[0][3] + c[0][1] * b.c[1][3] + c[0][2] * b.c[2][3] + c[0][3] * b.c[3][3];
-	m.c[1][0] = c[1][0] * b.c[0][0] + c[1][1] * b.c[1][0] + c[1][2] * b.c[2][0] + c[1][3] * b.c[3][0];
-	m.c[1][1] = c[1][0] * b.c[0][1] + c[1][1] * b.c[1][1] + c[1][2] * b.c[2][1] + c[1][3] * b.c[3][1];
-	m.c[1][2] = c[1][0] * b.c[0][2] + c[1][1] * b.c[1][2] + c[1][2] * b.c[2][2] + c[1][3] * b.c[3][2];
-	m.c[1][3] = c[1][0] * b.c[0][3] + c[1][1] * b.c[1][3] + c[1][2] * b.c[2][3] + c[1][3] * b.c[3][3];
-	m.c[2][0] = c[2][0] * b.c[0][0] + c[2][1] * b.c[1][0] + c[2][2] * b.c[2][0] + c[2][3] * b.c[3][0];
-	m.c[2][1] = c[2][0] * b.c[0][1] + c[2][1] * b.c[1][1] + c[2][2] * b.c[2][1] + c[2][3] * b.c[3][1];
-	m.c[2][2] = c[2][0] * b.c[0][2] + c[2][1] * b.c[1][2] + c[2][2] * b.c[2][2] + c[2][3] * b.c[3][2];
-	m.c[2][3] = c[2][0] * b.c[0][3] + c[2][1] * b.c[1][3] + c[2][2] * b.c[2][3] + c[2][3] * b.c[3][3];
-	m.c[3][0] = c[3][0] * b.c[0][0] + c[3][1] * b.c[1][0] + c[3][2] * b.c[2][0] + c[3][3] * b.c[3][0];
-	m.c[3][1] = c[3][0] * b.c[0][1] + c[3][1] * b.c[1][1] + c[3][2] * b.c[2][1] + c[3][3] * b.c[3][1];
-	m.c[3][2] = c[3][0] * b.c[0][2] + c[3][1] * b.c[1][2] + c[3][2] * b.c[2][2] + c[3][3] * b.c[3][2];
-	m.c[3][3] = c[3][0] * b.c[0][3] + c[3][1] * b.c[1][3] + c[3][2] * b.c[2][3] + c[3][3] * b.c[3][3];
-	return m;
+	Matrix4 mf;
+
+	mf.x[0] = x[0] * m.x[0] + x[4] * m.x[1] + x[8] * m.x[2] + x[12] * m.x[3];
+	mf.x[1] = x[1] * m.x[0] + x[5] * m.x[1] + x[9] * m.x[2] + x[13] * m.x[3];
+	mf.x[2] = x[2] * m.x[0] + x[6] * m.x[1] + x[10] * m.x[2] + x[14] * m.x[3];
+	mf.x[3] = x[3] * m.x[0] + x[7] * m.x[1] + x[11] * m.x[2] + x[15] * m.x[3];
+
+	mf.x[4] = x[0] * m.x[4] + x[4] * m.x[5] + x[8] * m.x[6] + x[12] * m.x[7];
+	mf.x[5] = x[1] * m.x[4] + x[5] * m.x[5] + x[9] * m.x[6] + x[13] * m.x[7];
+	mf.x[6] = x[2] * m.x[4] + x[6] * m.x[5] + x[10] * m.x[6] + x[14] * m.x[7];
+	mf.x[7] = x[3] * m.x[4] + x[7] * m.x[5] + x[11] * m.x[6] + x[15] * m.x[7];
+
+	mf.x[8] = x[0] * m.x[8] + x[4] * m.x[9] + x[8] * m.x[10] + x[12] * m.x[11];
+	mf.x[9] = x[1] * m.x[8] + x[5] * m.x[9] + x[9] * m.x[10] + x[13] * m.x[11];
+	mf.x[10] = x[2] * m.x[8] + x[6] * m.x[9] + x[10] * m.x[10] + x[14] * m.x[11];
+	mf.x[11] = x[3] * m.x[8] + x[7] * m.x[9] + x[11] * m.x[10] + x[15] * m.x[11];
+
+	mf.x[12] = x[0] * m.x[12] + x[4] * m.x[13] + x[8] * m.x[14] + x[12] * m.x[15];
+	mf.x[13] = x[1] * m.x[12] + x[5] * m.x[13] + x[9] * m.x[14] + x[13] * m.x[15];
+	mf.x[14] = x[2] * m.x[12] + x[6] * m.x[13] + x[10] * m.x[14] + x[14] * m.x[15];
+	mf.x[15] = x[3] * m.x[12] + x[7] * m.x[13] + x[11] * m.x[14] + x[15] * m.x[15];
+
+	return mf;
 }
 
 template <typename T>
@@ -446,10 +427,9 @@ template <typename T>
 Matrix4<T> Matrix4<T>::Translated(T x, T y, T z)
 {
 	Matrix4 m;
-	m.c[0][0] = 1; m.c[0][1] = 0; m.c[0][2] = 0; m.c[0][3] = 0;
-	m.c[1][0] = 0; m.c[1][1] = 1; m.c[1][2] = 0; m.c[1][3] = 0;
-	m.c[2][0] = 0; m.c[2][1] = 0; m.c[2][2] = 1; m.c[2][3] = 0;
-	m.c[3][0] = x; m.c[3][1] = y; m.c[3][2] = z; m.c[3][3] = 1;
+    m.x[12] = x;
+    m.x[13] = y;
+    m.x[14] = z;
 	return m;
 }
 
@@ -457,10 +437,9 @@ template <typename T>
 Matrix4<T> Matrix4<T>::Scaled(T x, T y, T z)
 {
 	Matrix4 m;
-	m.c[0][0] = x; m.c[0][1] = 0; m.c[0][2] = 0; m.c[0][3] = 0;
-	m.c[1][0] = 0; m.c[1][1] = y; m.c[1][2] = 0; m.c[1][3] = 0;
-	m.c[2][0] = 0; m.c[2][1] = 0; m.c[2][2] = z; m.c[2][3] = 0;
-	m.c[3][0] = 0; m.c[3][1] = 0; m.c[3][2] = 0; m.c[3][3] = 1;
+    m.x[0]  = x;
+    m.x[5]  = y;
+    m.x[10] = z;
 	return m;
 }
 
@@ -478,10 +457,8 @@ Matrix4<T> Matrix4<T>::RotatedX(T degrees)
 	T c = cos(radians);
 
 	Matrix4 m;
-	m.c[0][0] = 1; m.c[0][1] = 0; m.c[0][2] = 0; m.c[0][3] = 0;
-	m.c[1][0] = 0; m.c[1][1] = c; m.c[1][2] = s; m.c[1][3] = 0;
-	m.c[2][0] = 0; m.c[2][1] =-s; m.c[2][2] = c; m.c[2][3] = 0;
-	m.c[3][0] = 0; m.c[3][1] = 0; m.c[3][2] = 0; m.c[3][3] = 1;
+    m.x[5] =  c;  m.x[9]  = s;
+    m.x[6] = -s;  m.x[10] = c;
 	return m;
 }
 
@@ -493,10 +470,8 @@ Matrix4<T> Matrix4<T>::RotatedY(T degrees)
 	T c = cos(radians);
 
 	Matrix4 m;
-	m.c[0][0] = c; m.c[0][1] = 0; m.c[0][2] =-s; m.c[0][3] = 0;
-	m.c[1][0] = 0; m.c[1][1] = 1; m.c[1][2] = 0; m.c[1][3] = 0;
-	m.c[2][0] = s; m.c[2][1] = 0; m.c[2][2] = c; m.c[2][3] = 0;
-	m.c[3][0] = 0; m.c[3][1] = 0; m.c[3][2] = 0; m.c[3][3] = 1;
+    m.x[0] = c;  m.x[8]  = -s;
+    m.x[2] = s;  m.x[10] =  c;
 	return m;
 }
 
@@ -508,10 +483,8 @@ Matrix4<T> Matrix4<T>::RotatedZ(T degrees)
 	T c = cos(radians);
 
 	Matrix4 m;
-	m.c[0][0] = c; m.c[0][1] = s; m.c[0][2] = 0; m.c[0][3] = 0;
-	m.c[1][0] =-s; m.c[1][1] = c; m.c[1][2] = 0; m.c[1][3] = 0;
-	m.c[2][0] = 0; m.c[2][1] = 0; m.c[2][2] = 1; m.c[2][3] = 0;
-	m.c[3][0] = 0; m.c[3][1] = 0; m.c[3][2] = 0; m.c[3][3] = 1;
+    m.x[0] =  c;  m.x[4] = s;
+    m.x[1] = -s;  m.x[5] = c;
 	return m;
 }
 
@@ -534,25 +507,6 @@ Matrix4<T> Matrix4<T>::Sheared(T kx, T ky)
 	return m;
 }
 
-//// right hands
-//template <typename T>
-//Matrix4<T> Matrix4<T>::Perspective(T l, T r, T b, T t, T n, T f)
-//{
-//	Matrix4 m;
-//
-//	m.x[0]  = 2 * n / (r - l);
-//	m.x[5]  = 2 * n / (t - b);
-//	m.x[8]  = (r + l) / (r - l);
-//	m.x[9]  = (t + b) / (t - b);
-//	m.x[10] = -(f + n) / (f - n);
-//	m.x[11] = -1;
-//	m.x[14] = -2 * f * n / (f - n);
-//	m.x[15] = 0;
-//
-//	return m;
-//}
-
-// left hands
 template <typename T>
 Matrix4<T> Matrix4<T>::Perspective(T l, T r, T b, T t, T n, T f)
 {
@@ -570,7 +524,7 @@ Matrix4<T> Matrix4<T>::Perspective(T l, T r, T b, T t, T n, T f)
 	return m;
 }
 
-//// right hands
+//// 0 to 1
 //template <typename T>
 //Matrix4<T> Matrix4<T>::Perspective(T fovy, T aspect, T znear, T zfar)
 //{
@@ -581,14 +535,14 @@ Matrix4<T> Matrix4<T>::Perspective(T l, T r, T b, T t, T n, T f)
 //	T const tan_half_fovy = tan(fovy / static_cast<T>(2) * SM_DEG_TO_RAD);
 //	m.c[0][0] = static_cast<T>(1) / (aspect * tan_half_fovy);
 //	m.c[1][1] = static_cast<T>(1) / (tan_half_fovy);
-//	m.c[2][2] = zfar / (znear - zfar);
-//	m.c[2][3] = -static_cast<T>(1);
+//	m.c[2][2] = zfar / (zfar - znear);
+//	m.c[2][3] = static_cast<T>(1);
 //	m.c[3][2] = -(zfar * znear) / (zfar - znear);
 //
 //	return m;
 //}
 
-// left hands
+// -1 to 1
 template <typename T>
 Matrix4<T> Matrix4<T>::Perspective(T fovy, T aspect, T znear, T zfar)
 {
@@ -599,9 +553,9 @@ Matrix4<T> Matrix4<T>::Perspective(T fovy, T aspect, T znear, T zfar)
 	T const tan_half_fovy = tan(fovy / static_cast<T>(2) * SM_DEG_TO_RAD);
 	m.c[0][0] = static_cast<T>(1) / (aspect * tan_half_fovy);
 	m.c[1][1] = static_cast<T>(1) / (tan_half_fovy);
-	m.c[2][2] = zfar / (zfar - znear);
+	m.c[2][2] = (zfar + znear) / (zfar - znear);
 	m.c[2][3] = static_cast<T>(1);
-	m.c[3][2] = -(zfar * znear) / (zfar - znear);
+	m.c[3][2] = -(2 * zfar * znear) / (zfar - znear);
 
 	return m;
 }
@@ -617,6 +571,29 @@ Matrix4<T> Matrix4<T>::Orthographic(T l, T r, T b, T t, T n, T f)
 	m.x[13] = -(t + b) / (t - b);
 	m.x[14] = -(f + n) / (f - n);
 	return m;
+}
+
+template <typename T>
+Matrix4<T> Matrix4<T>::LookAt(const Vector3<T>& eye, const Vector3<T>& center, const Vector3<T>& up)
+{
+    auto f = (center.vec3 - eye.vec3).Normalized();
+    auto s = up.vec3.Cross(f).Normalized();
+    auto u = f.Cross(s);
+
+    Matrix4 m;
+    m[0][0] = s.x;
+    m[1][0] = s.y;
+    m[2][0] = s.z;
+    m[0][1] = u.x;
+    m[1][1] = u.y;
+    m[2][1] = u.z;
+    m[0][2] = f.x;
+    m[1][2] = f.y;
+    m[2][2] = f.z;
+    m[3][0] = -s.Dot(eye);
+    m[3][1] = -u.Dot(eye);
+    m[3][2] = -f.Dot(eye);
+    return m;
 }
 
 }

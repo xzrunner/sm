@@ -15,14 +15,16 @@ template <typename T>
 class Matrix2
 {
 public:
+    // Column major, c[column][row]
+    // | x0 x2 |    | c00 c10 |
+    // | x1 x3 |    | c01 c11 |
 	union {
-		T c[2][2];	// Column major order for OpenGL: c[column][row]
+		T c[2][2];
 		T x[4];
 	};
 
 public:
 	Matrix2();
-	Matrix2(const T* m);
 
 }; // Matrix2
 
@@ -37,14 +39,17 @@ template <typename T>
 class Matrix3
 {
 public:
+    // Column major    c[column][row]
+    // | x0 x3 x5 |    | c00 c10 c20 |
+    // | x1 x4 x7 |    | c01 c11 c21 |
+    // | x2 x5 x8 |    | c02 c12 c22 |
 	union {
-		T c[3][3];	// Column major order for OpenGL: c[column][row]
+		T c[3][3];
 		T x[9];
 	};
 
 public:
 	Matrix3();
-	Matrix3(const T* m);
 	Matrix3(const Matrix4<T>& m);
 
 }; // Matrix3
@@ -57,14 +62,18 @@ template <typename T>
 class Matrix4
 {
 public:
+    // Column major           c[column][row]
+    // | x0 x4 x8  x12 |    | c00 c10 c20 c30 |
+    // | x1 x5 x9  x13 |    | c01 c11 c21 c31 |
+    // | x2 x6 x10 x14 |    | c02 c12 c22 c32 |
+    // | x3 x7 x11 x15 |    | c03 c13 c23 c33 |
 	union {
-		T c[4][4];	// Column major order for OpenGL: c[column][row]
+		T c[4][4];
 		T x[16];
 	};
 
 public:
 	Matrix4();
-	Matrix4(const T* m);
 	Matrix4(const Matrix3<T>& m);
 	Matrix4(const QuaternionT<T>& q);
 
@@ -122,9 +131,11 @@ public:
 	static Matrix4<T> RotatedAxis(const Vector3<T>& axis, T angle);
 	static Matrix4<T> Sheared(T kx, T ky);
 
+    // left handed, -1 to 1
 	static Matrix4<T> Perspective(T left, T right, T bottom, T top, T znear, T zfar);
 	static Matrix4<T> Perspective(T fovy, T aspect, T znear, T zfar);
 	static Matrix4<T> Orthographic(T left, T right, T bottom, T top, T znear, T zfar);
+    static Matrix4<T> LookAt(const Vector3<T>& eye, const Vector3<T>& center, const Vector3<T>& up);
 
 }; // Matrix4
 

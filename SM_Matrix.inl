@@ -576,23 +576,23 @@ Matrix4<T> Matrix4<T>::Orthographic(T l, T r, T b, T t, T n, T f)
 template <typename T>
 Matrix4<T> Matrix4<T>::LookAt(const Vector3<T>& eye, const Vector3<T>& center, const Vector3<T>& up)
 {
-    auto f = (center.vec3 - eye.vec3).Normalized();
-    auto s = up.vec3.Cross(f).Normalized();
+    auto f = (center - eye).Normalized();
+    auto s = up.Cross(f).Normalized();
     auto u = f.Cross(s);
 
     Matrix4 m;
-    m[0][0] = s.x;
-    m[1][0] = s.y;
-    m[2][0] = s.z;
-    m[0][1] = u.x;
-    m[1][1] = u.y;
-    m[2][1] = u.z;
-    m[0][2] = f.x;
-    m[1][2] = f.y;
-    m[2][2] = f.z;
-    m[3][0] = -s.Dot(eye);
-    m[3][1] = -u.Dot(eye);
-    m[3][2] = -f.Dot(eye);
+    m.c[0][0] = s.x;
+    m.c[1][0] = s.y;
+    m.c[2][0] = s.z;
+    m.c[0][1] = u.x;
+    m.c[1][1] = u.y;
+    m.c[2][1] = u.z;
+    m.c[0][2] = f.x;
+    m.c[1][2] = f.y;
+    m.c[2][2] = f.z;
+    m.c[3][0] = -s.Dot(eye);
+    m.c[3][1] = -u.Dot(eye);
+    m.c[3][2] = -f.Dot(eye);
     return m;
 }
 

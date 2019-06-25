@@ -77,6 +77,8 @@ public:
 	Matrix4(const Matrix3<T>& m);
 	Matrix4(const QuaternionT<T>& q);
 
+    Matrix4<T>& operator = (const Matrix4<T>& b);
+
 	bool operator == (const Matrix4<T>& b) const;
 	bool operator != (const Matrix4<T>& b) const;
 

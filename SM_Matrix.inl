@@ -78,6 +78,13 @@ Matrix4<T>::Matrix4(const QuaternionT<T>& q)
 }
 
 template <typename T>
+Matrix4<T>& Matrix4<T>::operator = (const Matrix4<T>& b)
+{
+    memcpy(&x[0], &b.x[0], sizeof(x));
+    return *this;
+}
+
+template <typename T>
 bool Matrix4<T>::operator == (const Matrix4<T>& b) const
 {
 	return memcmp(x, b.x, sizeof(x)) == 0;

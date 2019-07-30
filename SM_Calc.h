@@ -25,6 +25,7 @@ float mat_trans_len(float len, const MatrixFix& mat);
 
 float get_line_angle(const vec2& s, const vec2& e);
 float get_angle(const vec2& center, const vec2& pa, const vec2& pb);
+float get_angle(const vec3& center, const vec3& pa, const vec3& pb);
 float get_angle_in_direction(const vec2& center, const vec2& start, const vec2& end);
 
 /**

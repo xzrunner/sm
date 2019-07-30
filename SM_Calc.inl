@@ -102,6 +102,22 @@ float get_angle(const vec2& center, const vec2& pa, const vec2& pb)
 }
 
 inline
+float get_angle(const vec3& center, const vec3& pa, const vec3& pb)
+{
+	const float a = dis_pos3_to_pos3(center, pa),
+		        b = dis_pos3_to_pos3(center, pb),
+		        c = dis_pos3_to_pos3(pa, pb);
+
+	float cos_val = (a * a + b * b - c * c) / (2 * a * b);
+	cos_val = std::max(std::min(cos_val, 1.0f), -1.0f);
+
+	return acos(cos_val);
+
+	// 	float angle = acos(cosVal);
+	// 	return is_turn_right(pa, center, pb) ? angle : -angle;
+}
+
+inline
 float get_angle_in_direction(const vec2& center, const vec2& start, const vec2& end)
 {
 	float angle = get_angle(center, start, end);

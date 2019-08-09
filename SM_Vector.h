@@ -125,6 +125,8 @@ public:
 	bool operator == (const Vector3& v) const;
 	bool operator != (const Vector3& v) const;
 
+    bool operator < (const Vector3& v) const;
+
 	Vector3 operator - () const;
 
 	void operator += (const Vector3& v);
@@ -134,6 +136,7 @@ public:
 
 	Vector3 operator + (const Vector3& v) const;
 	Vector3 operator - (const Vector3& v) const;
+    Vector3 operator * (const Vector3& v) const;
 	Vector3 operator * (T f) const;
 	Vector3 operator / (T f) const;
 

@@ -310,6 +310,14 @@ bool Vector3<T>::operator != (const Vector3& v) const
 }
 
 template <typename T>
+bool Vector3<T>::operator < (const Vector3& v) const
+{
+	return x < v.x
+		|| (x == v.x && y < v.y)
+		|| (x == v.x && y == v.y && z < v.z);
+}
+
+template <typename T>
 Vector3<T> Vector3<T>::operator - () const
 {
 	return Vector3(-x, -y, -z);
@@ -349,6 +357,12 @@ template <typename T>
 Vector3<T> Vector3<T>::operator - (const Vector3& v) const
 {
 	return Vector3(x - v.x, y - v.y, z - v.z);
+}
+
+template <typename T>
+Vector3<T> Vector3<T>::operator * (const Vector3& v) const
+{
+    return Vector3(x * v.x, y * v.y, z * v.z);
 }
 
 template <typename T>
@@ -410,9 +424,7 @@ T Vector3<T>::Dot(const Vector3& v) const
 template <typename T>
 bool Vector3Cmp::operator () (const Vector3<T>& p0, const Vector3<T>& p1) const
 {
-	return p0.x < p1.x
-		|| (p0.x == p1.x && p0.y < p1.y)
-		|| (p0.x == p1.x && p0.y == p1.y && p0.z < p1.z);
+    return p0 < p1;
 }
 
 /************************************************************************/

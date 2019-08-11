@@ -15,7 +15,7 @@ public:
 	PlaneT(const Vector3<T>& normal, const Vector3<T>& v0);
 	PlaneT(const Vector3<T>& v0, const Vector3<T>& v1, const Vector3<T>& v2);
 
-	void GetDistance(const Vector3<T>& v) const;
+    T GetDistance(const Vector3<T>& v) const;
 
 	void Build(const Vector3<T>& normal, T d);
 	void Build(const Vector3<T>& normal, const Vector3<T>& v);

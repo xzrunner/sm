@@ -24,10 +24,10 @@ inline PlaneT<T>::PlaneT(const Vector3<T>& v0, const Vector3<T>& v1, const Vecto
 }
 
 template <typename T>
-inline void PlaneT<T>::GetDistance(const Vector3<T>& v) const
+inline T PlaneT<T>::GetDistance(const Vector3<T>& v) const
 {
 	T d = normal.Dot(v);
-	return d + dist;
+	return d - dist;
 }
 
 template <typename T>

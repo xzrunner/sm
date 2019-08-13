@@ -27,7 +27,7 @@ template <typename T>
 inline T PlaneT<T>::GetDistance(const Vector3<T>& v) const
 {
 	T d = normal.Dot(v);
-	return d - dist;
+	return d + dist;
 }
 
 template <typename T>

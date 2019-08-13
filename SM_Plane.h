@@ -21,6 +21,8 @@ public:
 	void Build(const Vector3<T>& normal, const Vector3<T>& v);
 	void Build(const Vector3<T>& v0, const Vector3<T>& v1, const Vector3<T>& v2);
 
+    void Flip();
+
 public:
 	Vector3<T> normal;
 	T          dist;

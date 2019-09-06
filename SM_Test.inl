@@ -30,6 +30,9 @@ bool is_point_at_line_left(const vec2& v, const vec2& s, const vec2& e)
 inline
 bool is_point_in_rect(const vec2& v, const rect& r)
 {
+    if (!r.IsValid()) {
+        return false;
+    }
 	return v.x > r.xmin && v.x < r.xmax
 		&& v.y > r.ymin && v.y < r.ymax;
 }
@@ -37,6 +40,9 @@ bool is_point_in_rect(const vec2& v, const rect& r)
 inline
 bool is_point_on_rect(const vec2& v, const rect& r)
 {
+    if (!r.IsValid()) {
+        return false;
+    }
 	return v.x == r.xmin || v.y == r.xmax || v.y == r.ymin || v.y == r.ymax;
 }
 
@@ -113,6 +119,9 @@ bool is_two_line_parallel(const vec2& s0, const vec2& e0, const vec2& s1, const 
 inline
 bool is_rect_contain_point(const rect& r, const vec2& v)
 {
+    if (!r.IsValid()) {
+        return false;
+    }
 	return v.x >= r.xmin && v.x <= r.xmax
 		&& v.y >= r.ymin && v.y <= r.ymax;
 }
@@ -120,6 +129,9 @@ bool is_rect_contain_point(const rect& r, const vec2& v)
 inline
 bool is_rect_contain_rect(const rect& outer, const rect& inner)
 {
+    if (!inner.IsValid() || !outer.IsValid()) {
+        return false;
+    }
 	return inner.xmin >= outer.xmin && inner.xmax <= outer.xmax
 		&& inner.ymin >= outer.ymin && inner.ymax <= outer.ymax;
 }
@@ -127,13 +139,18 @@ bool is_rect_contain_rect(const rect& outer, const rect& inner)
 inline
 bool is_rect_intersect_rect(const rect& r0, const rect& r1)
 {
+    if (!r0.IsValid() || !r1.IsValid()) {
+        return false;
+    }
 	return !(r0.xmin >= r1.xmax || r0.xmax <= r1.xmin || r0.ymin >= r1.ymax || r0.ymax <= r1.ymin);
 }
 
 inline
 bool is_rect_intersect_polyline(const rect& r, const CU_VEC<vec2>& poly, bool loop)
 {
-	if (poly.size() < 2) return false;
+    if (!r.IsValid() || poly.size() < 2) {
+        return false;
+    }
 
 	for (size_t i = 0, n = poly.size() - 1; i < n; ++i)
 	{
@@ -141,8 +158,9 @@ bool is_rect_intersect_polyline(const rect& r, const CU_VEC<vec2>& poly, bool lo
 			return true;
 	}
 
-	if (loop && is_rect_intersect_segment(r, poly[poly.size() - 1], poly[0]))
-		return true;
+    if (loop && is_rect_intersect_segment(r, poly[poly.size() - 1], poly[0])) {
+        return true;
+    }
 
 	return false;
 }
@@ -150,10 +168,9 @@ bool is_rect_intersect_polyline(const rect& r, const CU_VEC<vec2>& poly, bool lo
 inline
 bool is_rect_intersect_polygon(const rect& rect, const CU_VEC<vec2>& poly)
 {
-	if (poly.size() < 3) {
-		return false;
-	}
-
+    if (!rect.IsValid() || poly.size() < 3) {
+        return false;
+    }
 	if (is_point_in_area(rect.Center(), poly) || is_point_in_rect(poly[0], rect)) {
 		return true;
 	}

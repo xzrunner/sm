@@ -52,6 +52,8 @@ public:
 	Matrix3();
 	Matrix3(const Matrix4<T>& m);
 
+    T Determinant() const;
+
 }; // Matrix3
 
 /**

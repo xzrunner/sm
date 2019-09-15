@@ -364,8 +364,9 @@ vec2 get_tri_gravity_center(const vec2& p0, const vec2& p1, const vec2& p2)
 inline
 float get_polygon_area(const CU_VEC<sm::vec2>& polygon)
 {
-	if (polygon.size() < 3)
-		return 0;
+    if (polygon.size() < 3) {
+        return 0;
+    }
 
 	float s = 0;
 	for (int i = 0, n = polygon.size(); i < n; i++) {
@@ -377,6 +378,23 @@ float get_polygon_area(const CU_VEC<sm::vec2>& polygon)
 }
 
 inline
+float get_polygon_area(const CU_VEC<sm::vec3>& polygon) {
+    if (polygon.size() < 3) {
+        return 0;
+    }
+
+    sm::vec3 tot;
+    for (int i = 0, n = polygon.size(); i < n; i++)
+    {
+        int next = (i + 1) % n;
+        sm::vec3 prod = polygon[i].Cross(polygon[next]);
+        tot += prod;
+    }
+    float s = tot.Dot(sm::calc_unit_normal(polygon[0], polygon[1], polygon[2]));
+    return fabs(s / 2.0f);
+}
+
+inline
 float get_triangle_area(const sm::vec2& p0, const sm::vec2& p1, const sm::vec2& p2)
 {
 	float s = 0;
@@ -384,6 +402,27 @@ float get_triangle_area(const sm::vec2& p0, const sm::vec2& p1, const sm::vec2& 
 	s += (p2.y + p1.y) * (p2.x - p1.x);
 	s += (p0.y + p2.y) * (p0.x - p2.x);
 	return fabs(s / 2.0f);
+}
+
+inline
+sm::vec3 calc_unit_normal(const sm::vec3& a, const sm::vec3& b, const sm::vec3& c)
+{
+    sm::mat3 x, y, z;
+    x.c[0][0] = 1; x.c[1][0] = a.y; x.c[2][0] = a.z;
+    x.c[0][1] = 1; x.c[1][1] = b.y; x.c[2][1] = b.z;
+    x.c[0][2] = 1; x.c[1][2] = c.y; x.c[2][2] = c.z;
+    y.c[0][0] = a.x; y.c[1][0] = 1; y.c[2][0] = a.z;
+    y.c[0][1] = b.x; y.c[1][1] = 1; y.c[2][1] = b.z;
+    y.c[0][2] = c.x; y.c[1][2] = 1; y.c[2][2] = c.z;
+    z.c[0][0] = a.x; z.c[1][0] = a.y; z.c[2][0] = 1;
+    z.c[0][1] = b.x; z.c[1][1] = b.y; z.c[2][1] = 1;
+    z.c[0][2] = c.x; z.c[1][2] = c.y; z.c[2][2] = 1;
+
+    sm::vec3 d;
+    d.x = x.Determinant();
+    d.y = y.Determinant();
+    d.z = z.Determinant();
+    return d.Normalized();
 }
 
 inline

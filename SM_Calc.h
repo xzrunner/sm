@@ -83,7 +83,10 @@ vec2 get_tri_gravity_center(const vec2& p0, const vec2& p1, const vec2& p2);
 *    area
 */
 float get_polygon_area(const CU_VEC<sm::vec2>& polygon);
+float get_polygon_area(const CU_VEC<sm::vec3>& polygon);
 float get_triangle_area(const sm::vec2& p0, const sm::vec2& p1, const sm::vec2& p2);
+
+sm::vec3 calc_unit_normal(const sm::vec3& a, const sm::vec3& b, const sm::vec3& c);
 
 /**
 *  @brief

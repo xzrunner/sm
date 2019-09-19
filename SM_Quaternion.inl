@@ -270,7 +270,7 @@ QuaternionT<T> QuaternionT<T>::CreateFromVectors(const Vector3<T>& v0, const Vec
 		if (axis.Length() < FLT_EPSILON)
 			axis = sm::vec3(0, 1, 1).Cross(normStart);
 
-		return sm::Quaternion::CreateFromAxisAngle(axis, 180.f);
+		return sm::Quaternion::CreateFromAxisAngle(axis, SM_PI);
 	}
 }
 

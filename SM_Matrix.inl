@@ -145,28 +145,28 @@ Matrix4<T>& Matrix4<T>::operator *= (const Matrix4<T>& b)
 template <typename T>
 Vector2<T> Matrix4<T>::operator * (const Vector2<T>& v) const
 {
-	T x = v.x * c[0][0] + v.y * c[1][0] + c[3][0];
-	T y = v.x * c[0][1] + v.y * c[1][1] + c[3][1];
+	T x = c[0][0] * v.x + c[1][0] * v.y + c[3][0];
+	T y = c[0][1] * v.x + c[1][1] * v.y + c[3][1];
 	return Vector2<T>(x, y);
 }
 
 template <typename T>
 Vector3<T> Matrix4<T>::operator * (const Vector3<T>& v) const
 {
-	T x = v.x * c[0][0] + v.y * c[1][0] + v.z * c[2][0] + c[3][0];
-	T y = v.x * c[0][1] + v.y * c[1][1] + v.z * c[2][1] + c[3][1];
-	T z = v.x * c[0][2] + v.y * c[1][2] + v.z * c[2][2] + c[3][2];
-	T w = v.x * c[0][3] + v.y * c[1][3] + v.z * c[2][3] + c[3][3];
+	T x = c[0][0] * v.x + c[1][0] * v.y + c[2][0] * v.z + c[3][0];
+	T y = c[0][1] * v.x + c[1][1] * v.y + c[2][1] * v.z + c[3][1];
+	T z = c[0][2] * v.x + c[1][2] * v.y + c[2][2] * v.z + c[3][2];
+	T w = c[0][3] * v.x + c[1][3] * v.y + c[2][3] * v.z + c[3][3];
 	return Vector3<T>(x / w, y / w, z / w);
 }
 
 template <typename T>
 Vector4<T> Matrix4<T>::operator * (const Vector4<T>& v) const
 {
-	T x = v.x * c[0][0] + v.y * c[1][0] + v.z * c[2][0] + v.w * c[3][0];
-	T y = v.x * c[0][1] + v.y * c[1][1] + v.z * c[2][1] + v.w * c[3][1];
-	T z = v.x * c[0][2] + v.y * c[1][2] + v.z * c[2][2] + v.w * c[3][2];
-	T w = v.x * c[0][3] + v.y * c[1][3] + v.z * c[2][3] + v.w * c[3][3];
+	T x = c[0][0] * v.x + c[1][0] * v.y + c[2][0] * v.z + c[3][0] * v.w;
+	T y = c[0][1] * v.x + c[1][1] * v.y + c[2][1] * v.z + c[3][1] * v.w;
+	T z = c[0][2] * v.x + c[1][2] * v.y + c[2][2] * v.z + c[3][2] * v.w;
+	T w = c[0][3] * v.x + c[1][3] * v.y + c[2][3] * v.z + c[3][3] * v.w;
 	return Vector4<T>(x, y, z, w);
 }
 

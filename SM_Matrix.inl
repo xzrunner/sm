@@ -136,13 +136,6 @@ Matrix4<T> Matrix4<T>::operator * (const Matrix4<T>& m) const
 }
 
 template <typename T>
-Matrix4<T>& Matrix4<T>::operator *= (const Matrix4<T>& b)
-{
-	Matrix4 m = *this * b;
-	return (*this = m);
-}
-
-template <typename T>
 Vector2<T> Matrix4<T>::operator * (const Vector2<T>& v) const
 {
 	T x = c[0][0] * v.x + c[1][0] * v.y + c[3][0];
@@ -182,25 +175,25 @@ void Matrix4<T>::Identity()
 template <typename T>
 void Matrix4<T>::Translate(T x, T y, T z)
 {
-	this->operator *= (Translated(x, y, z));
+    *this = Translated(x, y, z) * *this;
 }
 
 template <typename T>
 void Matrix4<T>::Scale(T x, T y, T z)
 {
-	this->operator *= (Scaled(x, y, z));
+    *this = Scaled(x, y, z) * *this;
 }
 
 template <typename T>
 void Matrix4<T>::Shear(T kx, T ky)
 {
-	this->operator *= (Sheared(kx, ky));
+    *this = Sheared(kx, ky) * *this;
 }
 
 template <typename T>
 void Matrix4<T>::RotateZ(T degrees)
 {
-	this->operator *= (RotatedZ(degrees));
+    *this = RotatedZ(degrees) * *this;
 }
 
 template <typename T>
@@ -241,12 +234,12 @@ void Matrix4<T>::SetTransformation(const Vector3<T>& scale,
 	c[3][1] -= rotation_origin.y;
 	c[3][2] -= rotation_origin.z;
 
-	operator *= (Matrix4<T>(QuaternionT<T>(
-		rotation_quaternion.x,
-		rotation_quaternion.y,
-		rotation_quaternion.z,
-		rotation_quaternion.w
-	)));
+    *this = (Matrix4<T>(QuaternionT<T>(
+        rotation_quaternion.x,
+        rotation_quaternion.y,
+        rotation_quaternion.z,
+        rotation_quaternion.w
+        ))) * *this;
 
 	c[3][0] += rotation_origin.x;
 	c[3][1] += rotation_origin.y;

@@ -84,8 +84,7 @@ public:
 	bool operator == (const Matrix4<T>& b) const;
 	bool operator != (const Matrix4<T>& b) const;
 
-	Matrix4<T> operator * (const Matrix4<T>& b) const;
-	Matrix4<T>& operator *= (const Matrix4<T>& b);
+    Matrix4<T> operator * (const Matrix4<T>& b) const;
 
 	Vector2<T> operator * (const Vector2<T>& v) const;
 	Vector3<T> operator * (const Vector3<T>& v) const;

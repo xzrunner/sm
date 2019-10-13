@@ -42,7 +42,7 @@ template <typename T>
 inline void PlaneT<T>::Build(const Vector3<T>& normal, const Vector3<T>& v)
 {
 	this->normal = normal.Normalized();
-	this->dist = -v.Dot(normal);
+	this->dist = -v.Dot(this->normal);
 }
 
 template <typename T>

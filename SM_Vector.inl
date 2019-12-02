@@ -318,6 +318,14 @@ bool Vector3<T>::operator < (const Vector3& v) const
 }
 
 template <typename T>
+bool Vector3<T>::operator > (const Vector3& v) const
+{
+	return x > v.x
+		|| (x == v.x && y > v.y)
+		|| (x == v.x && y == v.y && z > v.z);
+}
+
+template <typename T>
 Vector3<T> Vector3<T>::operator - () const
 {
 	return Vector3(-x, -y, -z);

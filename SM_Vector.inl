@@ -69,6 +69,13 @@ bool Vector2<T>::operator != (const Vector2& v) const
 }
 
 template <typename T>
+bool Vector2<T>::operator < (const Vector2& v) const
+{
+    return x < v.x
+        || (x == v.x && y < v.y);
+}
+
+template <typename T>
 Vector2<T> Vector2<T>::operator - () const
 {
 	return Vector2(-x, -y);

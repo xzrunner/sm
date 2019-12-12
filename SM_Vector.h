@@ -40,6 +40,8 @@ public:
 	bool operator == (const Vector2& v) const;
 	bool operator != (const Vector2& v) const;
 
+    bool operator < (const Vector2& v) const;
+
 	Vector2<T> operator - () const;
 
 	void operator += (const Vector2& v);

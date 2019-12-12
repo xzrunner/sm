@@ -426,6 +426,30 @@ sm::vec3 calc_unit_normal(const sm::vec3& a, const sm::vec3& b, const sm::vec3& 
 }
 
 inline
+sm::vec3 calc_face_normal(const CU_VEC<sm::vec3>& polygon)
+{
+    sm::vec3 invalid;
+    invalid.MakeInvalid();
+    if (polygon.size() < 3) {
+        return invalid;
+    }
+
+    for (size_t i = 0, n = polygon.size(); i < n; ++i)
+    {
+        auto& p0 = polygon[i];
+        auto& p1 = polygon[(i + 1) % n];
+        auto& p2 = polygon[(i + 2) % n];
+
+        auto cross = (p1 - p0).Cross(p2 - p0);
+        if (cross.LengthSquared() > 0) {
+            return cross.Normalized();
+        }
+    }
+
+    return invalid;
+}
+
+inline
 float get_polygon_perimeter(const CU_VEC<sm::vec2>& poly)
 {
 	if (poly.size() < 2) {

@@ -63,6 +63,7 @@ bool is_rect_intersect_polygon(const rect& r, const CU_VEC<vec2>& poly);
  *  @brief
  *    convex
  */
+bool is_polygon_convex(const CU_VEC<vec2>& poly);
 bool is_convex_intersect_convex(const CU_VEC<vec2>& c0, const CU_VEC<vec2>& c1);
 
 /**

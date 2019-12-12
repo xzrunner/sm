@@ -311,6 +311,31 @@ bool is_polygon_intersect_polygon(const CU_VEC<vec2>& poly0, const CU_VEC<vec2>&
 	return false;
 }
 
+bool is_polygon_convex(const CU_VEC<vec2>& poly)
+{
+    if (poly.size() < 2) {
+        return false;
+    }
+    if (poly.size() == 3) {
+        return true;
+    }
+
+    size_t n_positive = 0, n_negative = 0;
+    for (size_t i = 0, n = poly.size(); i < n; ++i)
+    {
+        auto& p0 = poly[(i + n - 1) % n];
+        auto& p1 = poly[i];
+        auto& p2 = poly[(i + 1) % n];
+        auto cross = (p1 - p0).Cross(p2 - p1);
+        if (cross > 0) {
+            ++n_positive;
+        } else if (cross < 0) {
+            ++n_positive;
+        }
+    }
+    return n_positive == 0 || n_negative == 0;
+}
+
 bool is_polygon_in_polygon(const CU_VEC<vec2>& in, const CU_VEC<vec2>& out)
 {
 	if (in.size() < 3 || out.size() < 3) {

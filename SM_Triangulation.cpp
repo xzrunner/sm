@@ -116,6 +116,47 @@ static void finish(struct triangulateio& in,
 }
 
 static void finish(struct triangulateio& in,
+				   struct triangulateio& out,
+				   const CU_VEC<vec2>& bound,
+                   const CU_VEC<CU_VEC<vec2>>& holes,
+				   CU_VEC<vec2>& result)
+{
+	int index = 0;
+	for (int i = 0; i < out.numberoftriangles; ++i)
+	{
+		CU_VEC<vec2> tri;
+		for (int j = 0; j < out.numberofcorners; ++j)
+		{
+			int pIndex = out.trianglelist[index++];
+
+			vec2 p;
+			p.x = out.pointlist[pIndex * 2];
+			p.y = out.pointlist[pIndex * 2 + 1];
+			tri.push_back(p);
+		}
+
+		vec2 center = get_tri_gravity_center(tri[0], tri[1], tri[2]);
+		if (is_point_in_area(center, bound))
+        {
+            bool in_hole = false;
+            for (auto& hole : holes)
+            {
+                if (is_point_in_area(center, hole)) {
+                    in_hole = true;
+                    break;
+                }
+            }
+
+            if (!in_hole) {
+                copy(tri.begin(), tri.end(), back_inserter(result));
+            }
+		}
+	}
+
+	finish(in, out);
+}
+
+static void finish(struct triangulateio& in,
                    struct triangulateio& out,
 				   const CU_VEC<vec2>& bound,
 				   CU_VEC<vec2>& out_vertices,
@@ -227,144 +268,83 @@ void triangulate_normal(const CU_VEC<vec2>& bound,
 }
 
 void triangulate_holes(const CU_VEC<vec2>& bound,
-					   const CU_VEC<CU_VEC<vec2> >& holes,
+					   const CU_VEC<CU_VEC<vec2>>& holes,
 					   CU_VEC<vec2>& result,
 					   TriangulateConstrained tc)
 {
-	if (!holes.empty()) {
-		return triangulate_holes_new(bound, holes[0], result, tc);
-	}
-
 	struct triangulateio in, out;
 	init(in, out);
+
+    size_t p_num = 0;
 
 	CU_VEC<vec2> bound_fixed;
-	verify_bound(bound, bound_fixed);
+    verify_bound(bound, bound_fixed);
+    p_num += bound_fixed.size();
 
-	in.numberofpoints = bound_fixed.size();
+    CU_VEC<CU_VEC<vec2>> holes_fixed;
+    for (auto& hole : holes)
+    {
+        CU_VEC<vec2> fixed;
+        verify_bound(hole, fixed);
+        holes_fixed.push_back(fixed);
+        p_num += fixed.size();
+    }
+
+	in.numberofpoints = p_num;
 	in.numberofpointattributes = 0;
 	in.pointlist = (REAL *) malloc(in.numberofpoints * 2 * sizeof(REAL));
 	in.pointmarkerlist = (int *) NULL;
-	int index = 0;
-	for (int i = 0; i < in.numberofpoints; ++i)
-	{
-		in.pointlist[index++] = bound_fixed[i].x;
-		in.pointlist[index++] = bound_fixed[i].y;
+	size_t ptr_p = 0;
+	for (auto& p : bound_fixed) {
+		in.pointlist[ptr_p++] = p.x;
+		in.pointlist[ptr_p++] = p.y;
 	}
+    for (auto& hole : holes_fixed) {
+        for (auto& p : hole) {
+            in.pointlist[ptr_p++] = p.x;
+            in.pointlist[ptr_p++] = p.y;
+        }
+    }
 
 	in.numberofsegments = in.numberofpoints;
 	in.segmentlist = (int *) malloc(in.numberofsegments * 2 * sizeof(int));
-	index = 0;
-	for (int i = 0; i < in.numberofsegments - 1; ++i)
-	{
-		in.segmentlist[index++] = i;
-		in.segmentlist[index++] = i + 1;
-	}
-	in.segmentlist[index++] = in.numberofsegments - 1;
-	in.segmentlist[index++] = 0;
-
-	in.segmentmarkerlist = (int *) NULL;
-
-	//in.numberofholes = 0;
-
-	in.numberofholes = 1;
-	in.holelist = (REAL *) malloc(in.numberofholes * 2 * sizeof(REAL));
-	in.holelist[0] = 0;
-	in.holelist[1] = 0;
-
-	// 	CU_VEC<vec2> hole_fixed;
-	// 	verify_bound(holes[0], hole_fixed);
-	// 	in.numberofholes = hole_fixed.size();
-	// 	in.holelist = (REAL*)malloc(in.numberofholes * 2 * sizeof(REAL));
-	// 	index = 0;
-	// 	for (int i = 0; i < in.numberofholes; ++i)
-	// 	{
-	// 		in.holelist[index++] = hole_fixed[i].x;
-	// 		in.holelist[index++] = hole_fixed[i].y;
-	// 	}
-
-	in.numberofregions = 0;
-
-	implement(in, out, tc);
-	finish(in, out, bound_fixed, result);
-}
-
-void triangulate_holes_new(const CU_VEC<vec2>& bound,
-						   const CU_VEC<vec2>& hole,
-						   CU_VEC<vec2>& result,
-						   TriangulateConstrained tc)
-{
-	struct triangulateio in, out;
-	init(in, out);
-
-	CU_VEC<vec2> bound_fixed, hole_fixed;
-	verify_bound(bound, bound_fixed);
-	verify_bound(hole, hole_fixed);
-
-	in.numberofpoints = bound_fixed.size() + hole_fixed.size();
-	in.numberofpointattributes = 0;
-	in.pointlist = (REAL *) malloc(in.numberofpoints * 2 * sizeof(REAL));
-	in.pointmarkerlist = (int *) NULL;
-	int index = 0;
-	for (int i = 0, n = bound_fixed.size(); i < n; ++i)
-	{
-		in.pointlist[index++] = bound_fixed[i].x;
-		in.pointlist[index++] = bound_fixed[i].y;
-	}
-	vec2 hold_center;
-	for (int i = 0, n = hole_fixed.size(); i < n; ++i)
-	{
-		in.pointlist[index++] = hole_fixed[i].x;
-		in.pointlist[index++] = hole_fixed[i].y;
-
-		hold_center += hole_fixed[i];
-	}
-	hold_center /= static_cast<float>(hole_fixed.size());
-
-	in.numberofsegments = in.numberofpoints;
-	in.segmentlist = (int *) malloc(in.numberofsegments * 2 * sizeof(int));
-	index = 0;
+	size_t ptr_s = 0;
+    size_t start_p_idx = 0;
+    size_t curr_p_idx = 0;
 	for (size_t i = 0; i < bound_fixed.size() - 1; ++i)
-	{
-		in.segmentlist[index++] = i;
-		in.segmentlist[index++] = i + 1;
+    {
+		in.segmentlist[ptr_s++] = curr_p_idx;
+		in.segmentlist[ptr_s++] = curr_p_idx + 1;
+        ++curr_p_idx;
 	}
-	in.segmentlist[index++] = bound_fixed.size() - 1;
-	in.segmentlist[index++] = 0;
+	in.segmentlist[ptr_s++] = curr_p_idx;
+	in.segmentlist[ptr_s++] = start_p_idx;
+    ++curr_p_idx;
+    start_p_idx = curr_p_idx;
 
-	for (size_t i = 0; i < hole_fixed.size() - 1; ++i)
-	{
-		in.segmentlist[index++] = i;
-		in.segmentlist[index++] = i + 1;
-	}
-	in.segmentlist[index++] = in.numberofpoints - 1;
-	in.segmentlist[index++] = bound_fixed.size();
+    for (auto& hole : holes_fixed)
+    {
+	    for (size_t i = 0; i < hole.size() - 1; ++i)
+        {
+		    in.segmentlist[ptr_s++] = curr_p_idx;
+		    in.segmentlist[ptr_s++] = curr_p_idx + 1;
+            ++curr_p_idx;
+	    }
+	    in.segmentlist[ptr_s++] = curr_p_idx;
+	    in.segmentlist[ptr_s++] = start_p_idx;
+        ++curr_p_idx;
+        start_p_idx = curr_p_idx;
+    }
 
 	in.segmentmarkerlist = (int *) NULL;
 
-	// 	in.numberofholes = 0;
-	// 	in.holelist = NULL;
-
-	in.numberofholes = 1;
-	in.holelist = (REAL *) malloc(in.numberofholes * 2 * sizeof(REAL));
-	in.holelist[0] = hold_center.x;
-	in.holelist[1] = hold_center.y;
-
-	// 	CU_VEC<vec2> hole_fixed;
-	// 	verify_bound(holes[0], hole_fixed);
-	// 	in.numberofholes = hole_fixed.size();
-	// 	in.holelist = (REAL*)malloc(in.numberofholes * 2 * sizeof(REAL));
-	// 	index = 0;
-	// 	for (int i = 0; i < in.numberofholes; ++i)
-	// 	{
-	// 		in.holelist[index++] = hole_fixed[i].x;
-	// 		in.holelist[index++] = hole_fixed[i].y;
-	// 	}
+	in.numberofholes = 0;
+	in.holelist = NULL;
 
 	in.numberofregions = 0;
 
 	implement(in, out, tc);
-	finish(in, out, bound_fixed, result);
+	finish(in, out, bound_fixed, holes_fixed, result);
 }
 
 static void triangulate_points_prepare(triangulateio& in,

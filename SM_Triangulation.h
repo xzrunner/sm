@@ -22,13 +22,9 @@ void triangulate_normal(const CU_VEC<vec2>& bound,
 						TriangulateConstrained tc = TC_CONSTRAINED);
 
 void triangulate_holes(const CU_VEC<vec2>& bound,
-					   const CU_VEC<CU_VEC<vec2> >& holes,
+					   const CU_VEC<CU_VEC<vec2>>& holes,
 					   CU_VEC<vec2>& result,
 					   TriangulateConstrained tc = TC_CONSTRAINED);
-void triangulate_holes_new(const CU_VEC<vec2>& bound,
-						   const CU_VEC<vec2>& hole,
-						   CU_VEC<vec2>& result,
-						   TriangulateConstrained tc = TC_CONSTRAINED);
 
 void triangulate_points(const CU_VEC<vec2>& bound,
 						const CU_VEC<vec2>& points,

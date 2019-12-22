@@ -71,7 +71,7 @@ bool is_convex_intersect_convex(const CU_VEC<vec2>& c0, const CU_VEC<vec2>& c1);
  *    polygon
  */
 bool is_polygon_intersect_polygon(const CU_VEC<vec2>& poly0, const CU_VEC<vec2>& poly1);
-bool is_polygon_in_polygon(const CU_VEC<vec2>& poly0, const CU_VEC<vec2>& poly1);
+bool is_polygon_in_polygon(const CU_VEC<vec2>& in, const CU_VEC<vec2>& out);
 bool is_polygon_clockwise(const CU_VEC<vec2>& poly);
 
 }

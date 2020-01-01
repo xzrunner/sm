@@ -405,17 +405,29 @@ bool is_polygon_in_polygon(const CU_VEC<vec2>& in, const CU_VEC<vec2>& out)
 	return true;
 }
 
+//bool is_polygon_clockwise(const CU_VEC<vec2>& poly)
+//{
+//    float cross_sum = 0.0f;
+//    for (size_t i = 0, n = poly.size(); i < n; ++i)
+//    {
+//        auto& p0 = poly[i];
+//        auto& p1 = poly[(i + 1) % n];
+//        auto& p2 = poly[(i + 2) % n];
+//        cross_sum += (p1 - p0).Cross(p2 - p1);
+//    }
+//    return cross_sum < 0;
+//}
+
 bool is_polygon_clockwise(const CU_VEC<vec2>& poly)
 {
-    float cross_sum = 0.0f;
+    float sum = 0.0f;
     for (size_t i = 0, n = poly.size(); i < n; ++i)
     {
         auto& p0 = poly[i];
-        auto& p1 = poly[i];
-        auto& p2 = poly[i];
-        cross_sum += (p1 - p0).Cross(p2 - p1);
+        auto& p1 = poly[(i + 1) % n];
+        sum += (p1.x - p0.x) * (p1.y + p0.y);
     }
-    return cross_sum > 0;
+    return sum > 0;
 }
 
 }

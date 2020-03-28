@@ -19,6 +19,18 @@ Matrix2<T>::Matrix2()
 	c[1][0] = 0; c[1][1] = 1;
 }
 
+template <typename T>
+bool Matrix2<T>::operator == (const Matrix2<T>& b) const
+{
+	return memcmp(x, b.x, sizeof(x)) == 0;
+}
+
+template <typename T>
+bool Matrix2<T>::operator != (const Matrix2<T>& b) const
+{
+	return !(*this == b);
+}
+
 /************************************************************************/
 /* Matrix3                                                              */
 /************************************************************************/
@@ -37,6 +49,18 @@ Matrix3<T>::Matrix3(const Matrix4<T>& m)
     c[0][0] = m.c[0][0]; c[1][0] = m.c[1][0]; c[2][0] = m.c[2][0];
     c[0][1] = m.c[0][1]; c[1][1] = m.c[1][1]; c[2][1] = m.c[2][1];
     c[0][2] = m.c[0][2]; c[1][2] = m.c[1][2]; c[2][2] = m.c[2][2];
+}
+
+template <typename T>
+bool Matrix3<T>::operator == (const Matrix3<T>& b) const
+{
+    return memcmp(x, b.x, sizeof(x)) == 0;
+}
+
+template <typename T>
+bool Matrix3<T>::operator != (const Matrix3<T>& b) const
+{
+    return !(*this == b);
 }
 
 template <typename T>

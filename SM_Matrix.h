@@ -26,6 +26,9 @@ public:
 public:
 	Matrix2();
 
+    bool operator == (const Matrix2<T>& b) const;
+    bool operator != (const Matrix2<T>& b) const;
+
 }; // Matrix2
 
 template <typename T>
@@ -51,6 +54,9 @@ public:
 public:
 	Matrix3();
 	Matrix3(const Matrix4<T>& m);
+
+    bool operator == (const Matrix3<T>& b) const;
+    bool operator != (const Matrix3<T>& b) const;
 
     T Determinant() const;
 

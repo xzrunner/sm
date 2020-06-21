@@ -140,8 +140,6 @@ public:
 	static Matrix4<T> RotatedAxis(const Vector3<T>& axis, T angle);
 	static Matrix4<T> Sheared(T kx, T ky);
 
-    // left handed, -1 to 1
-	static Matrix4<T> Perspective(T left, T right, T bottom, T top, T znear, T zfar);
 	static Matrix4<T> Perspective(T fovy, T aspect, T znear, T zfar);
 	static Matrix4<T> Orthographic(T left, T right, T bottom, T top, T znear, T zfar);
     static Matrix4<T> LookAt(const Vector3<T>& eye, const Vector3<T>& center, const Vector3<T>& up);

@@ -543,42 +543,6 @@ Matrix4<T> Matrix4<T>::Sheared(T kx, T ky)
 }
 
 template <typename T>
-Matrix4<T> Matrix4<T>::Perspective(T l, T r, T b, T t, T n, T f)
-{
-	Matrix4 m;
-
-	m.x[0] = 2 * n / (r - l);
-	m.x[5] = 2 * n / (t - b);
-	m.x[8] = (r + l) / (r - l);
-	m.x[9] = (t + b) / (t - b);
-	m.x[10] = (f + n) / (f - n);
-	m.x[11] = 1;
-	m.x[14] = -2 * f * n / (f - n);
-	m.x[15] = 0;
-
-	return m;
-}
-
-//// 0 to 1
-//template <typename T>
-//Matrix4<T> Matrix4<T>::Perspective(T fovy, T aspect, T znear, T zfar)
-//{
-//	assert(abs(aspect - std::numeric_limits<T>::epsilon()) > static_cast<T>(0));
-//
-//	Matrix4 m;
-//
-//	T const tan_half_fovy = tan(fovy / static_cast<T>(2) * SM_DEG_TO_RAD);
-//	m.c[0][0] = static_cast<T>(1) / (aspect * tan_half_fovy);
-//	m.c[1][1] = static_cast<T>(1) / (tan_half_fovy);
-//	m.c[2][2] = zfar / (zfar - znear);
-//	m.c[2][3] = static_cast<T>(1);
-//	m.c[3][2] = -(zfar * znear) / (zfar - znear);
-//
-//	return m;
-//}
-
-// -1 to 1
-template <typename T>
 Matrix4<T> Matrix4<T>::Perspective(T fovy, T aspect, T znear, T zfar)
 {
 	assert(abs(aspect - std::numeric_limits<T>::epsilon()) > static_cast<T>(0));
@@ -588,8 +552,8 @@ Matrix4<T> Matrix4<T>::Perspective(T fovy, T aspect, T znear, T zfar)
 	T const tan_half_fovy = tan(fovy / static_cast<T>(2) * SM_DEG_TO_RAD);
 	m.c[0][0] = static_cast<T>(1) / (aspect * tan_half_fovy);
 	m.c[1][1] = static_cast<T>(1) / (tan_half_fovy);
-	m.c[2][2] = (zfar + znear) / (zfar - znear);
-	m.c[2][3] = static_cast<T>(1);
+	m.c[2][2] = - (zfar + znear) / (zfar - znear);
+	m.c[2][3] = - static_cast<T>(1);
 	m.c[3][2] = -(2 * zfar * znear) / (zfar - znear);
 
 	return m;
@@ -612,8 +576,8 @@ template <typename T>
 Matrix4<T> Matrix4<T>::LookAt(const Vector3<T>& eye, const Vector3<T>& center, const Vector3<T>& up)
 {
     auto f = (center - eye).Normalized();
-    auto s = up.Cross(f).Normalized();
-    auto u = f.Cross(s);
+    auto s = f.Cross(up).Normalized();
+    auto u = s.Cross(f);
 
     Matrix4 m;
     m.c[0][0] = s.x;
@@ -622,12 +586,12 @@ Matrix4<T> Matrix4<T>::LookAt(const Vector3<T>& eye, const Vector3<T>& center, c
     m.c[0][1] = u.x;
     m.c[1][1] = u.y;
     m.c[2][1] = u.z;
-    m.c[0][2] = f.x;
-    m.c[1][2] = f.y;
-    m.c[2][2] = f.z;
+    m.c[0][2] = -f.x;
+    m.c[1][2] = -f.y;
+    m.c[2][2] = -f.z;
     m.c[3][0] = -s.Dot(eye);
     m.c[3][1] = -u.Dot(eye);
-    m.c[3][2] = -f.Dot(eye);
+    m.c[3][2] =  f.Dot(eye);
     return m;
 }
 

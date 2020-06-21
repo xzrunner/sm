@@ -20,7 +20,7 @@ union sm_mat4* sm_mat4_mul(union sm_mat4* m, const union sm_mat4* m1, const unio
 union sm_mat4* sm_mat4_rotxmat(union sm_mat4* m, float degrees);
 union sm_mat4* sm_mat4_identity(union sm_mat4* m);
 union sm_mat4* sm_mat4_trans(union sm_mat4* m, float x, float y, float z);
-union sm_mat4* sm_mat4_perspective(union sm_mat4 *m, float l, float r, float b, float t, float n, float f);
+union sm_mat4* sm_mat4_perspective(union sm_mat4 *m, float fovy, float aspect, float znear, float zfar);
 struct sm_vec3* sm_vec3_mul(struct sm_vec3* v, const union sm_mat4* m);
 
 #endif // spatial_math_matrix_h

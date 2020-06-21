@@ -32,9 +32,9 @@ union sm_mat4* sm_mat4_trans(union sm_mat4* m, float x, float y, float z)
 }
 
 extern "C"
-union sm_mat4* sm_mat4_perspective(union sm_mat4* m, float l, float r, float b, float t, float n, float f)
+union sm_mat4* sm_mat4_perspective(union sm_mat4* m, float fovy, float aspect, float znear, float zfar)
 {
-	*(mat4*)m = ((mat4*)m)->Perspective(l, r, b, t, n, f);
+	*(mat4*)m = ((mat4*)m)->Perspective(fovy, aspect, znear, zfar);
 	return m;
 }
 

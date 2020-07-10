@@ -73,15 +73,15 @@ void Rect<T>::Build(T width, T height)
 template <typename T>
 void Rect<T>::MakeEmpty()
 {
-	xmin = ymin = std::numeric_limits<T>::max();
-	xmax = ymax = -std::numeric_limits<T>::max();
+	xmin = ymin = (std::numeric_limits<T>::max)();
+	xmax = ymax = -(std::numeric_limits<T>::max)();
 }
 
 template <typename T>
 bool Rect<T>::IsValid() const
 {
-	return xmin != std::numeric_limits<T>::max() && ymin != std::numeric_limits<T>::max()
-		&& xmax != -std::numeric_limits<T>::max() && ymax != -std::numeric_limits<T>::max()
+	return xmin != (std::numeric_limits<T>::max)() && ymin != (std::numeric_limits<T>::max)()
+		&& xmax != -(std::numeric_limits<T>::max)() && ymax != -(std::numeric_limits<T>::max)()
 		&& xmin <= xmax && ymin <= ymax;
 }
 

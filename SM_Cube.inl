@@ -83,19 +83,19 @@ void Cube<T>::Build(T width, T height, T depth)
 template <typename T>
 void Cube<T>::MakeEmpty()
 {
-	xmin = ymin = zmin = std::numeric_limits<T>::max();
-	xmax = ymax = zmax = -std::numeric_limits<T>::max();
+	xmin = ymin = zmin = (std::numeric_limits<T>::max)();
+	xmax = ymax = zmax = -(std::numeric_limits<T>::max)();
 }
 
 template <typename T>
 bool Cube<T>::IsValid() const
 {
-	return xmin != std::numeric_limits<T>::max()
-		&& ymin != std::numeric_limits<T>::max()
-		&& zmin != std::numeric_limits<T>::max()
-		&& xmax != -std::numeric_limits<T>::max()
-		&& ymax != -std::numeric_limits<T>::max()
-		&& zmax != -std::numeric_limits<T>::max()
+	return xmin != (std::numeric_limits<T>::max)()
+		&& ymin != (std::numeric_limits<T>::max)()
+		&& zmin != (std::numeric_limits<T>::max)()
+		&& xmax != -(std::numeric_limits<T>::max)()
+		&& ymax != -(std::numeric_limits<T>::max)()
+		&& zmax != -(std::numeric_limits<T>::max)()
 		&& xmin <= xmax
 		&& ymin <= ymax
 		&& zmin <= zmax;

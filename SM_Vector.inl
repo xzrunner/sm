@@ -46,14 +46,14 @@ void Vector2<T>::Set(T x, T y)
 template <typename T>
 void Vector2<T>::MakeInvalid()
 {
-	x = y = std::numeric_limits<T>::max();
+	x = y = (std::numeric_limits<T>::max)();
 }
 
 template <typename T>
 bool Vector2<T>::IsValid() const
 {
-	return x != std::numeric_limits<T>::max()
-		|| y != std::numeric_limits<T>::max();
+	return x != (std::numeric_limits<T>::max)()
+		|| y != (std::numeric_limits<T>::max)();
 }
 
 template <typename T>
@@ -293,15 +293,15 @@ void Vector3<T>::Set(T x, T y, T z)
 template <typename T>
 void Vector3<T>::MakeInvalid()
 {
-	x = y = z = std::numeric_limits<T>::max();
+	x = y = z = (std::numeric_limits<T>::max)();
 }
 
 template <typename T>
 bool Vector3<T>::IsValid() const
 {
-	return x != std::numeric_limits<T>::max()
-		|| y != std::numeric_limits<T>::max()
-		|| z != std::numeric_limits<T>::max();
+	return x != (std::numeric_limits<T>::max)()
+		|| y != (std::numeric_limits<T>::max)()
+		|| z != (std::numeric_limits<T>::max)();
 }
 
 template <typename T>

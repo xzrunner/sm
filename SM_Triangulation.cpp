@@ -89,13 +89,13 @@ static void finish(struct triangulateio& in, struct triangulateio& out)
 
 static void finish(struct triangulateio& in,
 				   struct triangulateio& out,
-				   const CU_VEC<vec2>& bound,
-				   CU_VEC<vec2>& result)
+				   const std::vector<vec2>& bound,
+				   std::vector<vec2>& result)
 {
 	int index = 0;
 	for (int i = 0; i < out.numberoftriangles; ++i)
 	{
-		CU_VEC<vec2> tri;
+		std::vector<vec2> tri;
 		for (int j = 0; j < out.numberofcorners; ++j)
 		{
 			int pIndex = out.trianglelist[index++];
@@ -117,14 +117,14 @@ static void finish(struct triangulateio& in,
 
 static void finish(struct triangulateio& in,
 				   struct triangulateio& out,
-				   const CU_VEC<vec2>& bound,
-                   const CU_VEC<CU_VEC<vec2>>& holes,
-				   CU_VEC<vec2>& result)
+				   const std::vector<vec2>& bound,
+                   const std::vector<std::vector<vec2>>& holes,
+				   std::vector<vec2>& result)
 {
 	int index = 0;
 	for (int i = 0; i < out.numberoftriangles; ++i)
 	{
-		CU_VEC<vec2> tri;
+		std::vector<vec2> tri;
 		for (int j = 0; j < out.numberofcorners; ++j)
 		{
 			int pIndex = out.trianglelist[index++];
@@ -158,9 +158,9 @@ static void finish(struct triangulateio& in,
 
 static void finish(struct triangulateio& in,
                    struct triangulateio& out,
-				   const CU_VEC<vec2>& bound,
-				   CU_VEC<vec2>& out_vertices,
-				   CU_VEC<int>& out_triangles)
+				   const std::vector<vec2>& bound,
+				   std::vector<vec2>& out_vertices,
+				   std::vector<int>& out_triangles)
 {
 	out_vertices.reserve(out.numberofpoints);
 	int ptr = 0;
@@ -175,7 +175,7 @@ static void finish(struct triangulateio& in,
 	out_triangles.reserve(out.numberoftriangles);
 	for (int i = 0; i < out.numberoftriangles; ++i)
 	{
-		CU_VEC<int> tri;
+		std::vector<int> tri;
 		for (int j = 0; j < out.numberofcorners; ++j) {
 			tri.push_back(out.trianglelist[index++]);
 		}
@@ -189,7 +189,7 @@ static void finish(struct triangulateio& in,
 	finish(in, out);
 }
 
-static void verify_bound(const CU_VEC<vec2>& src, CU_VEC<vec2>& dst)
+static void verify_bound(const std::vector<vec2>& src, std::vector<vec2>& dst)
 {
    for (int i = 0, n = src.size(); i < n; ++i)
    {
@@ -207,9 +207,9 @@ static void verify_bound(const CU_VEC<vec2>& src, CU_VEC<vec2>& dst)
    }
 }
 
-static void verify_inner(const CU_VEC<vec2>& outer, CU_VEC<vec2>& inner)
+static void verify_inner(const std::vector<vec2>& outer, std::vector<vec2>& inner)
 {
-	CU_VEC<vec2>::iterator itr = inner.begin();
+	std::vector<vec2>::iterator itr = inner.begin();
 	for ( ; itr != inner.end(); )
 	{
 		bool find = false;
@@ -226,14 +226,14 @@ static void verify_inner(const CU_VEC<vec2>& outer, CU_VEC<vec2>& inner)
 	}
 }
 
-void triangulate_normal(const CU_VEC<vec2>& bound,
-						CU_VEC<vec2>& result,
+void triangulate_normal(const std::vector<vec2>& bound,
+						std::vector<vec2>& result,
 						TriangulateConstrained tc)
 {
 	struct triangulateio in, out;
 	init(in, out);
 
-	CU_VEC<vec2> bound_fixed;
+	std::vector<vec2> bound_fixed;
 	verify_bound(bound, bound_fixed);
 
 	in.numberofpoints = bound_fixed.size();
@@ -267,9 +267,9 @@ void triangulate_normal(const CU_VEC<vec2>& bound,
 	finish(in, out, bound_fixed, result);
 }
 
-void triangulate_holes(const CU_VEC<vec2>& bound,
-					   const CU_VEC<CU_VEC<vec2>>& holes,
-					   CU_VEC<vec2>& result,
+void triangulate_holes(const std::vector<vec2>& bound,
+					   const std::vector<std::vector<vec2>>& holes,
+					   std::vector<vec2>& result,
 					   TriangulateConstrained tc)
 {
 	struct triangulateio in, out;
@@ -277,14 +277,14 @@ void triangulate_holes(const CU_VEC<vec2>& bound,
 
     size_t p_num = 0;
 
-	CU_VEC<vec2> bound_fixed;
+	std::vector<vec2> bound_fixed;
     verify_bound(bound, bound_fixed);
     p_num += bound_fixed.size();
 
-    CU_VEC<CU_VEC<vec2>> holes_fixed;
+    std::vector<std::vector<vec2>> holes_fixed;
     for (auto& hole : holes)
     {
-        CU_VEC<vec2> fixed;
+        std::vector<vec2> fixed;
         verify_bound(hole, fixed);
         holes_fixed.push_back(fixed);
         p_num += fixed.size();
@@ -349,8 +349,8 @@ void triangulate_holes(const CU_VEC<vec2>& bound,
 
 static void triangulate_points_prepare(triangulateio& in,
 									   triangulateio& out,
-									   const CU_VEC<vec2>& bound,
-									   const CU_VEC<vec2>& points)
+									   const std::vector<vec2>& bound,
+									   const std::vector<vec2>& points)
 {
 	init(in, out);
 
@@ -388,15 +388,15 @@ static void triangulate_points_prepare(triangulateio& in,
 	in.numberofregions = 0;
 }
 
-void triangulate_points(const CU_VEC<vec2>& bound,
-						const CU_VEC<vec2>& points,
-						CU_VEC<vec2>& result,
+void triangulate_points(const std::vector<vec2>& bound,
+						const std::vector<vec2>& points,
+						std::vector<vec2>& result,
 						TriangulateConstrained tc)
 {
-	CU_VEC<vec2> bound_fixed;
+	std::vector<vec2> bound_fixed;
 	verify_bound(bound, bound_fixed);
 
-	CU_VEC<vec2> points_fixed(points);
+	std::vector<vec2> points_fixed(points);
 	verify_inner(bound_fixed, points_fixed);
 
 	struct triangulateio in, out;
@@ -407,16 +407,16 @@ void triangulate_points(const CU_VEC<vec2>& bound,
 	finish(in, out, bound_fixed, result);
 }
 
-void triangulate_points(const CU_VEC<vec2>& bound,
-						const CU_VEC<vec2>& points,
-						CU_VEC<vec2>& out_vertices,
-						CU_VEC<int>& out_triangles,
+void triangulate_points(const std::vector<vec2>& bound,
+						const std::vector<vec2>& points,
+						std::vector<vec2>& out_vertices,
+						std::vector<int>& out_triangles,
 						TriangulateConstrained tc)
 {
-	CU_VEC<vec2> bound_fixed;
+	std::vector<vec2> bound_fixed;
 	verify_bound(bound, bound_fixed);
 
-	CU_VEC<vec2> points_fixed(points);
+	std::vector<vec2> points_fixed(points);
 	verify_inner(bound_fixed, points_fixed);
 
 	struct triangulateio in, out;
@@ -427,15 +427,15 @@ void triangulate_points(const CU_VEC<vec2>& bound,
 	finish(in, out, bound_fixed, out_vertices, out_triangles);
 }
 
-void triangulate_lines(const CU_VEC<vec2>& bound,
-					   const CU_VEC<vec2>& lines,
-					   CU_VEC<vec2>& result,
+void triangulate_lines(const std::vector<vec2>& bound,
+					   const std::vector<vec2>& lines,
+					   std::vector<vec2>& result,
 					   TriangulateConstrained tc)
 {
 	struct triangulateio in, out;
 	init(in, out);
 
-	CU_VEC<vec2> bound_fixed;
+	std::vector<vec2> bound_fixed;
 	verify_bound(bound, bound_fixed);
 
 	in.numberofpoints = bound_fixed.size() + lines.size();
@@ -482,19 +482,19 @@ void triangulate_lines(const CU_VEC<vec2>& bound,
 	finish(in, out, bound_fixed, result);
 }
 
-void triangulate_points_and_lines(const CU_VEC<vec2>& bound,
-								  const CU_VEC<vec2>& points,
-								  const CU_VEC<vec2>& lines,
-								  CU_VEC<vec2>& result,
+void triangulate_points_and_lines(const std::vector<vec2>& bound,
+								  const std::vector<vec2>& points,
+								  const std::vector<vec2>& lines,
+								  std::vector<vec2>& result,
 								  TriangulateConstrained tc)
 {
 	struct triangulateio in, out;
 	init(in, out);
 
-	CU_VEC<vec2> bound_fixed;
+	std::vector<vec2> bound_fixed;
 	verify_bound(bound, bound_fixed);
 
-	CU_VEC<vec2> points_fixed(points);
+	std::vector<vec2> points_fixed(points);
 	verify_inner(bound_fixed, points_fixed);
 
 	in.numberofpoints = bound_fixed.size() + lines.size() + points_fixed.size();
@@ -546,10 +546,10 @@ void triangulate_points_and_lines(const CU_VEC<vec2>& bound,
 	finish(in, out, bound_fixed, result);
 }
 
-void triangulate_lines_and_loops(const CU_VEC<vec2>& bound,
-								 const CU_VEC<vec2>& lines,
-								 const CU_VEC<CU_VEC<vec2> >& loops,
-								 CU_VEC<vec2>& result,
+void triangulate_lines_and_loops(const std::vector<vec2>& bound,
+								 const std::vector<vec2>& lines,
+								 const std::vector<std::vector<vec2> >& loops,
+								 std::vector<vec2>& result,
 								 TriangulateConstrained tc)
 {
 	struct triangulateio in, out;
@@ -559,7 +559,7 @@ void triangulate_lines_and_loops(const CU_VEC<vec2>& bound,
 	for (int i = 0, n = loops.size(); i < n; ++i)
 		loopSize += loops[i].size();
 
-	CU_VEC<vec2> bound_fixed;
+	std::vector<vec2> bound_fixed;
 	verify_bound(bound, bound_fixed);
 
 	in.numberofpoints = bound_fixed.size() + lines.size() + loopSize;

@@ -3,14 +3,14 @@
 
 #include "SM_Vector.h"
 
-#include <cu/cu_stl.h>
+#include <vector>
 
 namespace sm
 {
 
-void douglas_peucker(const CU_VEC<vec2>& line,
+void douglas_peucker(const std::vector<vec2>& line,
 					 float precision,
-					 CU_VEC<vec2>& dst);
+					 std::vector<vec2>& dst);
 
 }
 

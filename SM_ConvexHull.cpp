@@ -8,8 +8,8 @@
 namespace sm
 {
 
-void convex_hull(const CU_VEC<vec2>& points,
-				 CU_VEC<vec2>& convex_hull)
+void convex_hull(const std::vector<vec2>& points,
+				 std::vector<vec2>& convex_hull)
 {
 	convex_hull.clear();
 
@@ -27,10 +27,10 @@ void convex_hull(const CU_VEC<vec2>& points,
 		return;
 	}
 
-	CU_VEC<vec2> sorted(points);
+	std::vector<vec2> sorted(points);
 	sort(sorted.begin(), sorted.end(), Vector2CmpX());
 
-	CU_VEC<vec2> upper, lower;
+	std::vector<vec2> upper, lower;
 	upper.reserve(points.size());
 	lower.reserve(points.size());
 	upper.push_back(sorted[0]);

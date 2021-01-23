@@ -3,14 +3,14 @@
 
 #include "SM_Vector.h"
 
-#include <cu/cu_stl.h>
+#include <vector>
 
 namespace sm
 {
 
-void cosine_smooth(const CU_VEC<vec2>& src,
+void cosine_smooth(const std::vector<vec2>& src,
 				   float sampling_width,
-				   CU_VEC<vec2>& dst);
+				   std::vector<vec2>& dst);
 
 }
 

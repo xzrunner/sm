@@ -7,7 +7,7 @@ namespace sm
 {
 
 inline
-void rm_duplicate_nodes(const CU_VEC<vec2>& src, CU_VEC<vec2>& dst)
+void rm_duplicate_nodes(const std::vector<vec2>& src, std::vector<vec2>& dst)
 {
 	if (src.size() > 1)
 	{
@@ -30,7 +30,7 @@ void rm_duplicate_nodes(const CU_VEC<vec2>& src, CU_VEC<vec2>& dst)
 }
 
 inline
-void trans_vertices(const Matrix2D& mt, const CU_VEC<vec2>& src, CU_VEC<vec2>& dst)
+void trans_vertices(const Matrix2D& mt, const std::vector<vec2>& src, std::vector<vec2>& dst)
 {
 	dst.clear();
 	dst.reserve(src.size());
@@ -40,7 +40,7 @@ void trans_vertices(const Matrix2D& mt, const CU_VEC<vec2>& src, CU_VEC<vec2>& d
 }
 
 inline
-void trans_vertices(const MatrixFix& mt, const CU_VEC<vec2>& src, CU_VEC<vec2>& dst)
+void trans_vertices(const MatrixFix& mt, const std::vector<vec2>& src, std::vector<vec2>& dst)
 {
 	dst.clear();
 	dst.reserve(src.size());

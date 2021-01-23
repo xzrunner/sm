@@ -47,7 +47,7 @@ bool is_point_on_rect(const vec2& v, const rect& r)
 }
 
 inline
-bool is_point_in_area(const vec2& v, const CU_VEC<vec2>& area)
+bool is_point_in_area(const vec2& v, const std::vector<vec2>& area)
 {
 	bool odd_nodes = false;
 	for (int i = 0, n = area.size(), j = n - 1; i < n; ++i)
@@ -70,7 +70,7 @@ bool is_point_in_circle(const vec2& v, const vec2& center, float radius)
 }
 
 inline
-bool is_point_in_convex(const vec2& pos, const CU_VEC<vec2>& convex)
+bool is_point_in_convex(const vec2& pos, const std::vector<vec2>& convex)
 {
 	return is_point_in_convex(pos, &convex[0], convex.size());
 }
@@ -95,7 +95,7 @@ bool is_point_in_convex(const vec2& pos, const vec2* convex, int num)
 }
 
 inline
-bool is_point_intersect_polyline(const vec2& point, const CU_VEC<vec2>& polyline)
+bool is_point_intersect_polyline(const vec2& point, const std::vector<vec2>& polyline)
 {
 	rect r(point, SM_LARGE_EPSILON, SM_LARGE_EPSILON);
 	return is_rect_intersect_polyline(r, polyline, true);
@@ -146,7 +146,7 @@ bool is_rect_intersect_rect(const rect& r0, const rect& r1)
 }
 
 inline
-bool is_rect_intersect_polyline(const rect& r, const CU_VEC<vec2>& poly, bool loop)
+bool is_rect_intersect_polyline(const rect& r, const std::vector<vec2>& poly, bool loop)
 {
     if (!r.IsValid() || poly.size() < 2) {
         return false;
@@ -166,7 +166,7 @@ bool is_rect_intersect_polyline(const rect& r, const CU_VEC<vec2>& poly, bool lo
 }
 
 inline
-bool is_rect_intersect_polygon(const rect& rect, const CU_VEC<vec2>& poly)
+bool is_rect_intersect_polygon(const rect& rect, const std::vector<vec2>& poly)
 {
     if (!rect.IsValid() || poly.size() < 3) {
         return false;
@@ -175,7 +175,7 @@ bool is_rect_intersect_polygon(const rect& rect, const CU_VEC<vec2>& poly)
 		return true;
 	}
 
-	CU_VEC<vec2> poly2;
+	std::vector<vec2> poly2;
 	poly2.push_back(vec2(rect.xmin, rect.ymin));
 	poly2.push_back(vec2(rect.xmax, rect.ymin));
 	poly2.push_back(vec2(rect.xmax, rect.ymax));

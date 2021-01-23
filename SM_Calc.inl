@@ -160,7 +160,7 @@ float dis_square_pos_to_pos(const vec2& v0, const vec2& v1)
 }
 
 inline
-float dis_pos_to_multi_pos(const vec2& pos, const CU_VEC<vec2>& multi_pos, int* nearest_idx)
+float dis_pos_to_multi_pos(const vec2& pos, const std::vector<vec2>& multi_pos, int* nearest_idx)
 {
 	float nearest = FLT_MAX;
 	int idx = -1;
@@ -194,7 +194,7 @@ float dis_pos_to_seg(const vec2& v, const vec2& s0, const vec2& s1)
 }
 
 inline
-float dis_pos_to_polyline(const vec2& pos, const CU_VEC<vec2>& polyline, int* nearest_idx)
+float dis_pos_to_polyline(const vec2& pos, const std::vector<vec2>& polyline, int* nearest_idx)
 {
 	if (polyline.size() < 2) {
 		return FLT_MAX;
@@ -218,7 +218,7 @@ float dis_pos_to_polyline(const vec2& pos, const CU_VEC<vec2>& polyline, int* ne
 }
 
 inline
-float dis_pos_to_polygon(const vec2& pos, const CU_VEC<vec2>& polygon, int* nearest_idx)
+float dis_pos_to_polygon(const vec2& pos, const std::vector<vec2>& polygon, int* nearest_idx)
 {
 	if (polygon.size() < 2) {
 		return FLT_MAX;
@@ -362,7 +362,7 @@ vec2 get_tri_gravity_center(const vec2& p0, const vec2& p1, const vec2& p2)
 }
 
 inline
-float get_polygon_area(const CU_VEC<sm::vec2>& polygon)
+float get_polygon_area(const std::vector<sm::vec2>& polygon)
 {
     if (polygon.size() < 3) {
         return 0;
@@ -378,7 +378,7 @@ float get_polygon_area(const CU_VEC<sm::vec2>& polygon)
 }
 
 inline
-float get_polygon_area(const CU_VEC<sm::vec3>& polygon) {
+float get_polygon_area(const std::vector<sm::vec3>& polygon) {
     if (polygon.size() < 3) {
         return 0;
     }
@@ -426,7 +426,7 @@ sm::vec3 calc_unit_normal(const sm::vec3& a, const sm::vec3& b, const sm::vec3& 
 }
 
 inline
-sm::vec3 calc_face_normal(const CU_VEC<sm::vec3>& polygon)
+sm::vec3 calc_face_normal(const std::vector<sm::vec3>& polygon)
 {
     sm::vec3 invalid;
     invalid.MakeInvalid();
@@ -450,7 +450,7 @@ sm::vec3 calc_face_normal(const CU_VEC<sm::vec3>& polygon)
 }
 
 inline
-float get_polygon_perimeter(const CU_VEC<sm::vec2>& poly)
+float get_polygon_perimeter(const std::vector<sm::vec2>& poly)
 {
 	if (poly.size() < 2) {
 		return 0;

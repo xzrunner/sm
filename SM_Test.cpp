@@ -68,7 +68,7 @@ bool is_rect_intersect_segment(const rect& r, const vec2& s, const vec2& e)
 }
 
 static inline
-void project_convex(const CU_VEC<vec2>& c, float angle, float* min, float* max)
+void project_convex(const std::vector<vec2>& c, float angle, float* min, float* max)
 {
 	*min = FLT_MAX;
 	*max = -FLT_MAX;
@@ -90,7 +90,7 @@ bool is_project_intersect(float min0, float max0, float min1, float max1)
 }
 
 static inline
-bool is_convex_intersect_convex(const CU_VEC<vec2>& c0, const CU_VEC<vec2>& c1, float angle)
+bool is_convex_intersect_convex(const std::vector<vec2>& c0, const std::vector<vec2>& c1, float angle)
 {
 	float min0, max0, min1, max1;
 	project_convex(c0, angle, &min0, &max0);
@@ -99,14 +99,14 @@ bool is_convex_intersect_convex(const CU_VEC<vec2>& c0, const CU_VEC<vec2>& c1, 
 }
 
 static inline
-bool is_convex_intersect_convex(const CU_VEC<vec2>& c0, const CU_VEC<vec2>& c1, const vec2& v0, const vec2& v1)
+bool is_convex_intersect_convex(const std::vector<vec2>& c0, const std::vector<vec2>& c1, const vec2& v0, const vec2& v1)
 {
 	float angle = SM_PI * 0.5f - atan2(v1.y - v0.y, v1.x - v0.x);
 	return is_convex_intersect_convex(c0, c1, angle);
 }
 
 static inline
-bool is_convex_intersect_convex(const CU_VEC<vec2>& c0, const CU_VEC<vec2>& c1, const CU_VEC<vec2>& proj)
+bool is_convex_intersect_convex(const std::vector<vec2>& c0, const std::vector<vec2>& c1, const std::vector<vec2>& proj)
 {
 	for (int i = 0, n = c0.size() - 1; i < n; ++i) {
 		if (!is_convex_intersect_convex(c0, c1, proj[i], proj[i+1])) {
@@ -119,7 +119,7 @@ bool is_convex_intersect_convex(const CU_VEC<vec2>& c0, const CU_VEC<vec2>& c1, 
 	return true;
 }
 
-bool is_convex_intersect_convex(const CU_VEC<vec2>& c0, const CU_VEC<vec2>& c1)
+bool is_convex_intersect_convex(const std::vector<vec2>& c0, const std::vector<vec2>& c1)
 {
 	if (c0.size() < 3 || c1.size() < 3) {
 		return false;
@@ -133,7 +133,7 @@ bool is_convex_intersect_convex(const CU_VEC<vec2>& c0, const CU_VEC<vec2>& c1)
 }
 
 static inline
-bool is_polygon_colckwise(const CU_VEC<vec2>& poly)
+bool is_polygon_colckwise(const std::vector<vec2>& poly)
 {
 	if (poly.size() < 3) {
 		return false;
@@ -169,7 +169,7 @@ bool is_two_points_same(const vec2& p0, const vec2& p1)
 		&& fabs(p0.y - p1.y) < SM_LARGE_EPSILON;
 }
 
-bool is_segment_intersect_polyline(const vec2& s, const vec2& e, const CU_VEC<vec2>& poly)
+bool is_segment_intersect_polyline(const vec2& s, const vec2& e, const std::vector<vec2>& poly)
 {
 	if (poly.size() < 2) {
 		return false;
@@ -220,7 +220,7 @@ bool is_segment_intersect_polyline(const vec2& s, const vec2& e, const CU_VEC<ve
 	return false;
 }
 
-bool is_polygon_intersect_polygon(const CU_VEC<vec2>& poly0, const CU_VEC<vec2>& poly1)
+bool is_polygon_intersect_polygon(const std::vector<vec2>& poly0, const std::vector<vec2>& poly1)
 {
 	if (poly0.size() < 3 || poly1.size() < 3) {
 		return false;
@@ -311,7 +311,7 @@ bool is_polygon_intersect_polygon(const CU_VEC<vec2>& poly0, const CU_VEC<vec2>&
 	return false;
 }
 
-bool is_polygon_convex(const CU_VEC<vec2>& poly)
+bool is_polygon_convex(const std::vector<vec2>& poly)
 {
     if (poly.size() < 2) {
         return false;
@@ -336,7 +336,7 @@ bool is_polygon_convex(const CU_VEC<vec2>& poly)
     return n_positive == 0 || n_negative == 0;
 }
 
-bool is_polygon_in_polygon(const CU_VEC<vec2>& in, const CU_VEC<vec2>& out)
+bool is_polygon_in_polygon(const std::vector<vec2>& in, const std::vector<vec2>& out)
 {
 	if (in.size() < 3 || out.size() < 3) {
 		return false;
@@ -405,7 +405,7 @@ bool is_polygon_in_polygon(const CU_VEC<vec2>& in, const CU_VEC<vec2>& out)
 	return true;
 }
 
-//bool is_polygon_clockwise(const CU_VEC<vec2>& poly)
+//bool is_polygon_clockwise(const std::vector<vec2>& poly)
 //{
 //    float cross_sum = 0.0f;
 //    for (size_t i = 0, n = poly.size(); i < n; ++i)
@@ -418,7 +418,7 @@ bool is_polygon_in_polygon(const CU_VEC<vec2>& in, const CU_VEC<vec2>& out)
 //    return cross_sum < 0;
 //}
 
-bool is_polygon_clockwise(const CU_VEC<vec2>& poly)
+bool is_polygon_clockwise(const std::vector<vec2>& poly)
 {
     float sum = 0.0f;
     for (size_t i = 0, n = poly.size(); i < n; ++i)

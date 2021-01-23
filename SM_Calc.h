@@ -4,7 +4,7 @@
 #include "SM_Vector.h"
 #include "SM_Plane.h"
 
-#include <cu/cu_stl.h>
+#include <vector>
 
 #include <stddef.h>
 
@@ -47,10 +47,10 @@ bool is_turn_right(const vec2& a, const vec2& center, const vec2& b);
  */
 float dis_pos_to_pos(const vec2& v0, const vec2& v1);
 float dis_square_pos_to_pos(const vec2& v0, const vec2& v1);
-float dis_pos_to_multi_pos(const vec2& pos, const CU_VEC<vec2>& multi_pos, int* nearest_idx = NULL);
+float dis_pos_to_multi_pos(const vec2& pos, const std::vector<vec2>& multi_pos, int* nearest_idx = NULL);
 float dis_pos_to_seg(const vec2& v, const vec2& s0, const vec2& s1);
-float dis_pos_to_polyline(const vec2& pos, const CU_VEC<vec2>& polyline, int* nearest_idx = NULL);
-float dis_pos_to_polygon(const vec2& pos, const CU_VEC<vec2>& polygon, int* nearest_idx = NULL);
+float dis_pos_to_polyline(const vec2& pos, const std::vector<vec2>& polyline, int* nearest_idx = NULL);
+float dis_pos_to_polygon(const vec2& pos, const std::vector<vec2>& polygon, int* nearest_idx = NULL);
 
 float dis_pos3_to_pos3(const vec3& v0, const vec3& v1);
 float dis_square_pos3_to_pos3(const vec3& v0, const vec3& v1);
@@ -82,18 +82,18 @@ vec2 get_tri_gravity_center(const vec2& p0, const vec2& p1, const vec2& p2);
 *  @brief
 *    area
 */
-float get_polygon_area(const CU_VEC<sm::vec2>& polygon);
-float get_polygon_area(const CU_VEC<sm::vec3>& polygon);
+float get_polygon_area(const std::vector<sm::vec2>& polygon);
+float get_polygon_area(const std::vector<sm::vec3>& polygon);
 float get_triangle_area(const sm::vec2& p0, const sm::vec2& p1, const sm::vec2& p2);
 
 sm::vec3 calc_unit_normal(const sm::vec3& a, const sm::vec3& b, const sm::vec3& c);
-sm::vec3 calc_face_normal(const CU_VEC<sm::vec3>& polygon);
+sm::vec3 calc_face_normal(const std::vector<sm::vec3>& polygon);
 
 /**
 *  @brief
 *    perimeter
 */
-float get_polygon_perimeter(const CU_VEC<sm::vec2>& poly);
+float get_polygon_perimeter(const std::vector<sm::vec2>& poly);
 
 /**
 *  @brief

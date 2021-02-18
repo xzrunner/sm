@@ -2,6 +2,7 @@
 #include "SM_Calc.h"
 
 #include <algorithm>
+#include <iterator>
 
 #include <stddef.h>
 

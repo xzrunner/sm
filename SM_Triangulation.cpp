@@ -4,6 +4,8 @@
 
 #include "external/triangle.cpp"
 
+#include <iterator>
+
 #include <assert.h>
 
 namespace sm

@@ -395,7 +395,7 @@ Vector3<T> Vector3<T>::operator / (T f) const
 template <typename T>
 T Vector3<T>::Length() const
 {
-	return sqrt(LengthSquared());
+	return static_cast<T>(sqrt(LengthSquared()));
 }
 
 template <typename T>

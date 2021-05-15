@@ -550,7 +550,7 @@ Matrix4<T> Matrix4<T>::Perspective(T fovy, T aspect, T znear, T zfar)
 	Matrix4 m;
 	memset(m.x, 0, sizeof(m));
 
-	T const tan_half_fovy = tan(fovy / static_cast<T>(2) * SM_DEG_TO_RAD);
+	T const tan_half_fovy = static_cast<T>(tan(fovy / static_cast<T>(2) * SM_DEG_TO_RAD));
 	m.c[0][0] = static_cast<T>(1) / (aspect * tan_half_fovy);
 	m.c[1][1] = static_cast<T>(1) / (tan_half_fovy);
 	m.c[2][2] = - (zfar + znear) / (zfar - znear);

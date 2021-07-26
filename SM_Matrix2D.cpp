@@ -2,6 +2,7 @@
 #include "SM_Math.h"
 
 #include <string.h>
+#include <cmath>
 
 namespace sm
 {
@@ -158,6 +159,23 @@ void Matrix2D::SetTransformation(float _x, float _y, float angle, float sx, floa
 	x[3]  = kx * s * sx + c * sy; // = d
 	x[4] = _x - ox * x[0] - oy * x[2];
 	x[5] = _y - ox * x[1] - oy * x[3];
+}
+
+void Matrix2D::Decompose(sm::vec2& scale, float& rotate, sm::vec2& translate) const
+{
+	translate.x = x[4];
+	translate.y = x[5];
+
+	scale.x = std::sqrt(x[0] * x[0] + x[1] * x[1]);
+	scale.y = std::sqrt(x[2] * x[2] + x[3] * x[3]);
+
+	if (scale.x != 0) {
+		rotate = std::acos(x[0] / scale.x);
+	} else if (scale.y != 0) {
+		rotate = std::acos(x[3] / scale.y);
+	} else {
+		rotate = 0;
+	}
 }
 
 }

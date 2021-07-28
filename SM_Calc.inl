@@ -212,7 +212,7 @@ float dis_pos_to_polyline(const vec2& pos, const std::vector<vec2>& polyline, in
 		}
 	}
 	if (nearest_idx) {
-		*nearest_idx = nearest;
+		*nearest_idx = static_cast<int>(nearest);
 	}
 	return min_dis;
 }
@@ -236,7 +236,7 @@ float dis_pos_to_polygon(const vec2& pos, const std::vector<vec2>& polygon, int*
 		}
 	}
 	if (nearest_idx) {
-		*nearest_idx = nearest;
+		*nearest_idx = static_cast<int>(nearest);
 	}
 	return min_dis;
 }
@@ -369,8 +369,8 @@ float get_polygon_area(const std::vector<sm::vec2>& polygon)
     }
 
 	float s = 0;
-	for (int i = 0, n = polygon.size(); i < n; i++) {
-		int next = (i + 1) % n;
+	for (size_t i = 0, n = polygon.size(); i < n; i++) {
+		size_t next = (i + 1) % n;
 		s += (polygon[i].y + polygon[next].y) * (polygon[i].x - polygon[next].x);
 	}
 
@@ -384,9 +384,9 @@ float get_polygon_area(const std::vector<sm::vec3>& polygon) {
     }
 
     sm::vec3 tot;
-    for (int i = 0, n = polygon.size(); i < n; i++)
+    for (size_t i = 0, n = polygon.size(); i < n; i++)
     {
-        int next = (i + 1) % n;
+		size_t next = (i + 1) % n;
         sm::vec3 prod = polygon[i].Cross(polygon[next]);
         tot += prod;
     }
@@ -457,7 +457,7 @@ float get_polygon_perimeter(const std::vector<sm::vec2>& poly)
 	}
 
 	float perimeter = 0.0f;
-	for (int i = 0, n = poly.size() - 1; i < n; ++i) {
+	for (size_t i = 0, n = poly.size() - 1; i < n; ++i) {
 		perimeter += sm::dis_pos_to_pos(poly[i], poly[i + 1]);
 	}
 	perimeter += sm::dis_pos_to_pos(poly[0], poly[poly.size() - 1]);

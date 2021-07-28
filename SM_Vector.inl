@@ -173,7 +173,7 @@ Vector2<T> Vector2<T>::operator / (T f) const
 template <typename T>
 T Vector2<T>::Length() const
 {
-	return sqrt(LengthSquared());
+	return static_cast<T>(sqrt(LengthSquared()));
 }
 
 template <typename T>

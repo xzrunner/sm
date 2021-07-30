@@ -170,9 +170,9 @@ void Matrix2D::Decompose(sm::vec2& scale, float& rotate, sm::vec2& translate) co
 	scale.y = std::sqrt(x[2] * x[2] + x[3] * x[3]);
 
 	if (scale.x != 0) {
-		rotate = std::acos(x[0] / scale.x);
+		rotate = std::atan2f(x[1], x[0]);
 	} else if (scale.y != 0) {
-		rotate = std::acos(x[3] / scale.y);
+		rotate = -std::atan2f(x[2], x[3]);
 	} else {
 		rotate = 0;
 	}

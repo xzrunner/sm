@@ -2,7 +2,7 @@
 #include "SM_Calc.h"
 #include "SM_Test.h"
 
-#include "external/triangle.cpp"
+#include "external/triangle/triangle.cpp"
 
 #include <iterator>
 

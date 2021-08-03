@@ -6,10 +6,6 @@
 namespace sm
 {
 
-#ifdef _MSC_VER
-#define roundf(num) ((num > 0.0) ? floor(num + 0.5) : ceil(num - 0.5))
-#endif // _MSC_VER
-
 inline
 MatrixFix MatrixFix::operator * (const MatrixFix& b) const
 {

@@ -84,7 +84,7 @@ QuaternionT<T> QuaternionT<T>::operator * (const QuaternionT<T>& q) const
 template <typename T>
 void QuaternionT<T>::Normalize()
 {
-	*this = Scaled(1 / sqrt(Dot(*this)));
+	*this = Scaled(1 / sqrtf(Dot(*this)));
 }
 
 template <typename T>

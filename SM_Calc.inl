@@ -82,7 +82,7 @@ float mat_trans_len(float len, const MatrixFix& mat)
 inline
 float get_line_angle(const vec2& s, const vec2& e)
 {
-	return atan2(e.y - s.y, e.x - s.x);
+	return atan2f(e.y - s.y, e.x - s.x);
 }
 
 inline
@@ -95,7 +95,7 @@ float get_angle(const vec2& center, const vec2& pa, const vec2& pb)
 	float cos_val = (a * a + b * b - c * c) / (2 * a * b);
 	cos_val = std::max(std::min(cos_val, 1.0f), -1.0f);
 
-	return acos(cos_val);
+	return acosf(cos_val);
 
 	// 	float angle = acos(cosVal);
 	// 	return is_turn_right(pa, center, pb) ? angle : -angle;
@@ -111,7 +111,7 @@ float get_angle(const vec3& center, const vec3& pa, const vec3& pb)
 	float cos_val = (a * a + b * b - c * c) / (2 * a * b);
 	cos_val = std::max(std::min(cos_val, 1.0f), -1.0f);
 
-	return acos(cos_val);
+	return acosf(cos_val);
 
 	// 	float angle = acos(cosVal);
 	// 	return is_turn_right(pa, center, pb) ? angle : -angle;
@@ -189,7 +189,7 @@ float dis_pos_to_seg(const vec2& v, const vec2& s0, const vec2& s1)
 	} else if (!is_acute_angle(v, s1, s0)) {
 		return dis_pos_to_pos(v, s1);
 	} else {
-		return fabs((s0.x - v.x) * (s1.y - v.y) - (s0.y - v.y) * (s1.x - v.x)) / dis_pos_to_pos(s0, s1);
+		return fabsf((s0.x - v.x) * (s1.y - v.y) - (s0.y - v.y) * (s1.x - v.x)) / dis_pos_to_pos(s0, s1);
 	}
 }
 
@@ -374,7 +374,7 @@ float get_polygon_area(const std::vector<sm::vec2>& polygon)
 		s += (polygon[i].y + polygon[next].y) * (polygon[i].x - polygon[next].x);
 	}
 
-	return fabs(s / 2.0f);
+	return fabsf(s / 2.0f);
 }
 
 inline
@@ -391,7 +391,7 @@ float get_polygon_area(const std::vector<sm::vec3>& polygon) {
         tot += prod;
     }
     float s = tot.Dot(sm::calc_unit_normal(polygon[0], polygon[1], polygon[2]));
-    return fabs(s / 2.0f);
+    return fabsf(s / 2.0f);
 }
 
 inline
@@ -401,7 +401,7 @@ float get_triangle_area(const sm::vec2& p0, const sm::vec2& p1, const sm::vec2& 
 	s += (p1.y + p0.y) * (p1.x - p0.x);
 	s += (p2.y + p1.y) * (p2.x - p1.x);
 	s += (p0.y + p2.y) * (p0.x - p2.x);
-	return fabs(s / 2.0f);
+	return fabsf(s / 2.0f);
 }
 
 inline

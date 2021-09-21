@@ -139,6 +139,7 @@ public:
 	static Matrix4<T> RotatedZ(T degrees);
 	static Matrix4<T> RotatedAxis(const Vector3<T>& axis, T angle);
 	static Matrix4<T> Sheared(T kx, T ky);
+	static Matrix4<T> SkewY(T sx, T sz);
 
 	static Matrix4<T> Perspective(T fovy, T aspect, T znear, T zfar);
 	static Matrix4<T> Orthographic(T left, T right, T bottom, T top, T znear, T zfar);

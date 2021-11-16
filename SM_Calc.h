@@ -99,6 +99,8 @@ float get_polygon_perimeter(const std::vector<sm::vec2>& poly);
 */
 bool intersect_planes(const Plane& p0, const Plane& p1, const Plane& p2, vec3* cross);
 
+sm::vec3 calc_plane_mirror(const Plane& plane, const sm::vec3& pos);
+
 }
 
 #include "SM_Calc.inl"

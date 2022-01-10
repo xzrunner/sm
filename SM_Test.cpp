@@ -1,8 +1,29 @@
 #include "SM_Test.h"
 #include "SM_Calc.h"
 
+namespace
+{
+
+bool is_two_points_same(const sm::vec2& p0, const sm::vec2& p1)
+{
+	return fabs(p0.x - p1.x) < SM_LARGE_EPSILON
+		&& fabs(p0.y - p1.y) < SM_LARGE_EPSILON;
+}
+
+}
+
 namespace sm
 {
+
+bool is_point_in_segment(const vec2& pos, const vec2& s0, const vec2& s1)
+{
+	if (is_two_points_same(pos, s0) || is_two_points_same(pos, s1)) {
+		return false;
+	} else {
+		rect r(pos, SM_LARGE_EPSILON, SM_LARGE_EPSILON);
+		return is_rect_intersect_segment(r, s0, s1);
+	}
+}
 
 bool is_rect_intersect_segment(const rect& r, const vec2& s, const vec2& e)
 {
@@ -160,13 +181,6 @@ static inline
 int get_next_idx_in_ring(int sz, int curr, int step)
 {
 	return (curr + sz + step) % sz;
-}
-
-static inline
-bool is_two_points_same(const vec2& p0, const vec2& p1)
-{
-	return fabs(p0.x - p1.x) < SM_LARGE_EPSILON
-		&& fabs(p0.y - p1.y) < SM_LARGE_EPSILON;
 }
 
 bool is_segment_intersect_polyline(const vec2& s, const vec2& e, const std::vector<vec2>& poly)

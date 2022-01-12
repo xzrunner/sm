@@ -536,7 +536,7 @@ void Vector4<T>::operator /= (T f)
 template <typename T>
 Vector4<T> Vector4<T>::operator + (const Vector4& v) const
 {
-	return Vector4(x + v.x, y + v.y, z + v.z, w + z.w);
+	return Vector4(x + v.x, y + v.y, z + v.z, w + v.w);
 }
 
 template <typename T>

@@ -1,3 +1,9 @@
 [submodule "external/triangle"]
 	path = external/triangle
 	url = git@github.com:libigl/triangle.git
+[submodule "CavalierContours"]
+	path = external/CavalierContours
+	url = git@github.com:jbuckmccready/CavalierContours.git
+[submodule "external/clipper"]
+	path = external/clipper
+	url = git@github.com:brandon-kohn/clipper-lib.git

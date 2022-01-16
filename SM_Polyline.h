@@ -8,9 +8,9 @@ namespace sm
 {
 
 std::vector<std::vector<vec2>> 
-polyline_offset(const std::vector<vec2>& polyline, bool is_closed, float offste);
+polyline_offset(const std::vector<vec2>& polyline, float offste);
 
 std::vector<std::vector<vec2>>
-polyline_expand(const std::vector<vec2>& polyline, bool is_closed, float offste);
+polyline_expand(const std::vector<vec2>& polyline, float offste);
 
 }

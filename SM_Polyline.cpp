@@ -6,13 +6,16 @@ namespace sm
 {
 
 std::vector<std::vector<vec2>> 
-polyline_offset(const std::vector<vec2>& polyline, bool is_closed, float offset)
+polyline_offset(const std::vector<vec2>& polyline, float offset)
 {
+	const bool is_closed = polyline.front() == polyline.back();
+
 	cavc::Polyline<float> input;
 	input.isClosed() = is_closed;
 
-	for (auto& pos : polyline) {
-		input.addVertex(pos.x, pos.y, 0.0f);
+	int n = is_closed ? polyline.size() - 1 : polyline.size();
+	for (int i = 0; i < n; ++i) {
+		input.addVertex(polyline[i].x, polyline[i].y, 0.0f);
 	}
 
 	auto results = cavc::parallelOffset(input, offset);
@@ -31,15 +34,12 @@ polyline_offset(const std::vector<vec2>& polyline, bool is_closed, float offset)
 }
 
 std::vector<std::vector<vec2>>
-polyline_expand(const std::vector<vec2>& polyline, bool is_closed, float offste)
+polyline_expand(const std::vector<vec2>& polyline, float offste)
 {
-	if (is_closed) {
-		printf("++ %f %f\n", polyline.front().x, polyline.back().x);
-	}
 	std::vector<std::vector<sm::vec2>> ret;
 
-	auto off0 = polyline_offset(polyline, is_closed, offste);
-	auto off1 = polyline_offset(polyline, is_closed, -offste);
+	auto off0 = polyline_offset(polyline, offste);
+	auto off1 = polyline_offset(polyline, -offste);
 
 	if (off0.size() != off1.size() || off0.empty()) {
 		return ret;

@@ -1,12 +1,12 @@
 #include "SM_Polyline.h"
 
-#include "external/CavalierContours/include/cavc/polylineoffset.hpp"
+#include <cavc/polylineoffset.hpp>
 
 namespace sm
 {
 
 std::vector<std::vector<vec2>> 
-polyline_offset(const std::vector<vec2>& polyline, float offset)
+polyline_offset(const std::vector<vec2>& polyline, float distance)
 {
 	const bool is_closed = polyline.front() == polyline.back();
 
@@ -18,7 +18,7 @@ polyline_offset(const std::vector<vec2>& polyline, float offset)
 		input.addVertex(polyline[i].x, polyline[i].y, 0.0f);
 	}
 
-	auto results = cavc::parallelOffset(input, offset);
+	auto results = cavc::parallelOffset(input, distance);
 
 	std::vector<std::vector<vec2>> polylines;
 	for (auto& src : results)

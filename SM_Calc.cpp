@@ -12,4 +12,23 @@ sm::vec3 calc_plane_mirror(const Plane& plane, const sm::vec3& pos)
 	return v2 * 2 - v1;
 }
 
+bool intersect_segment_polyline(const vec2& s0, const vec2& s1, const std::vector<sm::vec2>& polyline, vec2* cross, size_t* idx)
+{
+	for (size_t i = 0, n = polyline.size(); i < n; ++i)
+	{
+		if (is_point_in_segment(polyline[i], s0, s1)) 
+		{
+			*cross = polyline[i];
+			*idx = i;
+			return true;
+		} 
+		else if (intersect_segment_segment(polyline[i], polyline[(i + 1) % n], s0, s1, cross))
+		{
+			*idx = i;
+			return true;
+		}
+	}
+	return false;
+}
+
 }

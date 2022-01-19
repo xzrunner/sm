@@ -62,6 +62,8 @@ float distance_aabb(const vec3& pos, const vec3& aabb_min, const vec3& aabb_max)
 bool intersect_line_line(const vec2& s0, const vec2& e0, const vec2& s1, const vec2& e1, vec2* cross);
 bool intersect_segment_segment(const vec2& s0, const vec2& e0, const vec2& s1, const vec2& e1, vec2* cross);
 
+bool intersect_segment_polyline(const vec2& s0, const vec2& s1, const std::vector<sm::vec2>& polyline, vec2* cross, size_t* idx);
+
 /**
  *  @brief
  *    Get the foot of out at line(s, e).

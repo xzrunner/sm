@@ -11,7 +11,8 @@ polyline_offset(const std::vector<vec2>& polyline, float distance, bool is_close
 	cavc::Polyline<float> input;
 	input.isClosed() = is_closed;
 
-	const size_t n = is_closed ? polyline.size() - 1 : polyline.size();
+	const size_t n = (is_closed && polyline.front() == polyline.back()) ? 
+		polyline.size() - 1 : polyline.size();
 	for (int i = 0; i < n; ++i) {
 		input.addVertex(polyline[i].x, polyline[i].y, 0.0f);
 	}

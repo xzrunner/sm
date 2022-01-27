@@ -8,9 +8,7 @@
 namespace sm
 {
 
-void douglas_peucker(const std::vector<vec2>& line,
-					 float precision,
-					 std::vector<vec2>& dst);
+std::vector<vec2> douglas_peucker(const std::vector<vec2>& poly, float precision);
 
 }
 

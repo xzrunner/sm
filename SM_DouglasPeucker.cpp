@@ -53,22 +53,22 @@ void points_reduction(const std::vector<vec2>& line,
 	}
 }
 
-void douglas_peucker(const std::vector<vec2>& line,
-					 float precision,
-					 std::vector<vec2>& dst)
+std::vector<vec2> douglas_peucker(const std::vector<vec2>& poly, float precision)
 {
-	if (line.empty()) {
-		return;
+	if (poly.empty()) {
+		return {};
 	}
 
-	dst.clear();
+	std::vector<vec2> dst;
 
 	std::vector<bool> flag;
-	flag.resize(line.size(), false);
-	points_reduction(line, precision, flag, 0, line.size() - 1);
-	for (int i = 0, n = line.size(); i < n; ++i) {
-		if (flag[i]) dst.push_back(line[i]);
+	flag.resize(poly.size(), false);
+	points_reduction(poly, precision, flag, 0, static_cast<int>(poly.size() - 1));
+	for (size_t i = 0, n = poly.size(); i < n; ++i) {
+		if (flag[i]) dst.push_back(poly[i]);
 	}
+
+	return dst;
 }
 
 }

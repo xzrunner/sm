@@ -13,6 +13,8 @@ float cos_fast(float x);
 int next_p2(int a);
 bool is_power_of_two(int x);
 
+float f16_to_f32(unsigned short value);
+
 }
 
 #include "SM_Math.inl"

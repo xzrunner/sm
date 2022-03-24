@@ -99,6 +99,7 @@ public:
 	void Identity();
 
 	void Translate(T x, T y, T z);
+	void Rotate(T x, T y, T z);
 	void Scale(T x, T y, T z);
 	void Shear(T kx, T ky);
 	void RotateZ(T degrees);

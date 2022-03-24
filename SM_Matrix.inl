@@ -203,6 +203,12 @@ void Matrix4<T>::Translate(T x, T y, T z)
 }
 
 template <typename T>
+void Matrix4<T>::Rotate(T x, T y, T z)
+{
+	*this = Rotated(x, y, z) * *this;
+}
+
+template <typename T>
 void Matrix4<T>::Scale(T x, T y, T z)
 {
     *this = Scaled(x, y, z) * *this;

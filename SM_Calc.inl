@@ -434,19 +434,15 @@ sm::vec3 calc_face_normal(const std::vector<sm::vec3>& polygon)
         return invalid;
     }
 
+	sm::vec3 normal;
     for (size_t i = 0, n = polygon.size(); i < n; ++i)
     {
         auto& p0 = polygon[i];
         auto& p1 = polygon[(i + 1) % n];
-        auto& p2 = polygon[(i + 2) % n];
 
-        auto cross = (p1 - p0).Cross(p2 - p0);
-        if (cross.LengthSquared() > 0) {
-            return cross.Normalized();
-        }
+		normal += p0.Cross(p1);
     }
-
-    return invalid;
+    return normal.Normalized();
 }
 
 inline

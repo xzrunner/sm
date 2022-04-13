@@ -54,6 +54,7 @@ public:
 public:
 	Matrix3();
 	Matrix3(const Matrix4<T>& m);
+	Matrix3(const Vector3<T>& x, const Vector3<T>& y, const Vector3<T>& z);
 
     bool operator == (const Matrix3<T>& b) const;
     bool operator != (const Matrix3<T>& b) const;

@@ -52,6 +52,14 @@ Matrix3<T>::Matrix3(const Matrix4<T>& m)
 }
 
 template <typename T>
+Matrix3<T>::Matrix3(const Vector3<T>& x, const Vector3<T>& y, const Vector3<T>& z)
+{
+	c[0][0] = x.x; c[0][1] = x.y; c[0][2] = x.z;
+	c[1][0] = y.x; c[1][1] = y.y; c[1][2] = y.z;
+	c[2][0] = z.x; c[2][1] = z.y; c[2][2] = z.z;
+}
+
+template <typename T>
 bool Matrix3<T>::operator == (const Matrix3<T>& b) const
 {
     return memcmp(x, b.x, sizeof(x)) == 0;

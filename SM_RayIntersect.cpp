@@ -31,11 +31,11 @@ bool ray_ray_intersect(const Ray& ray0, const Ray& ray1, vec3* cross)
 }
 
 // code from http://paulbourke.net/geometry/pointlineplane/lineline.c
-bool line_line_intersect(const sm::vec3& p1, const sm::vec3& p2,
-	                     const sm::vec3& p3, const sm::vec3& p4,
-	                     sm::vec3* pa, sm::vec3* pb, float* mua, float* mub)
+bool line_line_intersect(const vec3& p1, const vec3& p2,
+	                     const vec3& p3, const vec3& p4,
+	                     vec3* pa, vec3* pb, float* mua, float* mub)
 {
-	sm::vec3 p13,p43,p21;
+	vec3 p13,p43,p21;
 	float d1343,d4321,d1321,d4343,d2121;
 	float numer,denom;
 

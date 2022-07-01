@@ -161,7 +161,7 @@ void Matrix2D::SetTransformation(float _x, float _y, float angle, float sx, floa
 	x[5] = _y - ox * x[1] - oy * x[3];
 }
 
-void Matrix2D::Decompose(sm::vec2& scale, float& rotate, sm::vec2& translate) const
+void Matrix2D::Decompose(vec2& scale, float& rotate, vec2& translate) const
 {
 	translate.x = x[4];
 	translate.y = x[5];

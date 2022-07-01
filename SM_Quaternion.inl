@@ -260,17 +260,17 @@ QuaternionT<T> QuaternionT<T>::CreateFromVectors(const Vector3<T>& v0, const Vec
 		float s = sqrtf((1.0f + d) * 2.0f);
 		float invS = 1.0f / s;
 
-		auto q = sm::Quaternion(c.x * invS, c.y * invS, c.z * invS, 0.5f * s);
+		auto q = Quaternion(c.x * invS, c.y * invS, c.z * invS, 0.5f * s);
 		q.Normalize();
 		return q;
 	}
 	else
 	{
-		auto axis = sm::vec3(1, 0, 0).Cross(normStart);
+		auto axis = vec3(1, 0, 0).Cross(normStart);
 		if (axis.Length() < FLT_EPSILON)
-			axis = sm::vec3(0, 1, 1).Cross(normStart);
+			axis = vec3(0, 1, 1).Cross(normStart);
 
-		return sm::Quaternion::CreateFromAxisAngle(axis, SM_PI);
+		return Quaternion::CreateFromAxisAngle(axis, SM_PI);
 	}
 }
 

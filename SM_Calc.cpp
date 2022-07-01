@@ -3,7 +3,7 @@
 namespace sm
 {
 
-sm::vec3 calc_plane_mirror(const Plane& plane, const sm::vec3& pos)
+vec3 calc_plane_mirror(const Plane& plane, const vec3& pos)
 {
 	float len_s = plane.normal.LengthSquared();
 	auto v1 = pos;
@@ -12,7 +12,7 @@ sm::vec3 calc_plane_mirror(const Plane& plane, const sm::vec3& pos)
 	return v2 * 2 - v1;
 }
 
-bool intersect_segment_polyline(const vec2& s0, const vec2& s1, const std::vector<sm::vec2>& polyline, vec2* cross, size_t* idx)
+bool intersect_segment_polyline(const vec2& s0, const vec2& s1, const std::vector<vec2>& polyline, vec2* cross, size_t* idx)
 {
 	for (size_t i = 0, n = polyline.size(); i < n; ++i)
 	{

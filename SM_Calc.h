@@ -61,8 +61,7 @@ float distance_aabb(const vec3& pos, const vec3& aabb_min, const vec3& aabb_max)
  */
 bool intersect_line_line(const vec2& s0, const vec2& e0, const vec2& s1, const vec2& e1, vec2* cross);
 bool intersect_segment_segment(const vec2& s0, const vec2& e0, const vec2& s1, const vec2& e1, vec2* cross);
-
-bool intersect_segment_polyline(const vec2& s0, const vec2& s1, const std::vector<sm::vec2>& polyline, vec2* cross, size_t* idx);
+bool intersect_segment_polyline(const vec2& s0, const vec2& s1, const std::vector<vec2>& polyline, vec2* cross, size_t* idx);
 
 /**
  *  @brief
@@ -82,18 +81,18 @@ vec2 get_tri_gravity_center(const vec2& p0, const vec2& p1, const vec2& p2);
 *  @brief
 *    area
 */
-float get_polygon_area(const std::vector<sm::vec2>& polygon);
-float get_polygon_area(const std::vector<sm::vec3>& polygon);
-float get_triangle_area(const sm::vec2& p0, const sm::vec2& p1, const sm::vec2& p2);
+float get_polygon_area(const std::vector<vec2>& polygon);
+float get_polygon_area(const std::vector<vec3>& polygon);
+float get_triangle_area(const vec2& p0, const vec2& p1, const vec2& p2);
 
-sm::vec3 calc_unit_normal(const sm::vec3& a, const sm::vec3& b, const sm::vec3& c);
-sm::vec3 calc_face_normal(const std::vector<sm::vec3>& polygon);
+vec3 calc_unit_normal(const vec3& a, const vec3& b, const vec3& c);
+vec3 calc_face_normal(const std::vector<vec3>& polygon);
 
 /**
 *  @brief
 *    perimeter
 */
-float get_polygon_perimeter(const std::vector<sm::vec2>& poly);
+float get_polygon_perimeter(const std::vector<vec2>& poly);
 
 /**
 *  @brief
@@ -101,7 +100,7 @@ float get_polygon_perimeter(const std::vector<sm::vec2>& poly);
 */
 bool intersect_planes(const Plane& p0, const Plane& p1, const Plane& p2, vec3* cross);
 
-sm::vec3 calc_plane_mirror(const Plane& plane, const sm::vec3& pos);
+vec3 calc_plane_mirror(const Plane& plane, const vec3& pos);
 
 }
 

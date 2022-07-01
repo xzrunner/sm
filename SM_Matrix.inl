@@ -559,7 +559,7 @@ Matrix4<T> Matrix4<T>::Sheared(T kx, T ky)
 template <typename T>
 Matrix4<T> Matrix4<T>::SkewY(T sx, T sz)
 {
-	sm::mat4 m;
+	mat4 m;
 	m.x[2] = sz;
 	m.x[8] = sx;
 	return m;

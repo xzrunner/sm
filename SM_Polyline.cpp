@@ -24,7 +24,7 @@ polyline_offset(const std::vector<vec2>& polyline, float distance, bool is_close
 	{
 		std::vector<vec2> dst;
 		for (auto& pos : src.vertexes()) {
-			dst.push_back(sm::vec2(pos.x(), pos.y()));
+			dst.push_back(vec2(pos.x(), pos.y()));
 		}
 		polylines.push_back(dst);
 	}
@@ -35,7 +35,7 @@ polyline_offset(const std::vector<vec2>& polyline, float distance, bool is_close
 std::vector<std::vector<vec2>>
 polyline_expand(const std::vector<vec2>& polyline, float offste, bool is_closed)
 {
-	std::vector<std::vector<sm::vec2>> ret;
+	std::vector<std::vector<vec2>> ret;
 
 	auto off0 = polyline_offset(polyline, offste, is_closed);
 	auto off1 = polyline_offset(polyline, -offste, is_closed);

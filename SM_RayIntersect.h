@@ -11,9 +11,9 @@ namespace sm
 {
 
 bool ray_ray_intersect(const Ray& ray0, const Ray& ray1, vec3* cross);
-bool line_line_intersect(const sm::vec3& p1, const sm::vec3& p2,
-	                     const sm::vec3& p3, const sm::vec3& p4,
-	                     sm::vec3* pa, sm::vec3* pb, float* mua, float* mub);
+bool line_line_intersect(const vec3& p1, const vec3& p2,
+	                     const vec3& p3, const vec3& p4,
+	                     vec3* pa, vec3* pb, float* mua, float* mub);
 
 bool ray_aabb_intersect(const cube& aabb, const Ray& ray, vec3* cross);
 bool ray_obb_intersect(const cube& aabb, const vec3& pos, const Quaternion& angle, const vec3& scale, const Ray& ray, vec3* cross);

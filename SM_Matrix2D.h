@@ -33,7 +33,7 @@ public:
 
 	void SetTransformation(float x, float y, float angle, float sx, float sy, float ox, float oy, float kx, float ky);
 
-	void Decompose(sm::vec2& scale, float& rotate, sm::vec2& translate) const;
+	void Decompose(vec2& scale, float& rotate, vec2& translate) const;
 
 	static void Mul(const Matrix2D& m0, const Matrix2D& m1, Matrix2D& out);
 

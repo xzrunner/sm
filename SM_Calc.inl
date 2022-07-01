@@ -362,7 +362,7 @@ vec2 get_tri_gravity_center(const vec2& p0, const vec2& p1, const vec2& p2)
 }
 
 inline
-float get_polygon_area(const std::vector<sm::vec2>& polygon)
+float get_polygon_area(const std::vector<vec2>& polygon)
 {
     if (polygon.size() < 3) {
         return 0;
@@ -378,24 +378,24 @@ float get_polygon_area(const std::vector<sm::vec2>& polygon)
 }
 
 inline
-float get_polygon_area(const std::vector<sm::vec3>& polygon) {
+float get_polygon_area(const std::vector<vec3>& polygon) {
     if (polygon.size() < 3) {
         return 0;
     }
 
-    sm::vec3 tot;
+    vec3 tot;
     for (size_t i = 0, n = polygon.size(); i < n; i++)
     {
 		size_t next = (i + 1) % n;
-        sm::vec3 prod = polygon[i].Cross(polygon[next]);
+        vec3 prod = polygon[i].Cross(polygon[next]);
         tot += prod;
     }
-    float s = tot.Dot(sm::calc_unit_normal(polygon[0], polygon[1], polygon[2]));
+    float s = tot.Dot(calc_unit_normal(polygon[0], polygon[1], polygon[2]));
     return fabsf(s / 2.0f);
 }
 
 inline
-float get_triangle_area(const sm::vec2& p0, const sm::vec2& p1, const sm::vec2& p2)
+float get_triangle_area(const vec2& p0, const vec2& p1, const vec2& p2)
 {
 	float s = 0;
 	s += (p1.y + p0.y) * (p1.x - p0.x);
@@ -405,9 +405,9 @@ float get_triangle_area(const sm::vec2& p0, const sm::vec2& p1, const sm::vec2& 
 }
 
 inline
-sm::vec3 calc_unit_normal(const sm::vec3& a, const sm::vec3& b, const sm::vec3& c)
+vec3 calc_unit_normal(const vec3& a, const vec3& b, const vec3& c)
 {
-    sm::mat3 x, y, z;
+    mat3 x, y, z;
     x.c[0][0] = 1; x.c[1][0] = a.y; x.c[2][0] = a.z;
     x.c[0][1] = 1; x.c[1][1] = b.y; x.c[2][1] = b.z;
     x.c[0][2] = 1; x.c[1][2] = c.y; x.c[2][2] = c.z;
@@ -418,7 +418,7 @@ sm::vec3 calc_unit_normal(const sm::vec3& a, const sm::vec3& b, const sm::vec3& 
     z.c[0][1] = b.x; z.c[1][1] = b.y; z.c[2][1] = 1;
     z.c[0][2] = c.x; z.c[1][2] = c.y; z.c[2][2] = 1;
 
-    sm::vec3 d;
+    vec3 d;
     d.x = x.Determinant();
     d.y = y.Determinant();
     d.z = z.Determinant();
@@ -426,15 +426,15 @@ sm::vec3 calc_unit_normal(const sm::vec3& a, const sm::vec3& b, const sm::vec3& 
 }
 
 inline
-sm::vec3 calc_face_normal(const std::vector<sm::vec3>& polygon)
+vec3 calc_face_normal(const std::vector<vec3>& polygon)
 {
-    sm::vec3 invalid;
+    vec3 invalid;
     invalid.MakeInvalid();
     if (polygon.size() < 3) {
         return invalid;
     }
 
-	sm::vec3 normal;
+	vec3 normal;
     for (size_t i = 0, n = polygon.size(); i < n; ++i)
     {
         auto& p0 = polygon[i];
@@ -446,7 +446,7 @@ sm::vec3 calc_face_normal(const std::vector<sm::vec3>& polygon)
 }
 
 inline
-float get_polygon_perimeter(const std::vector<sm::vec2>& poly)
+float get_polygon_perimeter(const std::vector<vec2>& poly)
 {
 	if (poly.size() < 2) {
 		return 0;
@@ -454,9 +454,9 @@ float get_polygon_perimeter(const std::vector<sm::vec2>& poly)
 
 	float perimeter = 0.0f;
 	for (size_t i = 0, n = poly.size() - 1; i < n; ++i) {
-		perimeter += sm::dis_pos_to_pos(poly[i], poly[i + 1]);
+		perimeter += dis_pos_to_pos(poly[i], poly[i + 1]);
 	}
-	perimeter += sm::dis_pos_to_pos(poly[0], poly[poly.size() - 1]);
+	perimeter += dis_pos_to_pos(poly[0], poly[poly.size() - 1]);
 
 	return perimeter;
 }

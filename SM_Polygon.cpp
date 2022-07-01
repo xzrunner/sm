@@ -35,7 +35,7 @@ std::vector<sm::vec2> parser_path(const ClipperLib::Path& path)
 	return poly;
 }
 
-std::vector<std::vector<sm::vec2>> 
+std::vector<std::vector<sm::vec2>>
 do_clipper(const std::vector<std::vector<sm::vec2>>& subject, const std::vector<sm::vec2>& clip, ClipperLib::ClipType type)
 {
 	ClipperLib::Paths sub_paths, clp_paths;

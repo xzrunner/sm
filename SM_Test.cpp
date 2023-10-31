@@ -93,7 +93,7 @@ void project_convex(const std::vector<vec2>& c, float angle, float* min, float* 
 {
 	*min = FLT_MAX;
 	*max = -FLT_MAX;
-	for (int i = 0, n = c.size(); i < n; ++i) {
+	for (size_t i = 0, n = c.size(); i < n; ++i) {
 		vec2 v = rotate_vector(c[i], angle);
 		if (v.x < *min) {
 			*min = v.x;
@@ -122,14 +122,14 @@ bool is_convex_intersect_convex(const std::vector<vec2>& c0, const std::vector<v
 static inline
 bool is_convex_intersect_convex(const std::vector<vec2>& c0, const std::vector<vec2>& c1, const vec2& v0, const vec2& v1)
 {
-	float angle = SM_PI * 0.5f - atan2(v1.y - v0.y, v1.x - v0.x);
+	float angle = SM_PI * 0.5f - static_cast<float>(atan2(v1.y - v0.y, v1.x - v0.x));
 	return is_convex_intersect_convex(c0, c1, angle);
 }
 
 static inline
 bool is_convex_intersect_convex(const std::vector<vec2>& c0, const std::vector<vec2>& c1, const std::vector<vec2>& proj)
 {
-	for (int i = 0, n = c0.size() - 1; i < n; ++i) {
+	for (size_t i = 0, n = c0.size() - 1; i < n; ++i) {
 		if (!is_convex_intersect_convex(c0, c1, proj[i], proj[i+1])) {
 			return false;
 		}
@@ -161,9 +161,9 @@ bool is_polygon_colckwise(const std::vector<vec2>& poly)
 	}
 
 	float left = FLT_MAX;
-	int left_idx = 0;
-	int sz = poly.size();
-	for (int i = 0; i < sz; ++i) {
+	size_t left_idx = 0;
+	size_t sz = poly.size();
+	for (size_t i = 0; i < sz; ++i) {
 		if (poly[i].x < left) {
 			left = poly[i].x;
 			left_idx = i;
@@ -198,7 +198,7 @@ bool is_segment_intersect_polyline(const vec2& s, const vec2& e, const std::vect
 		return false;
 	}
 
-	int sz = poly.size();
+	int sz = static_cast<int>(poly.size());
 	for (int i = 0; i < sz; ++i)
 	{
 		const vec2& start = poly[i];
@@ -240,8 +240,8 @@ bool is_polygon_intersect_polygon(const std::vector<vec2>& poly0, const std::vec
 		return false;
 	}
 
-	int sz0 = poly0.size(),
-		sz1 = poly1.size();
+	int sz0 = static_cast<int>(poly0.size()),
+		sz1 = static_cast<int>(poly1.size());
 
 	int step0 = is_polygon_colckwise(poly0) ? 1 : -1,
 		step1 = is_polygon_colckwise(poly1) ? 1 : -1;

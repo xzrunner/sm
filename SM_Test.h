@@ -3,6 +3,7 @@
 
 #include "SM_Vector.h"
 #include "SM_Rect.h"
+#include "SM_Cube.h"
 
 #include <vector>
 
@@ -74,6 +75,12 @@ bool is_convex_intersect_convex(const std::vector<vec2>& c0, const std::vector<v
 bool is_polygon_intersect_polygon(const std::vector<vec2>& poly0, const std::vector<vec2>& poly1);
 bool is_polygon_in_polygon(const std::vector<vec2>& in, const std::vector<vec2>& out);
 bool is_polygon_clockwise(const std::vector<vec2>& poly);
+
+/**
+ *  @brief
+ *    cube
+ */
+bool is_point_in_cube(const cube& c, const vec3& v);
 
 }
 

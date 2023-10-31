@@ -184,6 +184,17 @@ bool is_rect_intersect_polygon(const rect& rect, const std::vector<vec2>& poly)
 	return is_polygon_intersect_polygon(poly, poly2);
 }
 
+inline
+bool is_point_in_cube(const cube& c, const vec3& v)
+{
+	if (!c.IsValid()) {
+		return false;
+	}
+	return v.x > c.xmin && v.x < c.xmax
+		&& v.y > c.ymin && v.y < c.ymax
+		&& v.z > c.zmin && v.z < c.zmax;
+}
+
 }
 
 #endif // _SPATIAL_MATH_TEST_INL_

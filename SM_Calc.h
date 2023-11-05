@@ -2,6 +2,7 @@
 #define _SPATIAL_MATH_CALC_H_
 
 #include "SM_Vector.h"
+#include "SM_Matrix.h"
 #include "SM_Plane.h"
 #include "SM_Rect.h"
 
@@ -103,6 +104,8 @@ float get_polygon_perimeter(const std::vector<vec2>& poly);
 bool intersect_planes(const Plane& p0, const Plane& p1, const Plane& p2, vec3* cross);
 
 vec3 calc_plane_mirror(const Plane& plane, const vec3& pos);
+
+void transform_plane(Plane& plane, const mat4& mt);
 
 }
 

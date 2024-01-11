@@ -214,29 +214,31 @@ bool ray_triangle_intersect(const mat4& mat, const vec3& v0, const vec3& v1,
 		return false;
 	}
 
+	vec2 bary;
+
 	float f = 1.0f / a;
 
 	auto s = ray.origin - _v0;
-	cross->x = f * s.Dot(p);
-	if (cross->x < 0.0f) {
+	bary.x = f * s.Dot(p);
+	if (bary.x < 0.0f) {
 		return false;
 	}
-	if (cross->x > 1.0f) {
+	if (bary.x > 1.0f) {
 		return false;
 	}
 
 	auto q = s.Cross(e1);
-	cross->y = f * ray.dir.Dot(q);
-	if (cross->y < 0.0f) {
+	bary.y = f * ray.dir.Dot(q);
+	if (bary.y < 0.0f) {
 		return false;
 	}
-	if (cross->y + cross->x > 1.0f) {
+	if (bary.y + bary.x > 1.0f) {
 		return false;
 	}
 
-	cross->z = f * e2.Dot(q);
+	*cross = _v0 + e1 * bary.x + e2 * bary.y;
 
-	return cross->z >= 0.0f;
+	return f * e2.Dot(q) >= 0.0f;
 }
 
 // Code from glm/gtx/intersect.h intersectRayTriangle
@@ -253,29 +255,31 @@ bool ray_triangle_intersect_both_faces(const mat4& mat, const vec3& v0, const ve
 	auto p = ray.dir.Cross(e2);;
 	auto a = e1.Dot(p);
 
+	vec2 bary;
+
 	float f = 1.0f / a;
 
 	auto s = ray.origin - _v0;
-	cross->x = f * s.Dot(p);
-	if (cross->x < 0.0f) {
+	bary.x = f * s.Dot(p);
+	if (bary.x < 0.0f) {
 		return false;
 	}
-	if (cross->x > 1.0f) {
+	if (bary.x > 1.0f) {
 		return false;
 	}
 
 	auto q = s.Cross(e1);
-	cross->y = f * ray.dir.Dot(q);
-	if (cross->y < 0.0f) {
+	bary.y = f * ray.dir.Dot(q);
+	if (bary.y < 0.0f) {
 		return false;
 	}
-	if (cross->y + cross->x > 1.0f) {
+	if (bary.y + bary.x > 1.0f) {
 		return false;
 	}
 
-	cross->z = f * e2.Dot(q);
+	*cross = _v0 + e1 * bary.x + e2 * bary.y;
 
-	return cross->z >= 0.0f;
+	return f * e2.Dot(q) >= 0.0f;
 }
 
 bool ray_polygon_intersect(const mat4& mat, const vec3* polygon, size_t polygon_n, const Ray& ray, vec3* cross)

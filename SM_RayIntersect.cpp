@@ -79,6 +79,30 @@ bool line_line_intersect(const vec3& p1, const vec3& p2,
 	return true;
 }
 
+bool ray_line_intersect(const Ray& ray, const vec3& p0, const vec3& p1, vec3* cross)
+{
+	auto da = ray.dir;
+	auto db = p1 - p0;
+	auto dc = p0 - ray.origin;
+	auto cross_ab = da.Cross(db);
+	float zz = fabs(dc.Dot(cross_ab));
+	if (fabs(dc.Dot(cross_ab)) > 0.01f) {
+		return false;
+	}
+
+	float d = cross_ab.LengthSquared();
+	// collinear
+	if (d < std::numeric_limits<float>::epsilon()) {
+		return false;
+	}
+	auto t = dc.Cross(da).Dot(cross_ab) / d;
+	if (t >= 0.0f && t <= 1.0f) {
+		*cross = ray.origin + ray.dir * t;
+		return true;
+	}
+	return false;
+}
+
 #define NUMDIM	3
 #define RIGHT	0
 #define LEFT	1

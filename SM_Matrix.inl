@@ -568,7 +568,7 @@ Matrix4<T> Matrix4<T>::SkewY(T sx, T sz)
 template <typename T>
 Matrix4<T> Matrix4<T>::Perspective(T fovy, T aspect, T znear, T zfar)
 {
-	assert(abs(aspect - std::numeric_limits<T>::epsilon()) > static_cast<T>(0));
+	assert(fabsf(aspect - std::numeric_limits<T>::epsilon()) > static_cast<T>(0));
 
 	Matrix4 m;
 	memset(m.x, 0, sizeof(m));

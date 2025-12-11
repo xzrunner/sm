@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.8)
+cmake_minimum_required(VERSION 3.16)
 
 project(sm)
 
@@ -141,15 +141,6 @@ set(ALL_FILES
     ${vector}
 )
 
-add_subdirectory(external/CavalierContours)
-add_subdirectory(external/clipper)
-add_subdirectory(external/triangle)
+add_library(${PROJECT_NAME} STATIC ${ALL_FILES})
 
-# include header dirs
-include_directories(${CMAKE_SOURCE_DIR}/external)
-include_directories(${CMAKE_SOURCE_DIR}/external/clipper)
-include_directories(${CMAKE_SOURCE_DIR}/external/CavalierContours/include)
-
-add_library(sm ${ALL_FILES})
-
-target_link_libraries(sm PRIVATE clipper_static)
+target_include_directories(${PROJECT_NAME} PRIVATE external external/clipper external/CavalierContours/include)

@@ -3,6 +3,7 @@
 
 #include <float.h>
 #include <stdint.h>
+#include <stddef.h> // size_t
 
 namespace sm
 {

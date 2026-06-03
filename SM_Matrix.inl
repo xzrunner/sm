@@ -4,6 +4,7 @@
 #include "sm_const.h"
 #include "SM_Quaternion.h"
 #include "SM_Math.h"
+#include <string.h> // memcpy / memset (needed for clang two-phase template lookup)
 
 namespace sm
 {

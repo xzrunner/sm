@@ -577,9 +577,17 @@ Matrix4<T> Matrix4<T>::Perspective(T fovy, T aspect, T znear, T zfar)
 	T const tan_half_fovy = static_cast<T>(tan(fovy / static_cast<T>(2) * SM_DEG_TO_RAD));
 	m.c[0][0] = static_cast<T>(1) / (aspect * tan_half_fovy);
 	m.c[1][1] = static_cast<T>(1) / (tan_half_fovy);
-	m.c[2][2] = - (zfar + znear) / (zfar - znear);
 	m.c[2][3] = - static_cast<T>(1);
+#ifdef __APPLE__
+	// Metal clip space is z in [0,1] (OpenGL is [-1,1]); a [-1,1] projection puts
+	// the near half of the frustum at z<0, which Metal clips away -> 3D geometry
+	// disappears. Use a zero-to-one perspective on the Metal backend.
+	m.c[2][2] = zfar / (znear - zfar);
+	m.c[3][2] = -(zfar * znear) / (zfar - znear);
+#else
+	m.c[2][2] = - (zfar + znear) / (zfar - znear);
 	m.c[3][2] = -(2 * zfar * znear) / (zfar - znear);
+#endif
 
 	return m;
 }

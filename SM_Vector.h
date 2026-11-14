@@ -2,6 +2,7 @@
 #define _SPATIAL_MATH_VECTOR_H_
 
 #include <float.h>
+#include <stddef.h>
 #include <stdint.h>
 
 namespace sm
